@@ -1,7 +1,6 @@
-# WDProjLithiumGabrielTumbaga
-Chemivis - Visualizing the unseen fundamentals of chemistry
+# Chemivis 
+## Visualizing the unseen fundamentals of chemistry
 
-Short comprehensive paragraph:
 Chemistry is the study of matter, which is made up of atoms and molecules that form everything around us. Yet these particles are invisible to the naked eye, making them difficult to imagine and understand. **Chemivis** bridges this gap by bringing the unseen world of chemistry to life through interactive visualizations and simulations. It helps learners visualize abstract chemistry concepts easier, while also teaching them all about the fundamental topics of the subject!
 
 ## Website Outline
@@ -25,3 +24,10 @@ This page explains the law of conservation of mass and how it applies to balanci
 This section compiles short, interactive chemistry games that reinforce learning. These activities will generally be about basic inorganic chemistry topics, such as nomenclature, identifying ions, and matching formulas to names. These games serve as fun ways to review the concepts covered in the previous pages, as well as other lessons users might come across while studying chemistry.
 
 ## JS Implementation ##
+JavaScript will power most of the interactive features of Chemivis, making static visuals respond to user actions across the website:
+- **Interactive Periodic Table:** JS will trigger pop-ups displaying detailed element information and atomic models when a user clicks on an element.
+- **Subatomic Particles:** JS will allow users to interact with the atomic model by clicking specific parts to reveal informative pop-ups about subatomic particles.
+- **VSEPR Theory:** JS will manage the molecular shape simulation, updating 3D models based on the atomic structure details selected by a user.
+- **Balancing Chemical Equations:** JS will dynamically balance chemical equations, updating the visual models from the values in those equations.
+- **Practice Games:** JS will handle game logic, including questions, answers, scoring, and feedback to create an interactive learning experience.
+Overall, JS will make Chemivis' visualizations less static and more interactive for users.
