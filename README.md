@@ -2,6 +2,9 @@
 ## Visualizing the unseen fundamentals of chemistry
 Chemistry is the study of matter, which is made up of atoms and molecules that form everything around us. Yet these particles are invisible to the naked eye, making them difficult to imagine and understand. **Chemivis** bridges this gap by bringing the unseen world of chemistry to life through interactive visualizations and simulations. It helps learners visualize abstract chemistry concepts easier, while also teaching them all about the fundamental topics of the subject!
 
+## Logo
+<img width="813" height="457" alt="image" src="https://github.com/user-attachments/assets/4f3a08f1-c6b9-4aad-ab3f-2788b63f2901" />
+
 ### Website Outline
 
 **Home Page**: _Welcome to Chemivis_
