@@ -23,7 +23,7 @@ Chemistry is the study of matter, which is made up of atoms and molecules that f
 > This section compiles short, interactive chemistry games that reinforce learning. These activities will generally be about basic inorganic chemistry topics, such as nomenclature, identifying ions, and matching formulas to names. These games serve as fun ways to review the concepts covered in the previous pages, as well as other lessons users might come across while studying chemistry.
 
 ### JS Implementation ##
-JavaScript will power most of the interactive features of Chemivis, making static visuals respond to user actions across the website:
+JavaScript will power most of the interactive features of Chemivis, making static visuals respond to user actions across the website.
 - **Interactive Periodic Table:** JS will trigger pop-ups displaying detailed element information and atomic models when a user clicks on an element.
 - **Subatomic Particles:** JS will allow users to interact with the atomic model by clicking specific parts to reveal informative pop-ups about subatomic particles.
 - **VSEPR Theory:** JS will manage the molecular shape simulation, updating 3D models based on the atomic structure details selected by a user.
