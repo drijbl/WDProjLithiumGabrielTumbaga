@@ -2,6 +2,4 @@
 Chemivis - Visualizing the unseen fundamentals of chemistry
 
 Short comprehensive paragraph:
-Chemistry is the study of matter, it delves into the core structure of everything around us and how different materials exist. At its core, matter is made up of atoms, which combine to form compounds or molecules, but it visualizing these can be really difficult, especially considering atoms are unvisible to the naked eye! This is what Chemivis aims to solve.
-
-Chemivis 
+Chemistry is the study of matter, which is made up of atoms and molecules that form everything around us. Yet these particles are invisible to the naked eye, making them difficult to imagine and understand. Chemivis bridges this gap by bringing the unseen world of chemistry to life through interactive visualizations and simulations. It helps learners visualize abstract chemistry concepts easier, while also teaching them all about the fundamental topics of the subject!
