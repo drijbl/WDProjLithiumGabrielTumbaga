@@ -15,12 +15,20 @@ This markdown file contains the descriptions of our pages and the different thin
 <br>
 
 **Subatomic Particles**: _Inside the Atom_
-- 
+- This page will have a discussion part muna, though im not sure ano yung pwedeng header? para nde siya plain text na parang article.
+- Within the lesson, may part where you can click on the protons, electrons, and neutrons of an atom, tas it will pop-up information about those
+- Dun sa history of the atomic model, para siyang timeline with the different models, so medj maganda sana itsura nito
+  
 **VSEPR Theory**: _Geometry with Molecules_
-> This page discusses the Valence Shell Electron Pair Repulsion (VSEPR) theory, which explains how molecules can have different shapes based on their structures. Here, there will be a discussion on the lesson and an interactive simulation box where users can modify the structure of molecules to update a 3D molecular model in real time to show the resulting shape.
-
+- Similar to the subatomic particles page, may discussion muna toh b4 the simulation
+- After the discussion, naiisip ko is parang may simulation box thing where users can select # of bonds and lone pairs. At first, may nagrorotate na molecular geometry, tapos everytime nagchchange ng input from the user, mag-iiba yung shown geometry model while still rotating.
+  
 **Balancing Chemical Equations**: _Conserving Atoms Through Balance_
-> This page explains the law of conservation of mass and how it applies to balancing chemical equations. An interactive visualizer shows different equations where molecules on both sides of the equation change in number as coefficients change. This makes it easier to see how the numerical equations correspond to real atoms and molecules.
-
+- Discussion muna ng balancing
+- Parang may simulation where you can balance equations tapos l
+  
 **Practice Games**
-> This section compiles short, interactive chemistry games that reinforce learning. These activities will generally be about basic inorganic chemistry topics, such as nomenclature, identifying ions, and matching formulas to names. These games serve as fun ways to review the concepts covered in the previous pages, as well as other lessons users might come across while studying chemistry.
+- May tiles for the different games
+- Polyatomic ions
+- Transition Metal Charges
+- VSEPR? ewan ko basta parang yung chemquiz.net
