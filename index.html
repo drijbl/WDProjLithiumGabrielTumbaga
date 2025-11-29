@@ -8,18 +8,192 @@
   <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
   <title>Chemivis</title>
 </head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Rubik One', 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #b48ce3, #5cc0e6);
+      height: 100vh;
+      overflow-x: hidden;
+      position: relative; 
+      color: white; 
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    #hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      padding: 5px 10px;
+      color: #1c3d68; 
+      text-shadow: none; 
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -320px; 
+      width: 300px; 
+      height: 100%;
+      background: #144b63; 
+      color: white;
+      padding: 25px;
+      box-sizing: border-box;
+      transition: left 0.3s ease;
+      z-index: 1000; 
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2); 
+    }
+
+    .side-menu.open {
+      left: 0;
+    }
+
+    .side-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 18px 0;
+      font-size: 20px;
+      font-weight: 600; 
+      padding: 10px 15px; 
+      transition: background-color 0.2s, transform 0.2s;
+      border-radius: 5px; 
+      font-family: 'Poppins', sans-serif; 
+    }
+
+    .side-menu a:hover {
+        background-color: #216d91; 
+        transform: translateX(5px); 
+    }
+
+    #closeMenu {
+      font-size: 30px;
+      cursor: pointer;
+      color: #ff7a7a;
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: right;
+    }
+
+    main {
+      text-align: left; 
+      position: absolute; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%; 
+      max-width: 900px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start; 
+    }
+
+    .title {
+      font-size: 100px; 
+      font-weight: 700; 
+      color: #1c3d68; 
+      letter-spacing: 5px; 
+      margin-bottom: 0; 
+      line-height: 1; 
+      
+      text-shadow: 
+        0 0 10px rgba(180, 140, 227, 0.7), 
+        0 0 20px rgba(92, 192, 230, 0.5); 
+    }
+
+    .subtitle {
+      font-size: 32px; 
+      margin-top: 10px; 
+      color: #2a2a54; 
+      font-weight: 400; 
+      font-family: 'Poppins', sans-serif; 
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      line-height: 1.3;
+    }
+
+    .subtitle-line1 {
+        display: block;
+        padding-left: 210px; 
+    }
+
+    .subtitle-line2 {
+        display: block;
+        text-align: center;
+        width: 100%; 
+        margin-left: calc(210px / 2); 
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      display: block; 
+      text-align: center;
+    }
+    
+    .footer-icons {
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .footer-icons img {
+      width: 35px; 
+      margin: 0 18px; 
+      transition: transform 0.2s; 
+      filter: drop-shadow(0 0 3px rgba(0,0,0,0.3)); 
+    }
+    
+    .footer-icons img:hover {
+        transform: scale(1.15);
+    }
+  </style>
+</head>
 
 <body>
   <header>
-    
-  </header>
+    <div id="hamburger">☰</div>
+    </header>
+
+  <div class="side-menu" id="sideMenu">
+    <div id="closeMenu">✖</div>
+    <a href="index.html">HOME</a>
+    <a href="periodic-table.html">PERIODIC TABLE</a>
+    <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+    <a href="vsepr.html">VSEPR</a>
+    <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+    <a href="games.html">PRACTICE GAMES</a>
+  </div>
 
   <main>
-    
+    <div class="title">CHEMIVIS</div>
+    <div class="subtitle">
+        <span class="subtitle-line1">VISUALIZING THE FUNDAMENTALS OF</span>
+        <span class="subtitle-line2">THE UNSEEN CHEMISTRY</span>
+    </div>
   </main>
 
-  <footer>
-    
-  </footer>
-  
+   <footer>
+    <div class="footer-icons">
+      <img src="./assets/facebook.svg" alt="Facebook">
+      <img src="./assets/instagram.svg" alt="Instagram">
+      <img src="./assets/github.png" alt="GitHub">
+    </div>
+   </footer>
+
+  <script>
+    const menu = document.getElementById("sideMenu");
+    document.getElementById("hamburger").onclick = () => menu.classList.add("open");
+    document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
+  </script>
 </body>
+</html>
