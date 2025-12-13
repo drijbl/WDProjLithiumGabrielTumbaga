@@ -87,12 +87,12 @@ const atoms = {
   C1: createAtom(0x00FFFF, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
   C2: createAtom(0x00FFFF, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
   O: createAtom(0xFF6F00, 'Oxygen (O)', { atomicNumber: 8, atomicWeight: '16.00 g/mol' }),
-  H1: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H2: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H3: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H4: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H5: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H6: createAtom(0x66FFFF, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }) // hydroxyl hydrogen
+  H1: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H2: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H3: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H4: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H5: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H6: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }) // hydroxyl hydrogen
 };
 
 // Carbon atoms
