@@ -1,23 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <title>Chemivis | VSEPR Theory</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #9b52ee, #279fce);
+      padding: 60px 100px 60px 100px;  /* Adjust the gradient spacing here */
+    }
+
+    .page-shell {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 24px 30px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      background-color: #008080;
+      color: white;
+    }
+
+    #hamburger {
+      font-size: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    .page-title {
+      font-family: 'Rubik One', sans-serif;
+      font-size: 36px;
+      letter-spacing: 2px;
+    }
+
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -320px;
+      width: 300px;
+      height: 100%;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: #144b63;
+      color: white;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .side-menu a {
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .side-menu a:hover {
+      background: #216d91;
+    }
+
+    #closeMenu {
+      align-self: flex-end;
+      font-size: 26px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #ff7a7a;
+    }
+
+    .side-menu.open {
+      left: 0;
+    }
+
+    .lesson-container {
+      padding: 40px 30px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+
+    .lesson-section {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .lesson-section h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    .simulation-section {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .simulation-header {
+      max-width: 700px;
+    }
+
+    .simulation-header h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .simulation-header p {
+      font-size: 17px;
+    }
+
+    .simulation-container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .simulation-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-group label {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .control-group select {
+      padding: 8px 10px;
+      font-size: 15px;
+    }
+
+    #resetSimulation {
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .simulation-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    #vseprCanvasContainer {
+      width: 100%;
+      height: 360px;
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+
+    .shape-info h3 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+
+    .shape-info p {
+      font-size: 16px;
+    }
+
+    .site-footer {
+      padding: 24px 30px;
+      font-size: 14px;
+      text-align: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    @media (max-width: 900px) {
+      .simulation-container {
+        grid-template-columns: 1fr;
+      }
+
+      .page-title {
+        font-size: 28px;
+      }
+    }
+
+  </style>
 </head>
-  
+
 <body>
-  <header>
-   
-  </header>
 
-  <main>
+  <div class="page-shell">
 
-  </main>
+    <header class="site-header">
+      <div class="nav-left">
+        <button id="hamburger" aria-label="Open menu">☰</button>
+      </div>
+      <h1 class="page-title">VSEPR Theory</h1>
+    </header>
 
-  <footer>
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu" aria-hidden="true">
+      <button id="closeMenu" aria-label="Close menu">✖</button>
+      <a href="index.html">Home</a>
+      <a href="periodic-table.html">Periodic Table</a>
+      <a href="subatomic.html">Subatomic Particles</a>
+      <a href="vsepr.html" aria-current="page">VSEPR</a>
+      <a href="balancing.html">Balancing Equations</a>
+      <a href="games.html">Practice Games</a>
+    </nav>
 
-    
-  </footer>
+    <main class="lesson-container">
+
+      <!-- Lesson Section -->
+      <section class="lesson-section">
+        <h2>Lesson Content Here</h2>
+          <p>
+            Input the lesson content here.
+          </p>
+        </section>
+
+      <!-- Simulation Section -->
+      <section class="simulation-section">
+        <header class="simulation-header">
+          <h2>VSEPR Shape Simulator</h2>
+          <p>
+            Adjust the number of bonding pairs and lone pairs to see how molecular
+            geometry changes in real time.
+          </p>
+        </header>
+
+        <div class="simulation-container">
+
+          <!-- Controls -->
+          <div class="simulation-controls">
+            <div class="control-group">
+              <label for="bondPairs">Bonding Pairs</label>
+              <select id="bondPairs">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label for="lonePairs">Lone Pairs</label>
+              <select id="lonePairs">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+
+            <button id="resetSimulation">Reset</button>
+          </div>
+
+          <!-- Visual -->
+          <div class="simulation-visual">
+            <div id="vseprCanvasContainer"></div>
+            <div class="shape-info">
+              <h3>Shape Name</h3>
+              <p>Description of the molecular geometry will appear here.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      &copy; 2025 Chemivis
+    </footer>
+
+  </div>
+
+  <script>
+    const menu = document.getElementById("sideMenu");
+    document.getElementById("hamburger").onclick = () => menu.classList.add("open");
+    document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
+  </script>
+
 </body>
 </html>
