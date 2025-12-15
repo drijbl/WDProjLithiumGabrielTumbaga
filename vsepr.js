@@ -1,215 +1,188 @@
+import * as THREE from 'https://unpkg.com/three@0.181.2/build/three.module.js';
+
+
 // =======================
-// VSEPR LOGIC CONTROLLER
+// VSEPR SIMULATOR (UI + 3D)
 // =======================
 
-// DOM Elements
+// ---------- DOM ELEMENTS ----------
 const bondValueEl = document.getElementById('bondValue');
 const loneValueEl = document.getElementById('loneValue');
-
 const bondPlus = document.getElementById('bondPlus');
 const bondMinus = document.getElementById('bondMinus');
 const lonePlus = document.getElementById('lonePlus');
 const loneMinus = document.getElementById('loneMinus');
-
 const axeEl = document.getElementById('axe');
 const edgEl = document.getElementById('electronDomain');
 const mgEl = document.getElementById('molecularGeometry');
 
-const resetBtn = document.getElementById('resetSimulation');
-
-// Limits
-const MIN_BONDS = 2;
 const MAX_BONDS = 6;
+const MIN_BONDS = 2;
 const MAX_LONE = 4;
-const MAX_DOMAINS = 6;
+const MAX_TOTAL = 6; // total electron domains limit
 
-// =======================
-// VSEPR TABLE
-// =======================
+// ---------- VSEPR TABLE ----------
 const vseprTable = {
-  AX2:   { edg: 'Linear', mg: 'Linear' },
-
-  AX3:   { edg: 'Trigonal Planar', mg: 'Trigonal Planar' },
-  AX2E1: { edg: 'Trigonal Planar', mg: 'Bent' },
-
-  AX4:   { edg: 'Tetrahedral', mg: 'Tetrahedral' },
-  AX3E1: { edg: 'Tetrahedral', mg: 'Trigonal Pyramidal' },
-  AX2E2: { edg: 'Tetrahedral', mg: 'Bent' },
-
-  AX5:   { edg: 'Trigonal Bipyramidal', mg: 'Trigonal Bipyramidal' },
-  AX4E1: { edg: 'Trigonal Bipyramidal', mg: 'See-Saw' },
-  AX3E2: { edg: 'Trigonal Bipyramidal', mg: 'T-Shaped' },
-  AX2E3: { edg: 'Trigonal Bipyramidal', mg: 'Linear' },
-
-  AX6:   { edg: 'Octahedral', mg: 'Octahedral' },
-  AX5E1: { edg: 'Octahedral', mg: 'Square Pyramidal' },
-  AX4E2: { edg: 'Octahedral', mg: 'Square Planar' }
+  'AX2': { edg: 'Linear', mg: 'Linear' },
+  'AX3': { edg: 'Trigonal Planar', mg: 'Trigonal Planar' },
+  'AX2E1': { edg: 'Trigonal Planar', mg: 'Bent' },
+  'AX4': { edg: 'Tetrahedral', mg: 'Tetrahedral' },
+  'AX3E1': { edg: 'Tetrahedral', mg: 'Trigonal Pyramidal' },
+  'AX2E2': { edg: 'Tetrahedral', mg: 'Bent' },
+  'AX5': { edg: 'Trigonal Bipyramidal', mg: 'Trigonal Bipyramidal' },
+  'AX4E1': { edg: 'Trigonal Bipyramidal', mg: 'See-Saw' },
+  'AX3E2': { edg: 'Trigonal Bipyramidal', mg: 'T-Shaped' },
+  'AX2E3': { edg: 'Trigonal Bipyramidal', mg: 'Linear' },
+  'AX6': { edg: 'Octahedral', mg: 'Octahedral' },
+  'AX5E1': { edg: 'Octahedral', mg: 'Square Pyramidal' },
+  'AX4E2': { edg: 'Octahedral', mg: 'Square Planar' }
 };
 
-// =======================
-// AXE FORMATTER
-// =======================
-function formatAXE(bonds, lonePairs) {
-  let text = `AX<sub>${bonds}</sub>`;
-  if (lonePairs > 0) text += `E<sub>${lonePairs}</sub>`;
-  return text;
+// ---------- STATE ----------
+let bondPairs = 2;
+let lonePairs = 0;
+
+// ---------- THREE.JS SETUP ----------
+const container = document.getElementById("vseprCanvasContainer");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+camera.position.z = 6;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.domElement.style.pointerEvents = 'none'; // <--- allow clicks through canvas
+container.appendChild(renderer.domElement);
+
+// Lights
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+dirLight.position.set(5,5,5);
+scene.add(dirLight);
+
+// Molecule group
+let molecule = new THREE.Group();
+scene.add(molecule);
+
+// ---------- MATERIALS ----------
+const centralMat = new THREE.MeshPhongMaterial({ color: 0xff5555 });
+const atomMat = new THREE.MeshPhongMaterial({ color: 0x3399ff });
+const bondMat = new THREE.MeshPhongMaterial({ color: 0x888888 });
+const loneMat = new THREE.MeshPhongMaterial({ color: 0xffff00, transparent: true, opacity: 0.35 });
+
+// ---------- HELPERS ----------
+function sphere(radius, material){
+    return new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 32), material);
 }
 
-// =======================
-// BUTTON STATE HANDLER
-// =======================
+function bond(a, b){
+    const dir = new THREE.Vector3().subVectors(b,a);
+    const len = dir.length();
+    const mid = new THREE.Vector3().addVectors(a,b).multiplyScalar(0.5);
+    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, len, 16), bondMat);
+    cyl.position.copy(mid);
+    cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.normalize());
+    return cyl;
+}
+
+// ---------- VSEPR POSITIONS ----------
+const POSITIONS = {
+    2: [[1,0,0],[-1,0,0]],
+    3: [[1,0,0],[-0.5,0.87,0],[-0.5,-0.87,0]],
+    4: [[1,1,1],[-1,-1,1],[-1,1,-1],[1,-1,-1]],
+    5: [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1]],
+    6: [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]
+};
+
+// ---------- BUILD MODEL ----------
+function buildModel(bonds, lone){
+    molecule.clear();
+    const total = bonds + lone;
+    const base = POSITIONS[total];
+    if(!base) return;
+
+    const vectors = base.map(v => new THREE.Vector3(...v).normalize().multiplyScalar(1.6));
+    const central = sphere(0.3, centralMat);
+    molecule.add(central);
+
+    for(let i=0;i<bonds;i++){
+        const pos = vectors[i];
+        const atom = sphere(0.22, atomMat);
+        atom.position.copy(pos);
+        molecule.add(atom);
+        molecule.add(bond(new THREE.Vector3(), pos));
+    }
+
+    for(let i=bonds;i<total;i++){
+        const lp = sphere(0.18, loneMat);
+        lp.position.copy(vectors[i]);
+        molecule.add(lp);
+    }
+}
+
+// ---------- FORMAT AXE ----------
+function formatAXE(bonds, lone) {
+  let str = `AX<sub>${bonds}</sub>`;
+  if (lone > 0) str += `E<sub>${lone}</sub>`;
+  return str;
+}
+
+// ---------- BUTTON STATE ----------
 function updateButtonState(button, disabled) {
   button.disabled = disabled;
   button.style.background = disabled ? '#888888' : '#008080';
 }
 
-// =======================
-// THREE.JS SETUP
-// =======================
-let scene, camera, renderer, centralAtom, bondAtoms = [];
-
-function initThreeJS() {
-  const container = document.getElementById('vseprCanvasContainer');
-  // Clear previous canvas
-  container.innerHTML = '';
-
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xddeeff);
-
-  camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  camera.position.z = 5;
-
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  container.appendChild(renderer.domElement);
-
-  // Lights
-  const ambient = new THREE.AmbientLight(0xffffff, 0.8);
-  scene.add(ambient);
-
-  const directional = new THREE.DirectionalLight(0xffffff, 0.6);
-  directional.position.set(5, 5, 5);
-  scene.add(directional);
-}
-
-// =======================
-// CREATE ATOMS
-// =======================
-function createAtom(radius = 0.3, color = 0xff0000) {
-  const geometry = new THREE.SphereGeometry(radius, 32, 32);
-  const material = new THREE.MeshStandardMaterial({ color });
-  return new THREE.Mesh(geometry, material);
-}
-
-// =======================
-// UPDATE 3D MODEL
-// =======================
-function updateVSEPRModel(config) {
-  /*
-    config = {
-      bonds: number,
-      lonePairs: number,
-      axeKey: string,
-      electronGeometry: string,
-      molecularGeometry: string
-    }
-  */
-
-  if (!scene) initThreeJS();
-
-  // Remove old atoms
-  if (centralAtom) scene.remove(centralAtom);
-  bondAtoms.forEach(atom => scene.remove(atom));
-  bondAtoms = [];
-
-  // Central atom
-  centralAtom = createAtom(0.35, 0x0088ff);
-  scene.add(centralAtom);
-
-  // =======================
-  // LINEAR GEOMETRY (AX2)
-  // =======================
-  if (config.axeKey === 'AX2') {
-    const distance = 1.5;
-    const positions = [
-      new THREE.Vector3(-distance, 0, 0),
-      new THREE.Vector3(distance, 0, 0)
-    ];
-
-    positions.forEach(pos => {
-      const atom = createAtom();
-      atom.position.copy(pos);
-      scene.add(atom);
-      bondAtoms.push(atom);
-    });
-  } else {
-    // Placeholder for other geometries
-    console.log('Geometry placeholder:', config.axeKey);
-  }
-
-  renderer.render(scene, camera);
-}
-
-// =======================
-// MAIN UPDATE FUNCTION
-// =======================
-function updateSimulation() {
-  let bonds = parseInt(bondValueEl.textContent);
-  let lonePairs = parseInt(loneValueEl.textContent);
-
-  // Enforce bounds
-  bonds = Math.max(MIN_BONDS, Math.min(MAX_BONDS, bonds));
-  lonePairs = Math.max(0, Math.min(MAX_LONE, lonePairs));
-
-  // Enforce total domain limit
-  if (bonds + lonePairs > MAX_DOMAINS) {
-    lonePairs = MAX_DOMAINS - bonds;
-  }
-
-  bondValueEl.textContent = bonds;
+// ---------- UPDATE DISPLAY ----------
+function updateDisplay() {
+  bondValueEl.textContent = bondPairs;
   loneValueEl.textContent = lonePairs;
+}
 
-  const axeKey = lonePairs === 0
-    ? `AX${bonds}`
-    : `AX${bonds}E${lonePairs}`;
+// ---------- UPDATE MODEL ----------
+function updateModel() {
+  if (bondPairs < MIN_BONDS) bondPairs = MIN_BONDS;
+  if (bondPairs > MAX_BONDS) bondPairs = MAX_BONDS;
+  if (lonePairs < 0) lonePairs = 0;
+  if (lonePairs > MAX_LONE) lonePairs = MAX_LONE;
+  if (bondPairs + lonePairs > MAX_TOTAL) lonePairs = MAX_TOTAL - bondPairs;
 
-  const vsepr = vseprTable[axeKey] || { edg: 'Unknown', mg: 'Unknown' };
+  updateDisplay();
 
-  // Update UI
-  axeEl.innerHTML = formatAXE(bonds, lonePairs);
-  edgEl.textContent = vsepr.edg;
-  mgEl.textContent = vsepr.mg;
+  const axeKey = lonePairs === 0 ? `AX${bondPairs}` : `AX${bondPairs}E${lonePairs}`;
+  const result = vseprTable[axeKey];
+  axeEl.innerHTML = formatAXE(bondPairs, lonePairs);
+  edgEl.textContent = result ? result.edg : 'Unknown';
+  mgEl.textContent = result ? result.mg : 'Unknown';
 
-  // Button states
-  updateButtonState(bondPlus, bonds >= MAX_BONDS || bonds + lonePairs >= MAX_DOMAINS);
-  updateButtonState(bondMinus, bonds <= MIN_BONDS);
-  updateButtonState(lonePlus, lonePairs >= MAX_LONE || bonds + lonePairs >= MAX_DOMAINS);
+  updateButtonState(bondPlus, bondPairs >= MAX_BONDS || bondPairs + lonePairs >= MAX_TOTAL);
+  updateButtonState(bondMinus, bondPairs <= MIN_BONDS);
+  updateButtonState(lonePlus, lonePairs >= MAX_LONE || bondPairs + lonePairs >= MAX_TOTAL);
   updateButtonState(loneMinus, lonePairs <= 0);
 
-  // Update 3D model
-  updateVSEPRModel({
-    bonds,
-    lonePairs,
-    axeKey,
-    electronGeometry: vsepr.edg,
-    molecularGeometry: vsepr.mg
-  });
+  buildModel(bondPairs, lonePairs);
 }
 
-// =======================
-// EVENT LISTENERS
-// =======================
-bondPlus.onclick = () => { bondValueEl.textContent++; updateSimulation(); };
-bondMinus.onclick = () => { bondValueEl.textContent--; updateSimulation(); };
-lonePlus.onclick = () => { loneValueEl.textContent++; updateSimulation(); };
-loneMinus.onclick = () => { loneValueEl.textContent--; updateSimulation(); };
-resetBtn.onclick = () => {
-  bondValueEl.textContent = 2;
-  loneValueEl.textContent = 0;
-  updateSimulation();
-};
+// ---------- BUTTON EVENTS ----------
+bondPlus.onclick = () => { bondPairs++; updateModel(); };
+bondMinus.onclick = () => { bondPairs--; updateModel(); };
+lonePlus.onclick = () => { lonePairs++; updateModel(); };
+loneMinus.onclick = () => { lonePairs--; updateModel(); };
+document.getElementById('resetSimulation').onclick = () => { bondPairs=2; lonePairs=0; updateModel(); };
 
-// =======================
-// INITIALIZE
-// =======================
-updateSimulation();
+// ---------- ANIMATION ----------
+function animate(){
+    requestAnimationFrame(animate);
+    molecule.rotation.y += 0.004;
+    renderer.render(scene, camera);
+}
+animate();
+
+// ---------- HANDLE RESIZE ----------
+window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+});
+
+// ---------- INITIALIZE ----------
+updateModel();
