@@ -70,7 +70,9 @@ window.addEventListener('resize', () => {
 // Animate
 function animate() {
   requestAnimationFrame(animate);
-  if (isRotating) molecule.rotation.y += 0.01;
+  if (isRotating) molecule.rotation.y += 0.03;
+    if (isRotating) molecule.rotation.x += 0.01;
+
   renderer.render(scene, camera);
 }
 animate();
