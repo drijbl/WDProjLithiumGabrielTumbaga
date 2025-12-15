@@ -17,7 +17,6 @@ body {
   padding: 60px 100px;
 }
 
-/* ===== Background canvas ===== */
 canvas#bg {
   position: fixed;
   inset: 0;
@@ -25,7 +24,6 @@ canvas#bg {
   pointer-events: none;
 }
 
-/* ===== Page shell ===== */
 .page-shell {
   position: relative;
   z-index: 1;
@@ -114,6 +112,64 @@ canvas#bg {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ===== Simulation box ===== */
+.simulation-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.simulation-header {
+  background: #008080;
+  color: #FEFFFC;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.simulation-box {
+  width: 98%;
+  max-width: 1000px;
+  height: 400px;
+  background: rgba(200,200,200,.25);
+  border-radius: 12px;
+  border: 2px solid #000;
+  position: relative;
+}
+
+#equationDisplay {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+#moleculeContainer {
+  width: 100%;
+  height: 350px;
+  position: relative;
+}
+
+.simulation-controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.counter-button {
+  background: #008080;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
 </style>
 </head>
 
@@ -148,6 +204,23 @@ canvas#bg {
     </p>
   </div>
 
+  <!-- ===== Simulation Section ===== -->
+  <section class="lesson-section simulation-section">
+    <header class="simulation-header">
+      <h2>Equation Visualizer</h2>
+      <p>See how changing coefficients affects molecules and atom conservation.</p>
+    </header>
+
+    <div class="simulation-box" id="equationBox">
+      <div id="equationDisplay">---</div>
+      <div id="moleculeContainer"></div>
+    </div>
+
+    <div class="simulation-controls">
+      <button class="counter-button" id="nextEquation">Next Example</button>
+    </div>
+  </section>
+
   <nav class="side-menu" id="sideMenu">
     <div id="closeMenu">✖</div>
     <a href="index.html">HOME</a>
@@ -160,6 +233,7 @@ canvas#bg {
 </div>
 
 <script>
+// ===== Menu toggle =====
 const menu = document.getElementById("sideMenu");
 const hamburger = document.getElementById("hamburger");
 const closeMenu = document.getElementById("closeMenu");
@@ -169,14 +243,10 @@ closeMenu.onclick = () => menu.classList.remove("open");
 </script>
 
 <script>
+// ===== Background animation =====
 const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
-
-function resize() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+resize(); window.addEventListener("resize", resize);
 
 class Atom {
   constructor() {
@@ -187,87 +257,80 @@ class Atom {
     this.vy = (Math.random() - 0.5) * 0.7;
     this.exploded = false;
   }
-  draw() {
-    c.beginPath();
-    c.fillStyle = "white";
-    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    c.fill();
-  }
-  explode() {
-    this.exploded = true;
-    explosions.push(new Explosion(this.x, this.y));
-  }
+  draw() { c.beginPath(); c.fillStyle="white"; c.arc(this.x,this.y,this.r,0,Math.PI*2); c.fill(); }
+  explode() { this.exploded = true; explosions.push(new Explosion(this.x,this.y)); }
   update(atoms) {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-    for (let a of atoms) {
-      if (a === this || a.exploded) continue;
-      if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
-        this.explode();
-        a.explode();
-      }
-    }
+    this.x += this.vx; this.y += this.vy;
+    if(this.x<0||this.x>canvas.width)this.vx*=-1;
+    if(this.y<0||this.y>canvas.height)this.vy*=-1;
+    for(let a of atoms){ if(a===this||a.exploded) continue;
+      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){ this.explode(); a.explode(); } }
     this.draw();
   }
 }
 
 class Explosion {
-  constructor(x, y) {
-    this.p = [];
-    for (let i = 0; i < 20; i++) {
-      this.p.push({
-        x, y,
-        vx: (Math.random() - 0.5) * 3,
-        vy: (Math.random() - 0.5) * 3,
-        life: 40 + Math.random() * 20
-      });
-    }
-  }
-  update() {
-    this.p.forEach(pt => {
-      pt.x += pt.vx;
-      pt.y += pt.vy;
-      pt.life--;
-      c.fillStyle = `rgba(255,255,255,${pt.life / 60})`;
-      c.beginPath();
-      c.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
-      c.fill();
-    });
-    this.p = this.p.filter(pt => pt.life > 0);
-  }
+  constructor(x,y){ this.p=[]; for(let i=0;i<20;i++){ this.p.push({
+    x,y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:40+Math.random()*20 }); } }
+  update(){ this.p.forEach(pt=>{ pt.x+=pt.vx; pt.y+=pt.vy; pt.life--;
+    c.fillStyle=`rgba(255,255,255,${pt.life/60})`; c.beginPath(); c.arc(pt.x,pt.y,2,0,Math.PI*2); c.fill(); });
+    this.p=this.p.filter(pt=>pt.life>0); }
 }
 
-const atoms = [], explosions = [];
-for (let i = 0; i < 40; i++) atoms.push(new Atom());
-
-(function animate() {
-  requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
-  atoms.forEach(a => !a.exploded && a.update(atoms));
-  explosions.forEach(e => e.update());
-})();
+const atoms=[], explosions=[];
+for(let i=0;i<40;i++) atoms.push(new Atom());
+(function animate(){ requestAnimationFrame(animate); c.clearRect(0,0,canvas.width,canvas.height);
+  atoms.forEach(a=>!a.exploded&&a.update(atoms)); explosions.forEach(e=>e.update()); })();
 </script>
 
 <script>
-
+// ===== Section reveal =====
 const sections = document.querySelectorAll('.lesson-section');
-
 const revealOnScroll = () => {
   const triggerBottom = window.innerHeight * 0.8;
-  sections.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-    if (sectionTop < triggerBottom) {
-      section.classList.add('visible');
-    }
-  });
+  sections.forEach(section => { if(section.getBoundingClientRect().top < triggerBottom) section.classList.add('visible'); });
 };
-
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
+</script>
+
+<script>
+// ===== Balancing equation visualizer =====
+const equations = [
+  { eq: "H2 + O2 → H2O", molecules: [{H:2}, {O:2}, {H:2,O:1}] },
+  { eq: "CH4 + O2 → CO2 + H2O", molecules: [{C:1,H:4}, {O:2}, {C:1,O:2}, {H:2,O:1}] },
+  { eq: "N2 + H2 → NH3", molecules: [{N:2}, {H:2}, {N:1,H:3}] }
+];
+
+const equationDisplay = document.getElementById('equationDisplay');
+const moleculeContainer = document.getElementById('moleculeContainer');
+const nextEquationBtn = document.getElementById('nextEquation');
+
+function pickEquation() {
+  const eq = equations[Math.floor(Math.random()*equations.length)];
+  equationDisplay.textContent = eq.eq;
+  moleculeContainer.innerHTML = "";
+  eq.molecules.forEach((mol,i)=>{
+    const molDiv=document.createElement('div');
+    molDiv.style.position='absolute';
+    molDiv.style.left=`${20+i*80}px`;
+    molDiv.style.top='50px';
+    molDiv.style.width='60px';
+    molDiv.style.height='60px';
+    molDiv.style.borderRadius='50%';
+    molDiv.style.background='#3399ff';
+    molDiv.style.display='flex';
+    molDiv.style.alignItems='center';
+    molDiv.style.justifyContent='center';
+    molDiv.style.color='white';
+    molDiv.style.fontWeight='700';
+    molDiv.textContent=Object.keys(mol).map(k=>`${k}${mol[k]}`).join('');
+    moleculeContainer.appendChild(molDiv);
+  });
+}
+
+nextEquationBtn.onclick = pickEquation;
+pickEquation();
 </script>
 
 </body>
