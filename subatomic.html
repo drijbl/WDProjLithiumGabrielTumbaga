@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemivis | Balancing Equations</title>
+<title>Chemivis | Subatomic Particles</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
 
@@ -27,11 +27,11 @@ canvas#bg {
 .page-shell {
   position: relative;
   z-index: 1;
-  background: rgba(254, 255, 252, 0.88); 
+  background: rgba(254, 255, 252, 0.88);
   border-radius: 16px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.15);
   overflow: hidden;
-  min-height: 400px; 
+  min-height: 400px;
 }
 
 .site-header {
@@ -39,7 +39,7 @@ canvas#bg {
   align-items: center;
   gap: 20px;
   padding: 20px 30px;
-  background: #008080; 
+  background: #008080;
   border-radius: 12px 12px 0 0;
   color: white;
 }
@@ -57,7 +57,6 @@ canvas#bg {
   font-family: 'Rubik One', sans-serif;
   font-size: 28px;
   font-weight: 500;
-  color: white;
 }
 
 .side-menu {
@@ -101,6 +100,27 @@ canvas#bg {
   margin-bottom: 30px;
   text-align: right;
 }
+
+.lesson-section {
+  padding: 30px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.lesson-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lesson-section ul {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.lesson-section li::marker {
+  color: #008080;
+}
 </style>
 </head>
 
@@ -111,12 +131,63 @@ canvas#bg {
 <div class="page-shell">
   <header class="site-header">
     <button id="hamburger">☰</button>
-    <h1 class="page-title">Balancing Chemical Equations</h1>
+    <h1 class="page-title">Subatomic Particles</h1>
   </header>
 
-  <div style="padding: 200px 30px; text-align:center;">
-    <h2 style="color:#008080;">content</h2>
-    <p>Put content here.</p>
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Introduction</h2>
+    <p>
+      All matter is made of atoms, and atoms themselves are composed of even smaller
+      particles called <strong>subatomic particles</strong>. The three main subatomic
+      particles are <strong>protons</strong>, <strong>neutrons</strong>, and
+      <strong>electrons</strong>. Each of these affects the structure, behavior, and
+      properties of matter. Subatomic particles explain many key concepts in chemistry:</p>
+
+    <ul>
+      <li>Chemical reactions involve the rearrangement of electrons</li>
+      <li>Ions form when atoms gain or lose electrons</li>
+      <li>Isotopes affect atomic mass and nuclear stability</li>
+      <li>Bonding and reactivity depend on valence electrons</li>
+    </ul>
+  </div>
+
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Protons</h2>
+    <p>
+      Protons are positively charged particles found in the nucleus of the atom.
+      The number of protons, called the atomic number, uniquely identifies an element.
+      For example, carbon has 6 protons and oxygen has 8.
+      Changing the number of protons changes the element itself.
+    </p>
+  </div>
+
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Neutrons</h2>
+    <p>
+      Neutrons have no electric charge and are also located in the nucleus.
+      They add mass to the atom and help stabilize the nucleus.
+      Atoms of the same element with different numbers of neutrons are called isotopes.
+      Some isotopes are stable, while others are radioactive.
+    </p>
+  </div>
+
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Electrons</h2>
+    <p>
+      Electrons are negatively charged particles that occupy energy levels around the nucleus.
+      Although they have very little mass, they strongly influence chemical behavior.
+      The arrangement of electrons determines bonding and chemical reactions.
+    </p>
+  </div>
+
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Relative Mass and Charge</h2>
+    <p>
+      Protons and neutrons each have a relative mass of about 1 amu,
+      while electrons have a much smaller mass (about 1/1836 of a proton).
+      Protons carry a +1 charge, electrons carry a −1 charge,
+      and neutrons have no charge.
+    </p>
   </div>
 
   <nav class="side-menu" id="sideMenu">
@@ -130,86 +201,113 @@ canvas#bg {
   </nav>
 </div>
 
-
 <script>
+const menu = document.getElementById("sideMenu");
+const hamburger = document.getElementById("hamburger");
+const closeMenu = document.getElementById("closeMenu");
 
-  const menu = document.getElementById("sideMenu");
-  const hamburger = document.getElementById("hamburger");
-  const closeMenu = document.getElementById("closeMenu");
-
-  hamburger.onclick = () => menu.classList.add("open");
-  closeMenu.onclick = () => menu.classList.remove("open");
+hamburger.onclick = () => menu.classList.add("open");
+closeMenu.onclick = () => menu.classList.remove("open");
 </script>
 
 <script>
-  const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
+const canvas = document.getElementById("bg"),
+      c = canvas.getContext("2d");
 
-  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-  resize();
-  window.addEventListener("resize", resize);
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-  class Atom {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.r = 3 + Math.random() * 3;
-      this.vx = (Math.random() - 0.5) * 0.7;
-      this.vy = (Math.random() - 0.5) * 0.7;
-      this.exploded = false;
-    }
-    draw() {
-      c.beginPath();
-      c.fillStyle = "white";
-      c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      c.fill();
-    }
-    explode() {
-      this.exploded = true;
-      explosions.push(new Explosion(this.x, this.y));
-    }
-    update(atoms) {
-      this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-      for (let a of atoms) {
-        if (a === this || a.exploded) continue;
-        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
-          this.explode(); a.explode();
-        }
-      }
-      this.draw();
-    }
+class Atom {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 3 + Math.random() * 3;
+    this.vx = (Math.random() - 0.5) * 0.7;
+    this.vy = (Math.random() - 0.5) * 0.7;
+    this.exploded = false;
   }
+  draw() {
+    c.beginPath();
+    c.fillStyle = "white";
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fill();
+  }
+  explode() {
+    this.exploded = true;
+    explosions.push(new Explosion(this.x, this.y));
+  }
+  update(atoms) {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-  class Explosion {
-    constructor(x, y) {
-      this.p = [];
-      for (let i = 0; i < 20; i++) this.p.push({
-        x, y, vx: (Math.random() - 0.5) * 3,
+    for (let a of atoms) {
+      if (a === this || a.exploded) continue;
+      if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+        this.explode();
+        a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+class Explosion {
+  constructor(x, y) {
+    this.p = [];
+    for (let i = 0; i < 20; i++) {
+      this.p.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 3,
         vy: (Math.random() - 0.5) * 3,
         life: 40 + Math.random() * 20
       });
     }
-    update() {
-      this.p.forEach(pt => {
-        pt.x += pt.vx; pt.y += pt.vy; pt.life--;
-        c.fillStyle = `rgba(255,255,255,${pt.life/60})`;
-        c.beginPath(); c.arc(pt.x, pt.y, 2, 0, Math.PI*2); c.fill();
-      });
-      this.p = this.p.filter(pt => pt.life > 0);
-    }
   }
+  update() {
+    this.p.forEach(pt => {
+      pt.x += pt.vx;
+      pt.y += pt.vy;
+      pt.life--;
+      c.fillStyle = `rgba(255,255,255,${pt.life / 60})`;
+      c.beginPath();
+      c.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
+      c.fill();
+    });
+    this.p = this.p.filter(pt => pt.life > 0);
+  }
+}
 
-  const atoms = [], explosions = [];
-  for (let i = 0; i < 40; i++) atoms.push(new Atom());
+const atoms = [], explosions = [];
+for (let i = 0; i < 40; i++) atoms.push(new Atom());
 
-  (function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    atoms.forEach(a => !a.exploded && a.update(atoms));
-    explosions.forEach(e => e.update());
-  })();
+(function animate() {
+  requestAnimationFrame(animate);
+  c.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => !a.exploded && a.update(atoms));
+  explosions.forEach(e => e.update());
+})();
+</script>
+
+<script>
+const sections = document.querySelectorAll('.lesson-section');
+
+const revealOnScroll = () => {
+  const triggerBottom = window.innerHeight * 0.8;
+  sections.forEach(section => {
+    if (section.getBoundingClientRect().top < triggerBottom) {
+      section.classList.add('visible');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
 </script>
 
 </body>
