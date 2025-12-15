@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemivis | Balancing Equations</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CS3 Website Project" />
+  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
+  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
+  <title>Chemivis | Balancing Chemical Equations</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="./assets/logo.png">
+<link rel="stylesheet" href="references.css">
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -203,6 +208,7 @@ canvas#bg {
 .next-btn:hover {
   background: #006666;
 }
+
 </style>
 </head>
 
@@ -352,6 +358,45 @@ const revealOnScroll = () => {
 };
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
+</script>
+
+<script>
+// ===== Balancing equation visualizer =====
+const equations = [
+  { eq: "H2 + O2 → H2O", molecules: [{H:2}, {O:2}, {H:2,O:1}] },
+  { eq: "CH4 + O2 → CO2 + H2O", molecules: [{C:1,H:4}, {O:2}, {C:1,O:2}, {H:2,O:1}] },
+  { eq: "N2 + H2 → NH3", molecules: [{N:2}, {H:2}, {N:1,H:3}] }
+];
+
+const equationDisplay = document.getElementById('equationDisplay');
+const moleculeContainer = document.getElementById('moleculeContainer');
+const nextEquationBtn = document.getElementById('nextEquation');
+
+function pickEquation() {
+  const eq = equations[Math.floor(Math.random()*equations.length)];
+  equationDisplay.textContent = eq.eq;
+  moleculeContainer.innerHTML = "";
+  eq.molecules.forEach((mol,i)=>{
+    const molDiv=document.createElement('div');
+    molDiv.style.position='absolute';
+    molDiv.style.left=`${20+i*80}px`;
+    molDiv.style.top='50px';
+    molDiv.style.width='60px';
+    molDiv.style.height='60px';
+    molDiv.style.borderRadius='50%';
+    molDiv.style.background='#3399ff';
+    molDiv.style.display='flex';
+    molDiv.style.alignItems='center';
+    molDiv.style.justifyContent='center';
+    molDiv.style.color='white';
+    molDiv.style.fontWeight='700';
+    molDiv.textContent=Object.keys(mol).map(k=>`${k}${mol[k]}`).join('');
+    moleculeContainer.appendChild(molDiv);
+  });
+}
+
+nextEquationBtn.onclick = pickEquation;
+pickEquation();
 </script>
 
 </body>

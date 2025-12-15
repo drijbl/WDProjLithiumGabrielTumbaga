@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Periodic Table</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CS3 Website Project" />
+  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
+  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
+  <title>Chemivis | Periodic Table</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="./assets/logo.png">
+<link rel="stylesheet" href="references.css">
 
     <style>
         * {
@@ -185,7 +190,7 @@
             pointer-events: none;
         }
 
-    </style>
+</style>
 </head>
 
 <body>
@@ -479,5 +484,37 @@ function animate() {
 animate();
 </script>
     
+<!-- REFERENCES MENU -->
+<div class="references">
+  <div class="ref-main">REFERENCES</div>
+
+  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+    Khan
+  </div>
+
+  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+    Libre
+  </div>
+
+  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+    Britannica
+  </div>
+</div>
+<script>
+const refMenu = document.querySelector(".references");
+const refMain = document.querySelector(".ref-main");
+const refDim = document.querySelector(".ref-dim");
+
+refMain.addEventListener("click", () => {
+  refMenu.classList.toggle("active");
+  refDim.classList.toggle("active");
+});
+
+refDim.addEventListener("click", () => {
+  refMenu.classList.remove("active");
+  refDim.classList.remove("active");
+});
+</script>
+
 </body>
 </html>

@@ -1,0 +1,68 @@
+/* ================== REFERENCES RADIAL ================== */
+.ref-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 8;
+}
+.ref-dim.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.references {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9;
+}
+
+.ref-main {
+  width: 130px;
+  height: 130px;
+  font-family: 'Rubik One', sans-serif;
+  font-size: 14px;
+  color:#FFF;
+  letter-spacing: 2px;
+  font-weight: 400;
+  background: #008b8b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ref-sub {
+  width: 70px;
+  height: 70px;
+  background: #7a5ca8;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-family: 'Poppins';
+  opacity: 0;
+  transform: scale(0.2);
+  transition: transform 0.5s cubic-bezier(.25,.8,.25,1), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* stagger */
+.ref-sub.one { transition-delay: 0.05s; }
+.ref-sub.two { transition-delay: 0.15s; }
+.ref-sub.three { transition-delay: 0.25s; }
+
+.references.active .ref-sub { pointer-events: auto; }
+.references.active .one { transform: translate(-140px,10px) scale(1); opacity: 1; }
+.references.active .two { transform: translate(-95px,-95px) scale(1); opacity: 1; }
+.references.active .three { transform: translate(10px,-140px) scale(1); opacity: 1; }
+
+.references:not(.active) .ref-sub { transition-delay: 0s; }

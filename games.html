@@ -1,22 +1,413 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CS3 Website Project" />
+  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
+  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
+  <title>Chemivis | Practice Games</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="./assets/logo.png">
+<link rel="stylesheet" href="references.css">
+
+<style>
+/* ================== BODY / BG ================== */
+body {
+  margin: 0;
+  font-family: 'Rubik One', 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ================== HEADER ================== */
+header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  position: relative;
+  z-index: 10;
+}
+
+/* ================== SIDEBAR ================== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -320px; 
+  width: 300px;
+  height: 100%;
+  background: #144b63; 
+  color: white;
+  padding: 25px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  overflow-y: auto; 
+}
+
+.side-menu.open {
+  left: 0; 
+}
+
+.side-menu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 18px 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: background-color 0.2s, transform 0.2s;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.side-menu a:hover {
+  background-color: #216d91;
+  transform: translateX(5px);
+}
+
+#closeMenu {
+font-size: 30px;
+cursor: pointer;
+color: #ff7a7a;
+font-weight: normal;
+margin-bottom: 30px;
+text-align: right;
+}
+
+#hamburger { 
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #1c3d68;
+  text-shadow: none;
+}
+
+        
+/* ================== DIM OVERLAY ================== */
+.screen-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.screen-dim.active { opacity: 1; }
+
+/* ================== CONTENT ================== */
+.games-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  padding-top: 50px;       
+  z-index: 6;
+}
+
+.games-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.games-title .small {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 3px;
+  opacity: 0.85;
+}
+
+.games-title .big {
+  font-size: 38px;
+  letter-spacing: 4px;
+  color: #000;
+}
+
+.games-container {
+  display: flex;
+  gap: 120px;
+}
+
+.game-wrapper {
+  position: relative;
+}
+
+/* IMAGE CARD */
+.game-card {
+  width: 240px;
+  height: 200px;
+  border-radius: 22px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 7;
+}
+
+/* DESCRIPTION OVERLAY (RIGHT) */
+.game-desc {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 25px);
+  width: 260px;
+  padding: 20px;
+  background: #0b0f2b;
+  border-radius: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+}
+
+.game-wrapper:hover .game-desc {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.game-title {
+  margin-top: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* ================== FOOTER ================== */
+footer {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 6;
+}
+
+.footer-icons img {
+  width: 35px;
+  margin: 0 18px;
+}
+
+</style>
 </head>
-  
+
 <body>
-  <header>
-    
-  </header>
 
-  <main>
+<!-- EXPLODING ATOMS BACKGROUND -->
+<canvas id="bg"></canvas>
 
-  </main>
+<header>
+  <div id="hamburger">☰</div>
+</header>
 
-  <footer>
+<div class="side-menu" id="sideMenu">
+  <div id="closeMenu">✖</div>
+  <a href="index.html">HOME</a>
+  <a href="periodic-table.html">PERIODIC TABLE</a>
+  <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+  <a href="vsepr.html">VSEPR</a>
+  <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+  <a href="games.html">PRACTICE GAMES</a>
+</div>
 
-  </footer>
+<div class="screen-dim" id="dim"></div>
+
+<section class="games-section">
+
+  <div class="games-title">
+    <div class="big">PRACTICE GAMES</div>
+  </div>
+
+  <div class="games-container">
+
+    <div class="game-wrapper">
+      <div class="game-card" style="background-image: url('./assets/logo.png');"></div>
+      <div class="game-desc">
+        Explanation.
+      </div>
+      <div class="game-title"> Title</div>
+    </div>
+
+  <div class="game-wrapper">
+    <div class="game-card" style="background-image: url('./assets/logo.png')"></div>
+    <div class="game-desc">
+      Explanation.
+    </div>
+    <div class="game-title">Title</div>
+  </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-icons">
+    <img src="./assets/facebook.svg">
+    <img src="./assets/instagram.svg">
+    <img src="./assets/github.png">
+  </div>
+</footer>
+
+<script>
+/* SIDEBAR */
+const menu = document.getElementById("sideMenu");
+document.getElementById("hamburger").onclick = () => menu.classList.add("open");
+document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
+
+/* DARKEN */
+const dim = document.getElementById("dim");
+document.querySelectorAll(".game-wrapper").forEach(card => {
+  card.addEventListener("mouseenter", () => dim.classList.add("active"));
+  card.addEventListener("mouseleave", () => dim.classList.remove("active"));
+});
+</script>
+
+<script>
+/*EXPLODING ATOMS BG */
+const canvas = document.getElementById("bg");
+const c = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+class Atom {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 3 + Math.random() * 3;
+    this.vx = (Math.random() - 0.5) * 0.7;
+    this.vy = (Math.random() - 0.5) * 0.7;
+    this.exploded = false;
+  }
+  draw() {
+    c.beginPath();
+    c.fillStyle = "white";
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fill();
+  }
+  explode() {
+    this.exploded = true;
+    explosions.push(new Explosion(this.x, this.y));
+  }
+  update(atoms) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+    for (let a of atoms) {
+      if (a === this || a.exploded) continue;
+      const d = Math.hypot(a.x - this.x, a.y - this.y);
+      if (d < this.r + a.r) {
+        this.explode();
+        a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+class Explosion {
+  constructor(x, y) {
+    this.particles = [];
+    for (let i = 0; i < 20; i++) {
+      this.particles.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 3,
+        vy: (Math.random() - 0.5) * 3,
+        life: 40
+      });
+    }
+  }
+  update() {
+    this.particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life--;
+      c.fillStyle = `rgba(255,255,255,${p.life/40})`;
+      c.beginPath();
+      c.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      c.fill();
+    });
+    this.particles = this.particles.filter(p => p.life > 0);
+  }
+}
+
+const atoms = [];
+const explosions = [];
+for (let i = 0; i < 40; i++) atoms.push(new Atom());
+
+function animate() {
+  requestAnimationFrame(animate);
+  c.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => !a.exploded && a.update(atoms));
+  explosions.forEach(e => e.update());
+}
+animate();
+</script>
+
+<!-- REFERENCES MENU -->
+<div class="references">
+  <div class="ref-main">REFERENCES</div>
+
+  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+    Khan
+  </div>
+
+  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+    Libre
+  </div>
+
+  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+    Britannica
+  </div>
+</div>
+
+<script>
+const refMenu = document.querySelector(".references");
+const refMain = document.querySelector(".ref-main");
+const refDim = document.querySelector(".ref-dim");
+
+refMain.addEventListener("click", () => {
+  refMenu.classList.toggle("active");
+  refDim.classList.toggle("active");
+});
+
+refDim.addEventListener("click", () => {
+  refMenu.classList.remove("active");
+  refDim.classList.remove("active");
+});
+</script>
+
 </body>
 </html>
