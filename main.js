@@ -46,7 +46,7 @@ function createAtom(color, name, properties = {}) {
   const geometry = new THREE.SphereGeometry(radius, 32, 32);
   const material = new THREE.MeshPhysicalMaterial({
     color,
-    clearcoat: 0.3,
+    clearcoat: 0.1,
   });
   const atom = new THREE.Mesh(geometry, material);
   atom.castShadow = true;
@@ -63,10 +63,8 @@ function createBond(start, end) {
 
   const geometry = new THREE.CylinderGeometry(bondRadius, bondRadius, length, 16);
   const material = new THREE.MeshPhysicalMaterial({
-    color: 0xAAAAAA,
-    metalness: 0.1,
-    roughness: 0.5,
-    clearcoat: 0.3
+    color: 0xffcbe5,
+    clearcoat: 0.1,
   });
 
   const bond = new THREE.Mesh(geometry, material);
@@ -84,15 +82,15 @@ const molecule = new THREE.Group();
 
 // Ethanol atoms: C2H5OH
 const atoms = {
-  C1: createAtom(0x00FFFF, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
-  C2: createAtom(0x00FFFF, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
-  O: createAtom(0xFF6F00, 'Oxygen (O)', { atomicNumber: 8, atomicWeight: '16.00 g/mol' }),
-  H1: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H2: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H3: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H4: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H5: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
-  H6: createAtom(0xE69E4A, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }) // hydroxyl hydrogen
+  C1: createAtom(0xff96ca, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
+  C2: createAtom(0xff96ca, 'Carbon (C)', { atomicNumber: 6, atomicWeight: '12.01 g/mol' }),
+  O: createAtom(0xFF69B4, 'Oxygen (O)', { atomicNumber: 8, atomicWeight: '16.00 g/mol' }),
+  H1: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H2: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H3: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H4: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H5: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }),
+  H6: createAtom(0x20cbec, 'Hydrogen (H)', { atomicNumber: 1, atomicWeight: '1.008 g/mol' }) // hydroxyl hydrogen
 };
 
 // Carbon atoms

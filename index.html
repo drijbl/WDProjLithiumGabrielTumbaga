@@ -326,8 +326,8 @@
         x: Math.random()*cvs.width,
         y: Math.random()*cvs.height,
         r: 5 + Math.random()*3,
-        vx: (Math.random()*1.2-0.6),
-        vy: (Math.random()*1.2-0.6)
+        vx: (Math.random()*3-1.5),
+        vy: (Math.random()*3-1.5)
       });
     }
 
@@ -347,8 +347,8 @@
 
       for(let i=0;i<atoms.length;i++){
         let a = atoms[i];
-        a.x += a.vx;
-        a.y += a.vy;
+        a.x += a.vx * 10;
+        a.y += a.vy * 10;
 
         if(a.x<0||a.x>cvs.width) a.vx*=-1;
         if(a.y<0||a.y>cvs.height) a.vy*=-1;
