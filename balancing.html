@@ -17,6 +17,7 @@ body {
   padding: 60px 100px;
 }
 
+/* ===== Background canvas ===== */
 canvas#bg {
   position: fixed;
   inset: 0;
@@ -24,14 +25,15 @@ canvas#bg {
   pointer-events: none;
 }
 
+/* ===== Page shell ===== */
 .page-shell {
   position: relative;
   z-index: 1;
-  background: rgba(254, 255, 252, 0.88); 
+  background: rgba(254, 255, 252, 0.88);
   border-radius: 16px;
   box-shadow: 0 24px 60px rgba(0,0,0,0.15);
   overflow: hidden;
-  min-height: 400px; 
+  min-height: 400px;
 }
 
 .site-header {
@@ -39,7 +41,7 @@ canvas#bg {
   align-items: center;
   gap: 20px;
   padding: 20px 30px;
-  background: #008080; 
+  background: #008080;
   border-radius: 12px 12px 0 0;
   color: white;
 }
@@ -57,7 +59,6 @@ canvas#bg {
   font-family: 'Rubik One', sans-serif;
   font-size: 28px;
   font-weight: 500;
-  color: white;
 }
 
 .side-menu {
@@ -101,6 +102,18 @@ canvas#bg {
   margin-bottom: 30px;
   text-align: right;
 }
+
+.lesson-section {
+  padding: 30px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.lesson-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 
@@ -114,9 +127,25 @@ canvas#bg {
     <h1 class="page-title">Balancing Chemical Equations</h1>
   </header>
 
-  <div style="padding: 200px 30px; text-align:center;">
-    <h2 style="color:#008080;">content</h2>
-    <p>Put content here.</p>
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Introduction</h2>
+    <p>
+      Balancing chemical equations helps us show the validity of the conservation of mass:
+      that matter is neither created nor destroyed in a chemical reaction.
+      This skill is foundational for stoichiometry, reaction analysis, and laboratory work.
+    </p>
+  </div>
+
+  <div class="lesson-section">
+    <h2 style="color:#008080;">Law of Conservation of Mass</h2>
+    <p>
+      The Law of Conservation of Mass was first proposed by Antoine Lavoisier.
+      It states that the total mass of a closed system remains constant over time.
+      This law holds true in chemical reactions under normal conditions
+      (20–25°C, 1 atm).
+      Chemical reactions only involve electrons and do not change atomic identities.
+      The law does not apply to nuclear reactions, where mass can convert to energy.
+    </p>
   </div>
 
   <nav class="side-menu" id="sideMenu">
@@ -130,86 +159,115 @@ canvas#bg {
   </nav>
 </div>
 
-
 <script>
+const menu = document.getElementById("sideMenu");
+const hamburger = document.getElementById("hamburger");
+const closeMenu = document.getElementById("closeMenu");
 
-  const menu = document.getElementById("sideMenu");
-  const hamburger = document.getElementById("hamburger");
-  const closeMenu = document.getElementById("closeMenu");
-
-  hamburger.onclick = () => menu.classList.add("open");
-  closeMenu.onclick = () => menu.classList.remove("open");
+hamburger.onclick = () => menu.classList.add("open");
+closeMenu.onclick = () => menu.classList.remove("open");
 </script>
 
 <script>
-  const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
+const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
 
-  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
-  resize();
-  window.addEventListener("resize", resize);
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-  class Atom {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.r = 3 + Math.random() * 3;
-      this.vx = (Math.random() - 0.5) * 0.7;
-      this.vy = (Math.random() - 0.5) * 0.7;
-      this.exploded = false;
-    }
-    draw() {
-      c.beginPath();
-      c.fillStyle = "white";
-      c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      c.fill();
-    }
-    explode() {
-      this.exploded = true;
-      explosions.push(new Explosion(this.x, this.y));
-    }
-    update(atoms) {
-      this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-      for (let a of atoms) {
-        if (a === this || a.exploded) continue;
-        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
-          this.explode(); a.explode();
-        }
-      }
-      this.draw();
-    }
+class Atom {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 3 + Math.random() * 3;
+    this.vx = (Math.random() - 0.5) * 0.7;
+    this.vy = (Math.random() - 0.5) * 0.7;
+    this.exploded = false;
   }
+  draw() {
+    c.beginPath();
+    c.fillStyle = "white";
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fill();
+  }
+  explode() {
+    this.exploded = true;
+    explosions.push(new Explosion(this.x, this.y));
+  }
+  update(atoms) {
+    this.x += this.vx;
+    this.y += this.vy;
 
-  class Explosion {
-    constructor(x, y) {
-      this.p = [];
-      for (let i = 0; i < 20; i++) this.p.push({
-        x, y, vx: (Math.random() - 0.5) * 3,
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+    for (let a of atoms) {
+      if (a === this || a.exploded) continue;
+      if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+        this.explode();
+        a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+class Explosion {
+  constructor(x, y) {
+    this.p = [];
+    for (let i = 0; i < 20; i++) {
+      this.p.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 3,
         vy: (Math.random() - 0.5) * 3,
         life: 40 + Math.random() * 20
       });
     }
-    update() {
-      this.p.forEach(pt => {
-        pt.x += pt.vx; pt.y += pt.vy; pt.life--;
-        c.fillStyle = `rgba(255,255,255,${pt.life/60})`;
-        c.beginPath(); c.arc(pt.x, pt.y, 2, 0, Math.PI*2); c.fill();
-      });
-      this.p = this.p.filter(pt => pt.life > 0);
-    }
   }
+  update() {
+    this.p.forEach(pt => {
+      pt.x += pt.vx;
+      pt.y += pt.vy;
+      pt.life--;
+      c.fillStyle = `rgba(255,255,255,${pt.life / 60})`;
+      c.beginPath();
+      c.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
+      c.fill();
+    });
+    this.p = this.p.filter(pt => pt.life > 0);
+  }
+}
 
-  const atoms = [], explosions = [];
-  for (let i = 0; i < 40; i++) atoms.push(new Atom());
+const atoms = [], explosions = [];
+for (let i = 0; i < 40; i++) atoms.push(new Atom());
 
-  (function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    atoms.forEach(a => !a.exploded && a.update(atoms));
-    explosions.forEach(e => e.update());
-  })();
+(function animate() {
+  requestAnimationFrame(animate);
+  c.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => !a.exploded && a.update(atoms));
+  explosions.forEach(e => e.update());
+})();
+</script>
+
+<script>
+
+const sections = document.querySelectorAll('.lesson-section');
+
+const revealOnScroll = () => {
+  const triggerBottom = window.innerHeight * 0.8;
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    if (sectionTop < triggerBottom) {
+      section.classList.add('visible');
+    }
+  });
+};
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll();
 </script>
 
 </body>
