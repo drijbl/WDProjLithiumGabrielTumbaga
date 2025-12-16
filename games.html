@@ -16,7 +16,6 @@
 
 <body>
 
-<!-- EXPLODING ATOMS BACKGROUND -->
 <canvas id="bg"></canvas>
 
 <header>
@@ -43,7 +42,7 @@
 
   <div class="games-container">
 
-    <!-- POLYATOMIC IONS -->
+    <!-- Polyatomic Ions -->
     <div class="game-wrapper">
       <a href="game_ion.html" class="game-link">
         <div class="game-card" style="background-image: url('./assets/polyatomic.png');">
@@ -57,7 +56,7 @@
       <div class="game-title">Ion Know That One!</div>
     </div>
 
-    <!-- CHARGE IT -->
+    <!-- Transition Metal Charges -->
     <div class="game-wrapper">
       <a href="game_charges.html" class="game-link">
         <div class="game-card" style="background-image: url('./assets/charge.png');">
@@ -83,12 +82,12 @@
 </footer>
 
 <script>
-/* SIDEBAR */
+/* Sidebar */
 const menu = document.getElementById("sideMenu");
 document.getElementById("hamburger").onclick = () => menu.classList.add("open");
 document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
 
-/* DARKEN */
+/* Darken */
 const dim = document.getElementById("dim");
 document.querySelectorAll(".game-wrapper").forEach(card => {
   card.addEventListener("mouseenter", () => dim.classList.add("active"));
@@ -97,7 +96,7 @@ document.querySelectorAll(".game-wrapper").forEach(card => {
 </script>
 
 <script>
-/* EXPLODING ATOMS BG */
+/* Exploding Atoms BG */
 const canvas = document.getElementById("bg");
 const c = canvas.getContext("2d");
 
