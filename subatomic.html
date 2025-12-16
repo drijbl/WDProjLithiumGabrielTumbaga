@@ -24,6 +24,7 @@
     <h1 class="page-title">Subatomic Particles</h1>
   </header>
 
+<!-- Lesson content sections -->
   <div class="lesson-section">
     <h2 style="color:#008080;">Introduction</h2>
     <p>
@@ -33,6 +34,7 @@
       <strong>electrons</strong>. Each of these affects the structure, behavior, and
       properties of matter. Subatomic particles explain many key concepts in chemistry:</p>
 
+<!-- Bullet points highlighting key concepts -->
     <ul>
       <li>Chemical reactions involve the rearrangement of electrons</li>
       <li>Ions form when atoms gain or lose electrons</li>
@@ -41,6 +43,7 @@
     </ul>
   </div>
 
+ <!-- Individual sections for each subatomic particle -->
   <div class="lesson-section">
     <h2 style="color:#008080;">Protons</h2>
     <p>
@@ -80,6 +83,7 @@
     </p>
   </div>
 
+<!-- Navigation menu -->
   <nav class="side-menu" id="sideMenu">
     <div id="closeMenu">✖</div>
     <a href="index.html">HOME</a>
@@ -91,15 +95,17 @@
   </nav>
 </div>
 
+<!-- Navigation menu toggle -->
 <script>
 const menu = document.getElementById("sideMenu");
 const hamburger = document.getElementById("hamburger");
 const closeMenu = document.getElementById("closeMenu");
 
 hamburger.onclick = () => menu.classList.add("open");
-closeMenu.onclick = () => menu.classList.remove("open");
+closeMenu.onclick = () => menu.classList.remove("open"); //open and close hamburger/side menu
 </script>
 
+<!-- Exploding Atoms Background -->
 <script>
 const canvas = document.getElementById("bg"),
       c = canvas.getContext("2d");
@@ -111,6 +117,7 @@ function resize() {
 resize();
 window.addEventListener("resize", resize);
 
+//Atom Class
 class Atom {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -133,9 +140,12 @@ class Atom {
   update(atoms) {
     this.x += this.vx;
     this.y += this.vy;
+
+    //Bounce off walls
     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
+    //Check for collisions with other atoms
     for (let a of atoms) {
       if (a === this || a.exploded) continue;
       if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
@@ -147,6 +157,7 @@ class Atom {
   }
 }
 
+//Explosion effect for colliding atoms
 class Explosion {
   constructor(x, y) {
     this.p = [];
@@ -176,6 +187,7 @@ class Explosion {
 const atoms = [], explosions = [];
 for (let i = 0; i < 40; i++) atoms.push(new Atom());
 
+//Animation loop
 (function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -184,6 +196,7 @@ for (let i = 0; i < 40; i++) atoms.push(new Atom());
 })();
 </script>
 
+<!-- Scroll Reveal Script -->
 <script>
 const sections = document.querySelectorAll('.lesson-section');
 
@@ -191,7 +204,7 @@ const revealOnScroll = () => {
   const triggerBottom = window.innerHeight * 0.8;
   sections.forEach(section => {
     if (section.getBoundingClientRect().top < triggerBottom) {
-      section.classList.add('visible');
+      section.classList.add('visible'); //add visible class when in view
     }
   });
 };
@@ -243,6 +256,7 @@ revealOnScroll();
 
 </div>
 
+<!-- References Toggle -->
 <script>
 function toggleRefs() {
   document.getElementById("refMenu").classList.toggle("active");
