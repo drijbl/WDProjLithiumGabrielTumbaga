@@ -465,5 +465,114 @@
       sideMenu.classList.remove("open");
     });
   </script>
+
+  <!-- Exploding Atoms Background -->
+  <script>
+  const canvas = document.getElementById("bg"),
+        c = canvas.getContext("2d");
+
+  function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  //Atom Class
+  class Atom {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.r = 3 + Math.random() * 3;
+      this.vx = (Math.random() - 0.5) * 0.7;
+      this.vy = (Math.random() - 0.5) * 0.7;
+      this.exploded = false;
+    }
+    draw() {
+      c.beginPath();
+      c.fillStyle = "white";
+      c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      c.fill();
+    }
+    explode() {
+      this.exploded = true;
+      explosions.push(new Explosion(this.x, this.y));
+    }
+    update(atoms) {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      //Bounce off walls
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+      //Check for collisions with other atoms
+      for (let a of atoms) {
+        if (a === this || a.exploded) continue;
+        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+          this.explode();
+          a.explode();
+        }
+      }
+      this.draw();
+    }
+  }
+
+  //Explosion effect for colliding atoms
+  class Explosion {
+    constructor(x, y) {
+      this.p = [];
+      for (let i = 0; i < 20; i++) {
+        this.p.push({
+          x, y,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+          life: 40 + Math.random() * 20
+        });
+      }
+    }
+    update() {
+      this.p.forEach(pt => {
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.life--;
+        c.fillStyle = `rgba(255,255,255,${pt.life / 60})`;
+        c.beginPath();
+        c.arc(pt.x, pt.y, 2, 0, Math.PI * 2);
+        c.fill();
+      });
+      this.p = this.p.filter(pt => pt.life > 0);
+    }
+  }
+
+  const atoms = [], explosions = [];
+  for (let i = 0; i < 40; i++) atoms.push(new Atom());
+
+  //Animation loop
+  (function animate() {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    atoms.forEach(a => !a.exploded && a.update(atoms));
+    explosions.forEach(e => e.update());
+  })();
+  </script>
+
+  <!-- Scroll Reveal Script -->
+  <script>
+  const sections = document.querySelectorAll('.lesson-section');
+
+  const revealOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.8;
+    sections.forEach(section => {
+      if (section.getBoundingClientRect().top < triggerBottom) {
+        section.classList.add('visible'); //add visible class when in view
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+  </script>
+
 </body>
 </html>
