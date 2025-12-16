@@ -8,9 +8,9 @@
   <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
   <title>Chemivis | Balancing Chemical Equations</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="./assets/logo.png">
-<link rel="stylesheet" href="references.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./assets/logo.png">
+  <link rel="stylesheet" href="references.css">
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,6 +47,7 @@ canvas#bg {
   padding: 20px 30px;
   background: #008080;
   color: white;
+  border-radius: 12px 12px 0 0;
 }
 
 #hamburger {
@@ -60,8 +61,10 @@ canvas#bg {
 .page-title {
   font-family: 'Rubik One', sans-serif;
   font-size: 28px;
+  font-weight: 500;
 }
 
+/* ===== Side Menu ===== */
 .side-menu {
   position: fixed;
   top: 0;
@@ -73,6 +76,7 @@ canvas#bg {
   padding: 25px;
   transition: left 0.3s ease;
   z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
 }
 
 .side-menu.open { left: 0; }
@@ -85,6 +89,12 @@ canvas#bg {
   font-weight: 600;
   color: white;
   text-decoration: none;
+  border-radius: 5px;
+}
+
+.side-menu a:hover {
+  background: #216d91;
+  transform: translateX(5px);
 }
 
 #closeMenu {
@@ -95,6 +105,7 @@ canvas#bg {
   text-align: right;
 }
 
+/* ===== Sections ===== */
 .lesson-section {
   padding: 30px;
   opacity: 0;
@@ -134,10 +145,7 @@ canvas#bg {
   margin-bottom: 30px;
 }
 
-.coeff {
-  color: #008080;
-  font-weight: 700;
-}
+.coeff { color: #008080; font-weight: 700; }
 
 .equation-box sub {
   font-size: 18px;
@@ -147,7 +155,6 @@ canvas#bg {
 /* ===== ATOM VISUALIZER ===== */
 .atom-visualizer {
   display: flex;
-  justify-content: space-between;
   gap: 40px;
 }
 
@@ -175,12 +182,7 @@ canvas#bg {
   margin-bottom: 12px;
 }
 
-.atom {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-}
-
+.atom { width: 22px; height: 22px; border-radius: 50%; }
 .atom.H { background: #4fc3f7; }
 .atom.O { background: #ef5350; }
 .atom.N { background: #8d6e63; }
@@ -204,11 +206,6 @@ canvas#bg {
   border-radius: 8px;
   cursor: pointer;
 }
-
-.next-btn:hover {
-  background: #006666;
-}
-
 </style>
 </head>
 
@@ -249,7 +246,6 @@ canvas#bg {
           <h3>Reactants</h3>
           <div id="leftAtoms"></div>
         </div>
-
         <div class="side">
           <h3>Products</h3>
           <div id="rightAtoms"></div>
@@ -270,13 +266,6 @@ canvas#bg {
     <a href="games.html">PRACTICE GAMES</a>
   </nav>
 </div>
-
-<script>
-const menu = document.getElementById("sideMenu");
-hamburger.onclick = () => menu.classList.add("open");
-closeMenu.onclick = () => menu.classList.remove("open");
-</script>
-
 <script>
 const equations = [
   {
@@ -397,6 +386,101 @@ function pickEquation() {
 
 nextEquationBtn.onclick = pickEquation;
 pickEquation();
+</script>
+
+<!-- ===== Scripts ===== -->
+<script>
+const menu = document.getElementById("sideMenu");
+hamburger.onclick = () => menu.classList.add("open");
+closeMenu.onclick = () => menu.classList.remove("open");
+</script>
+
+<script>
+// ===== Exploding atoms background =====
+const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize(); addEventListener("resize",resize);
+
+class Atom{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.r=3+Math.random()*3;
+    this.vx=(Math.random()-.5)*.7;
+    this.vy=(Math.random()-.5)*.7;
+    this.dead=false;
+  }
+  draw(){c.beginPath();c.fillStyle="white";c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fill()}
+  explode(){this.dead=true; explosions.push({x:this.x,y:this.y,life:40})}
+  update(atoms){
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<0||this.x>canvas.width)this.vx*=-1;
+    if(this.y<0||this.y>canvas.height)this.vy*=-1;
+    for(let a of atoms){
+      if(a===this||a.dead)continue;
+      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
+        this.explode(); a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+const atoms=[], explosions=[];
+for(let i=0;i<40;i++) atoms.push(new Atom());
+
+(function animate(){
+  requestAnimationFrame(animate);
+  c.clearRect(0,0,canvas.width,canvas.height);
+  atoms.forEach(a=>!a.dead&&a.update(atoms));
+  explosions.forEach(e=>{
+    c.fillStyle=`rgba(255,255,255,${e.life/40})`;
+    c.beginPath(); c.arc(e.x,e.y,4,0,Math.PI*2); c.fill();
+    e.life--;
+  });
+})();
+</script>
+
+<script>
+// ===== Section reveal =====
+const sections=document.querySelectorAll('.lesson-section');
+function reveal(){
+  const t=innerHeight*.8;
+  sections.forEach(s=>s.getBoundingClientRect().top<t&&s.classList.add('visible'));
+}
+addEventListener('scroll',reveal); reveal();
+</script>
+
+<!-- REFERENCES MENU -->
+<div class="references">
+  <div class="ref-main">REFERENCES</div>
+
+  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+    Khan
+  </div>
+
+  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+    Libre
+  </div>
+
+  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+    Britannica
+  </div>
+</div>
+<script>
+const refMenu = document.querySelector(".references");
+const refMain = document.querySelector(".ref-main");
+const refDim = document.querySelector(".ref-dim");
+
+refMain.addEventListener("click", () => {
+  refMenu.classList.toggle("active");
+  refDim.classList.toggle("active");
+});
+
+refDim.addEventListener("click", () => {
+  refMenu.classList.remove("active");
+  refDim.classList.remove("active");
+});
 </script>
 
 </body>
