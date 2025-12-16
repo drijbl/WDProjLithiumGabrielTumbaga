@@ -160,7 +160,7 @@ canvas#bg{
   text-align:center;
 }
 
-.info-header{font-size:20px;font-weight:700}
+.info-header{font-size:20px;font-weight:700;}
 .info-value{font-size:16px}
 
 .simulation-controls{
