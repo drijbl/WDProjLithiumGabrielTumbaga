@@ -8,13 +8,14 @@
   <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
   <title>Chemivis | Practice Games</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="./assets/logo.png">
-<link rel="stylesheet" href="references.css">
-<link rel="stylesheet" href="games.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./assets/logo.png">
+  <link rel="stylesheet" href="references.css">
+  <link rel="stylesheet" href="games.css">
 </head>
 
 <body>
+
 <!-- EXPLODING ATOMS BACKGROUND -->
 <canvas id="bg"></canvas>
 
@@ -42,27 +43,33 @@
 
   <div class="games-container">
 
-  <div class="game-wrapper">
-  <div class="game-card" style="background-image: url('./assets/polyatomic.png');">
-    <div class="hover-caption">Nitrate</div>
-  </div>
+    <!-- POLYATOMIC IONS -->
+    <div class="game-wrapper">
+      <a href="game_ion.html" class="game-link">
+        <div class="game-card" style="background-image: url('./assets/polyatomic.png');">
+          <div class="hover-caption">Nitrate</div>
+        </div>
+      </a>
 
-  <div class="game-desc">
-    Try to identify common polyatomic ions and their charges in this matching game!
-  </div>
-  <div class="game-title">Ion Know That One!</div>
-  </div>
+      <div class="game-desc">
+        Try to identify common polyatomic ions and their charges in this matching game!
+      </div>
+      <div class="game-title">Ion Know That One!</div>
+    </div>
 
-  <div class="game-wrapper">
-  <div class="game-card" style="background-image: url('./assets/charge.png');">
-    <div class="hover-caption">Transition metals (Groups 8–10)</div>
-  </div>
+    <!-- CHARGE IT -->
+    <div class="game-wrapper">
+      <a href="game_charges.html" class="game-link">
+        <div class="game-card" style="background-image: url('./assets/charge.png');">
+          <div class="hover-caption">Transition metals (Groups 8–10)</div>
+        </div>
+      </a>
 
-  <div class="game-desc">
-    Practice assigning charges to ions in this interactive game!
-  </div>
-  <div class="game-title">Charge It!</div>
-</div>
+      <div class="game-desc">
+        Practice assigning charges to ions in this interactive game!
+      </div>
+      <div class="game-title">Charge It!</div>
+    </div>
 
   </div>
 </section>
@@ -90,7 +97,7 @@ document.querySelectorAll(".game-wrapper").forEach(card => {
 </script>
 
 <script>
-/*EXPLODING ATOMS BG */
+/* EXPLODING ATOMS BG */
 const canvas = document.getElementById("bg");
 const c = canvas.getContext("2d");
 
@@ -176,61 +183,6 @@ function animate() {
   explosions.forEach(e => e.update());
 }
 animate();
-</script>
-
-<!-- ===== REFERENCES DIM ===== -->
-<div class="ref-dim" id="refDim"></div>
-
-<!-- ===== REFERENCES MENU ===== -->
-<div class="references" id="refMenu">
-
-  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
-
-  <div class="ref-sub one">
-    Khan
-    <div class="apa-popup">
-      Khan Academy. (n.d.). <i>AP Chemistry</i>.
-      Retrieved from
-      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
-        khanacademy.org
-      </a>
-    </div>
-  </div>
-
-  <div class="ref-sub two">
-    Libre
-    <div class="apa-popup">
-      LibreTexts. (n.d.). <i>Chemistry</i>.
-      Retrieved from
-      <a href="https://chem.libretexts.org" target="_blank">
-        chem.libretexts.org
-      </a>
-    </div>
-  </div>
-
-  <div class="ref-sub three">
-    Britannica
-    <div class="apa-popup">
-      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
-      Retrieved from
-      <a href="https://www.britannica.com/science/chemistry" target="_blank">
-        britannica.com
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<script>
-function toggleRefs() {
-  document.getElementById("refMenu").classList.toggle("active");
-  document.getElementById("refDim").classList.toggle("active");
-}
-
-document.getElementById("refDim").onclick = () => {
-  document.getElementById("refMenu").classList.remove("active");
-  document.getElementById("refDim").classList.remove("active");
-};
 </script>
 
 </body>
