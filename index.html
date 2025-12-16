@@ -19,6 +19,7 @@
     <div id="hamburger">☰</div>
   </header>
 
+  <!-- Navigation menu -->
   <div class="side-menu" id="sideMenu">
     <div id="closeMenu">✖</div>
     <a href="index.html">HOME</a>
@@ -29,6 +30,7 @@
     <a href="games.html">PRACTICE GAMES</a>
   </div>
 
+  <!-- Main landing content -->
   <main>
     <div class="title">CHEMIVIS</div>
     <div class="subtitle">
@@ -37,6 +39,7 @@
     </div>
   </main>
 
+  <!-- Footer -->
   <footer>
     <div class="footer-icons">
       <img src="./assets/facebook.svg" alt="Facebook">
@@ -45,12 +48,17 @@
     </div>
   </footer>
 
+  <!-- Tooltip for 3D Molecule -->
+  <div class="tooltip"></div>
+
+  <!-- Navigation menu functionality -->
   <script>
     const menu = document.getElementById("sideMenu");
     document.getElementById("hamburger").onclick = () => menu.classList.add("open");
     document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
   </script>
 
+  <!-- Exploding atoms background script -->
   <script>
     const canvas = document.getElementById("bg");
     const c = canvas.getContext("2d");
@@ -59,9 +67,11 @@
       canvas.width = innerWidth;
       canvas.height = innerHeight;
     }
+
     resize();
     window.addEventListener("resize", resize);
 
+    // Atom class represents a single particle in the BG
     class Atom {
       constructor() {
         this.x = Math.random() * canvas.width;
@@ -72,6 +82,7 @@
         this.exploded = false;
       }
 
+      // Map atoms on BG
       draw() {
         c.beginPath();
         c.fillStyle = "white";
@@ -79,6 +90,7 @@
         c.fill();
       }
 
+      // Explode when two attoms collide 
       explode() {
         this.exploded = true;
         explosions.push(new Explosion(this.x, this.y));
@@ -91,6 +103,7 @@
         if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
         if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
+        // Check collision with other atoms
         for (let a of atoms) {
           if (a === this || a.exploded) continue;
           let dx = a.x - this.x;
@@ -106,12 +119,14 @@
       }
     }
 
+    // Burst effect upon collision
     class Explosion {
       constructor(x, y) {
         this.particles = [];
         for (let i = 0; i < 20; i++) {
           this.particles.push({
-            x, y,
+            x,
+            y,
             vx: (Math.random() - 0.5) * 3,
             vy: (Math.random() - 0.5) * 3,
             life: 40 + Math.random() * 20
@@ -149,78 +164,93 @@
     animate();
   </script>
 
-  <!-- Three.js molecule -->
-  <script type="module" src="./main.js"></script>
-  
+  <!-- Secondary exploding atoms background (larger bursts)  -->
   <canvas id="atomsBg"></canvas>
   <script>
     const cvs = document.getElementById('atomsBg');
     const ctx = cvs.getContext('2d');
 
-    function resize(){ cvs.width = innerWidth; cvs.height = innerHeight; }
-    resize(); addEventListener('resize', resize);
+    function resize() {
+      cvs.width = innerWidth;
+      cvs.height = innerHeight;
+    }
+
+    resize();
+    addEventListener('resize', resize);
 
     const atoms = [];
     const COUNT = 35;
-    for(let i=0;i<COUNT;i++){
+    for (let i = 0; i < COUNT; i++) {
       atoms.push({
-        x: Math.random()*cvs.width,
-        y: Math.random()*cvs.height,
-        r: 5 + Math.random()*3,
-        vx: (Math.random()*3-1.5),
-        vy: (Math.random()*3-1.5)
+        x: Math.random() * cvs.width,
+        y: Math.random() * cvs.height,
+        r: 5 + Math.random() * 3,
+        vx: (Math.random() * 3 - 1.5),
+        vy: (Math.random() * 3 - 1.5)
       });
     }
 
-    function explode(a){
-      for(let i=0;i<15;i++){
+    function explode(a) {
+      for (let i = 0; i < 15; i++) {
         atoms.push({
-          x: a.x, y: a.y, r: 2,
-          vx: (Math.random()*4-2),
-          vy: (Math.random()*4-2),
+          x: a.x,
+          y: a.y,
+          r: 2,
+          vx: (Math.random() * 4 - 2),
+          vy: (Math.random() * 4 - 2),
           life: 30
         });
       }
     }
 
-    function loop(){
-      ctx.clearRect(0,0,cvs.width,cvs.height);
+    function loop() {
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
 
-      for(let i=0;i<atoms.length;i++){
+      for (let i = 0; i < atoms.length; i++) {
         let a = atoms[i];
         a.x += a.vx * 10;
         a.y += a.vy * 10;
 
-        if(a.x<0||a.x>cvs.width) a.vx*=-1;
-        if(a.y<0||a.y>cvs.height) a.vy*=-1;
+        if (a.x < 0 || a.x > cvs.width) a.vx *= -1;
+        if (a.y < 0 || a.y > cvs.height) a.vy *= -1;
 
-        if(a.life!==undefined){ a.life--; if(a.life<=0){ atoms.splice(i,1); i--; continue; } }
+        if (a.life !== undefined) {
+          a.life--;
+          if (a.life <= 0) {
+            atoms.splice(i, 1);
+            i--;
+            continue;
+          }
+        }
 
         ctx.beginPath();
         ctx.fillStyle = 'white';
-        ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      for(let i=0;i<atoms.length;i++){
-        for(let j=i+1;j<atoms.length;j++){
+      for (let i = 0; i < atoms.length; i++) {
+        for (let j = i + 1; j < atoms.length; j++) {
           const a = atoms[i], b = atoms[j];
-          const dx = a.x-b.x, dy = a.y-b.y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          if(dist < a.r + b.r + 10){
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < a.r + b.r + 10) {
             explode(a);
             explode(b);
-            atoms.splice(j,1);
-            atoms.splice(i,1);
+            atoms.splice(j, 1);
+            atoms.splice(i, 1);
           }
         }
       }
 
       requestAnimationFrame(loop);
     }
+
     loop();
   </script>
-<div class="tooltip"></div>
+
+  <!-- 3D Molecule Script -->
+  <script type="module" src="./main.js"></script>
 
 </body>
 </html>

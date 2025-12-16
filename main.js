@@ -40,7 +40,7 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 const tooltip = document.querySelector('.tooltip');
 
-// Create atoms (all same size)
+// Create atoms 
 function createAtom(color, name, properties = {}) {
   const radius = 0.3;
   const geometry = new THREE.SphereGeometry(radius, 32, 32);
@@ -55,7 +55,7 @@ function createAtom(color, name, properties = {}) {
   return atom;
 }
 
-// Create bonds (slightly thicker and longer)
+// Create bonds 
 function createBond(start, end) {
   const direction = new THREE.Vector3().subVectors(end, start);
   const length = direction.length();
@@ -77,7 +77,6 @@ function createBond(start, end) {
   return bond;
 }
 
-// Molecule
 const molecule = new THREE.Group();
 
 // Ethanol atoms: C2H5OH
@@ -98,19 +97,19 @@ atoms.C1.position.set(0, 0, 0);
 atoms.C2.position.set(1.54, 0, 0);  // C–C bond
 
 // Hydrogens on C1 (tetrahedral)
-atoms.H1.position.set(-0.5, -0.9, 0);  
-atoms.H2.position.set(-0.5, 0.45, 0.7);  
+atoms.H1.position.set(-0.5, -0.9, 0);
+atoms.H2.position.set(-0.5, 0.45, 0.7);
 atoms.H3.position.set(-0.5, 0.45, -0.7);
 
 // Hydrogens on C2 (tetrahedral, angled slightly backward/right)
-atoms.H4.position.set(1.9, -0.45, 0.7);  
-atoms.H5.position.set(1.9, -0.45, -0.7);  
+atoms.H4.position.set(1.9, -0.45, 0.7);
+atoms.H5.position.set(1.9, -0.45, -0.7);
 
 // Oxygen atom (C2–O bond, angled upward/right)
-atoms.O.position.set(2, 0.9, 0);     
+atoms.O.position.set(2, 0.9, 0);
 
 // Hydrogen on OH (bonded to oxygen)
-atoms.H6.position.set(2.5, 1.2, -0.7);  
+atoms.H6.position.set(2.5, 1.2, -0.7);
 
 Object.values(atoms).forEach(atom => molecule.add(atom));
 
@@ -128,8 +127,8 @@ const bonds = [
 
 bonds.forEach(bond => molecule.add(bond));
 
-molecule.scale.set(1.5, 1.5, 1.5);
-molecule.position.set(0, -1.5, 0); 
+molecule.scale.set(1.8, 1.8, 1.8); // Scaling up the molecule
+molecule.position.set(0, -1.0, 0); // Centering the molecule
 
 scene.add(molecule);
 
@@ -218,9 +217,10 @@ window.addEventListener('resize', () => {
 function animate() {
   requestAnimationFrame(animate);
 
+  // Rotation speed
   if (isRotating && !mouseDown) {
     molecule.rotation.y += 0.03;
-	molecule.rotation.x += 0.02;
+    molecule.rotation.x += 0.02;
   }
 
   renderer.render(scene, camera);
