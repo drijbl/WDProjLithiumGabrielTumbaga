@@ -1,0 +1,130 @@
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 16px 28px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ===== BACK BUTTON ===== */
+.back-btn {
+  position: fixed;
+  top: 26px;
+  left: 26px;
+  background: white;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+
+/* ===== CARD ===== */
+.card {
+  width: 600px;
+  background: white;
+  border-radius: 40px;
+  padding: 60px;
+  box-shadow: 0 45px 90px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.title {
+  font-family: 'Rubik One', sans-serif;
+  font-size: 38px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  opacity: 0.6;
+  margin-bottom: 40px;
+}
+
+/* ===== PLAY ===== */
+.play-btn {
+  width: 100%;
+  background: #5e5cff;
+  color: white;
+}
+
+/* ===== HUD ===== */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.hearts {
+  font-size: 26px;
+  color: #ff4d4d;
+}
+
+.round {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+/* ===== FLASHCARD ===== */
+.ion-name {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 40px 0 18px;
+}
+
+.hint {
+  font-size: 15px;
+  opacity: 0.55;
+}
+
+.answer {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 34px 0;
+}
+
+/* ===== BUTTONS ===== */
+.btn-row {
+  display: flex;
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.correct {
+  background: #28c76f;
+  color: white;
+  flex: 1;
+}
+
+.wrong {
+  background: #ff5b5b;
+  color: white;
+  flex: 1;
+}
+
+/* ===== GAME OVER ===== */
+.game-over {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.restart {
+  margin-top: 30px;
+  width: 100%;
+  background: #5e5cff;
+  color: white;
+}
