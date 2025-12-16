@@ -11,7 +11,211 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="stylesheet" href="references.css">
+<<<<<<< HEAD
   <link rel="stylesheet" href="balancing.css">
+=======
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  padding: 60px 100px;
+}
+
+/* ===== Background canvas ===== */
+canvas#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== Page shell ===== */
+.page-shell {
+  position: relative;
+  z-index: 1;
+  background: rgba(254, 255, 252, 0.88);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 30px;
+  background: #008080;
+  color: white;
+  border-radius: 12px 12px 0 0;
+}
+
+#hamburger {
+  font-size: 30px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.page-title {
+  font-family: 'Rubik One', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+/* ===== Side Menu ===== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100%;
+  background: #144b63;
+  color: white;
+  padding: 25px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+}
+
+.side-menu.open { left: 0; }
+
+.side-menu a {
+  display: block;
+  margin: 18px 0;
+  padding: 10px 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+
+  transition: 
+    transform 0.25s ease,
+    background-color 0.25s ease;
+  will-change: transform;
+}
+
+.side-menu a:hover {
+  background-color: #216d91;
+  transform: translate3d(8px, 0, 0);
+}
+
+#closeMenu {
+  font-size: 30px;
+  cursor: pointer;
+  color: #ff7a7a;
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+/* ===== Sections ===== */
+.lesson-section {
+  padding: 30px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+
+.lesson-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== VISUALIZER ===== */
+.visualizer {
+  margin: 40px 30px;
+  padding: 40px;
+  border-radius: 14px;
+  background: #f0fbfb;
+  box-shadow: inset 0 0 0 2px #008080;
+}
+
+.visualizer-title {
+  color: #008080;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 25px;
+}
+
+.equation-box {
+  padding: 28px;
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+}
+
+.coeff { color: #008080; font-weight: 700; }
+
+.equation-box sub {
+  font-size: 18px;
+  vertical-align: -0.4em;
+}
+
+/* ===== ATOM VISUALIZER ===== */
+.atom-visualizer {
+  display: flex;
+  gap: 40px;
+}
+
+.side {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid #008080;
+}
+
+.side h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #008080;
+}
+
+.molecule {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #eefafa;
+  border: 1px solid #b6e2e2;
+  margin-bottom: 12px;
+}
+
+.atom { width: 22px; height: 22px; border-radius: 50%; }
+.atom.H { background: #4fc3f7; }
+.atom.O { background: #ef5350; }
+.atom.N { background: #8d6e63; }
+.atom.C { background: #616161; }
+.atom.Na { background: #ffb74d; }
+.atom.Cl { background: #81c784; }
+.atom.Fe { background: #b71c1c; }
+.atom.K { background: #ba68c8; }
+.atom.Ca { background: #90caf9; }
+
+/* ===== BUTTON ===== */
+.next-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px 36px;
+  font-size: 18px;
+  font-weight: 600;
+  background: #008080;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+</style>
+>>>>>>> ed5853ebc12aa23316625e0421cdffce6bb5deb3
 </head>
 
 <body>
@@ -194,6 +398,87 @@ pickEquation();
 </script>
 
 <!-- ===== Scripts ===== -->
+<<<<<<< HEAD
+=======
+<script>
+const menu = document.getElementById("sideMenu");
+hamburger.onclick = () => menu.classList.add("open");
+closeMenu.onclick = () => menu.classList.remove("open");
+</script>
+
+<script>
+// ===== Exploding atoms background =====
+const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize(); addEventListener("resize",resize);
+
+class Atom{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.r=3+Math.random()*3;
+    this.vx=(Math.random()-.5)*.7;
+    this.vy=(Math.random()-.5)*.7;
+    this.dead=false;
+  }
+  draw(){c.beginPath();c.fillStyle="white";c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fill()}
+  explode(){this.dead=true; explosions.push({x:this.x,y:this.y,life:40})}
+  update(atoms){
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<0||this.x>canvas.width)this.vx*=-1;
+    if(this.y<0||this.y>canvas.height)this.vy*=-1;
+    for(let a of atoms){
+      if(a===this||a.dead)continue;
+      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
+        this.explode(); a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+const atoms=[], explosions=[];
+for(let i=0;i<40;i++) atoms.push(new Atom());
+
+(function animate(){
+  requestAnimationFrame(animate);
+  c.clearRect(0,0,canvas.width,canvas.height);
+  atoms.forEach(a=>!a.dead&&a.update(atoms));
+  explosions.forEach(e=>{
+    c.fillStyle=`rgba(255,255,255,${e.life/40})`;
+    c.beginPath(); c.arc(e.x,e.y,4,0,Math.PI*2); c.fill();
+    e.life--;
+  });
+})();
+</script>
+
+<script>
+// ===== Section reveal =====
+const sections=document.querySelectorAll('.lesson-section');
+function reveal(){
+  const t=innerHeight*.8;
+  sections.forEach(s=>s.getBoundingClientRect().top<t&&s.classList.add('visible'));
+}
+addEventListener('scroll',reveal); reveal();
+</script>
+
+<!-- REFERENCES MENU -->
+<div class="references">
+  <div class="ref-main">REFERENCES</div>
+
+  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+    Khan
+  </div>
+
+  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+    Libre
+  </div>
+
+  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+    Britannica
+  </div>
+</div>
+>>>>>>> ed5853ebc12aa23316625e0421cdffce6bb5deb3
 <script>
 const menu = document.getElementById("sideMenu");
 hamburger.onclick = () => menu.classList.add("open");
