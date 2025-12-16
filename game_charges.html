@@ -13,14 +13,14 @@
 
 <button class="back-btn" onclick="location.href='games.html'">← Games</button>
 
-<!-- MENU -->
+<!-- Menu -->
 <div class="card" id="menu">
   <div class="title">CHARGE IT!</div>
   <div class="subtitle">Transition metals oxidation states flashcard game</div>
   <button class="play-btn" onclick="startGame()">Play</button>
 </div>
 
-<!-- GAME -->
+<!-- Game -->
 <div class="card hidden" id="game">
   <div class="hud">
     <div class="hearts" id="hearts">❤️❤️❤️</div>
@@ -38,7 +38,7 @@
   </div>
 </div>
 
-<!-- GAME OVER -->
+<!-- Game Over -->
 <div class="card hidden" id="gameOver">
   <div class="game-over">Game Over</div>
   <div class="subtitle">You ran out of hearts.</div>
@@ -67,14 +67,13 @@ let showingAnswer = false;
 let round = 1;
 let hearts = 3;
 
-// DOM
 const metalDiv = document.getElementById("metal");
 const answerDiv = document.getElementById("answer");
 const roundDiv = document.getElementById("round");
 const heartsDiv = document.getElementById("hearts");
 const buttonsDiv = document.getElementById("buttons");
 
-// ===== GAME FUNCTIONS =====
+// Game Functions
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -150,7 +149,7 @@ function restart() {
   nextMetal();
 }
 
-// ===== KEYBOARD SPACE =====
+// Space key to reveal answer
 document.addEventListener("keydown", e => {
   if (e.code === "Space" && !document.getElementById("game").classList.contains("hidden")) {
     e.preventDefault();
