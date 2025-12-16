@@ -1,0 +1,228 @@
+/* ================== BODY / BG ================== */
+body {
+  margin: 0;
+  font-family: 'Rubik One', 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ================== HEADER ================== */
+header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  position: relative;
+  z-index: 10;
+}
+
+/* ================== SIDEBAR ================== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -320px; 
+  width: 300px;
+  height: 100%;
+  background: #144b63; 
+  color: white;
+  padding: 25px;
+  box-sizing: border-box;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  overflow-y: auto; 
+}
+
+.side-menu.open {
+  left: 0; 
+}
+
+.side-menu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 18px 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: background-color 0.2s, transform 0.2s;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.side-menu a:hover {
+  background-color: #216d91;
+  transform: translateX(5px);
+}
+
+#closeMenu {
+font-size: 30px;
+cursor: pointer;
+color: #ff7a7a;
+font-weight: normal;
+margin-bottom: 30px;
+text-align: right;
+}
+
+#hamburger { 
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #1c3d68;
+  text-shadow: none;
+}
+
+        
+/* ================== DIM OVERLAY ================== */
+.screen-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.screen-dim.active { opacity: 1; }
+
+/* ================== CONTENT ================== */
+.games-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  padding-top: 50px;       
+  z-index: 6;
+}
+
+.games-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.games-title .small {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 3px;
+  opacity: 0.85;
+}
+
+.games-title .big {
+  font-size: 38px;
+  letter-spacing: 4px;
+  color: #000;
+}
+
+.games-container {
+  display: flex;
+  gap: 120px;
+}
+
+.game-wrapper {
+  position: relative;
+}
+
+/* IMAGE CARD */
+.game-card {
+  width: 240px;
+  height: 200px;
+  border-radius: 22px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 7;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Caption itself */
+.hover-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+
+  background: rgba(0, 0, 0, 0.65);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* Show ONLY on hover */
+.game-card:hover .hover-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* DESCRIPTION OVERLAY */
+.game-desc {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 25px);
+  width: 260px;
+  padding: 20px;
+  background: #0b0f2b;
+  border-radius: 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 999;
+  pointer-events: none;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+}
+
+.game-wrapper:hover .game-desc {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.game-title {
+  margin-top: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* ================== FOOTER ================== */
+footer {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 6;
+}
+
+.footer-icons img {
+  width: 35px;
+  margin: 0 18px;
+}

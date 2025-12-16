@@ -1,0 +1,198 @@
+/* ===== Body ===== */
+* {box-sizing: border-box;}
+
+body {
+    margin: 0;
+    font-family: 'Rubik One', 'Poppins', sans-serif; 
+    background: linear-gradient(135deg, #9b52ee, #279fce);
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -320px; 
+    width: 300px;
+    height: 100%;
+    background: #144b63; 
+    color: white;
+    padding: 25px;
+    box-sizing: border-box;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    overflow-y: auto; 
+}
+
+.side-menu.open {left: 0;}
+
+.side-menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 18px 0;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 15px;
+    transition: background-color 0.2s, transform 0.2s;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.side-menu a:hover {
+    background-color: #216d91;
+    transform: translateX(5px);
+}
+
+#closeMenu {
+    font-size: 30px;
+    cursor: pointer;
+    color: #ff7a7a;
+    font-weight: normal;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+#hamburger { 
+    font-size: 30px;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: #1c3d68;
+    text-shadow: none;
+}
+
+.title {
+    position: absolute;
+    top: 20px;          
+    left: 50%;      
+    transform: translateX(-50%);
+    font-family: "Rubik One", sans-serif;
+    font-size: 2.4rem;
+    color: #ffffff; 
+}
+
+
+.categories {
+    margin: 100px auto 25px auto; 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.categories button {
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid white;   /* default outline for "All" */
+    border-radius: 12px;
+    color: #ffffff;            /* text always white */
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.categories button:hover {
+    background: rgba(255,255,255,0.45);
+}
+
+/* Category-specific outlines */
+.categories button.alkali     { border-color: #ff7070; }
+.categories button.alkaline   { border-color: #ffd36a; }
+.categories button.transition { border-color: #6ab4ff; }
+.categories button.post       { border-color: #bfbfbf; }
+.categories button.metalloid  { border-color: #8aff9e; }
+.categories button.nonmetal   { border-color: #ffffff; }
+.categories button.halogen    { border-color: #b764ff; }
+.categories button.noble      { border-color: #70f7ff; }
+.categories button.lanthanide { border-color: #ff9cee; }
+.categories button.actinide   { border-color: #ff8b8b; }
+        
+.categories .cat {
+    border: 2px solid currentColor;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(6px);
+}
+
+.categories .cat:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+.table-container {
+    display: grid;
+    grid-template-columns: repeat(18, 60px);
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 80px;
+}
+
+.f-block-gap {
+    margin-top: 40px; 
+    margin-bottom: 20px;
+}
+
+.element {
+    background: rgba(255,255,255,0.3); 
+    border-radius: 12px 10px;
+    padding: 6px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    transition: 0.15s ease-in-out;
+    overflow: hidden;
+    color: #ffffff; 
+    border: 1px solid rgba(255,255,255,0.1); 
+}
+
+.element:hover {
+    background: rgba(255,255,255,0.6); 
+    transform: scale(1.07);
+    box-shadow: 0 0 20px currentColor;
+}
+
+.number {
+    font-size: 0.75rem;
+    text-align: left;
+    opacity: 0.95;
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.symbol {
+    font-size: 1.2rem;
+    font-weight: 400; 
+    margin-bottom: 2px;
+    white-space: nowrap;
+}
+
+.name {
+    font-size: 0.4rem;
+    opacity: 0.95; 
+    white-space: nowrap;
+}
+
+.mass {
+    font-size: 0.4rem;
+    opacity: 0.85; 
+    margin-top: 1px;
+    white-space: nowrap;
+}
+
+.alkali       { border: 2px solid #ff7070; }
+.alkaline     { border: 2px solid #ffd36a; }
+.transition   { border: 2px solid #6ab4ff; }
+.post         { border: 2px solid #bfbfbf; }
+.metalloid    { border: 2px solid #8aff9e; }
+.nonmetal     { border: 2px solid #ffffff; }
+.halogen      { border: 2px solid #b764ff; }
+.noble        { border: 2px solid #70f7ff; }
+.lanthanide   { border: 2px solid #ff9cee; }
+.actinide     { border: 2px solid #ff8b8b; }
+
+.row-offset {grid-column: 3;}
+
+#atomsBg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}

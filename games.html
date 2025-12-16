@@ -11,214 +11,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="stylesheet" href="references.css">
-
-<style>
-/* ================== BODY / BG ================== */
-body {
-  margin: 0;
-  font-family: 'Rubik One', 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #9b52ee, #279fce);
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-  color: white;
-}
-
-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ================== HEADER ================== */
-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  position: relative;
-  z-index: 10;
-}
-
-/* ================== SIDEBAR ================== */
-.side-menu {
-  position: fixed;
-  top: 0;
-  left: -320px; 
-  width: 300px;
-  height: 100%;
-  background: #144b63; 
-  color: white;
-  padding: 25px;
-  box-sizing: border-box;
-  transition: left 0.3s ease;
-  z-index: 1000;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-  overflow-y: auto; 
-}
-
-.side-menu.open {
-  left: 0; 
-}
-
-.side-menu a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  margin: 18px 0;
-  font-size: 20px;
-  font-weight: 600;
-  padding: 10px 15px;
-  transition: background-color 0.2s, transform 0.2s;
-  border-radius: 5px;
-  font-family: 'Poppins', sans-serif;
-}
-
-.side-menu a:hover {
-  background-color: #216d91;
-  transform: translateX(5px);
-}
-
-#closeMenu {
-font-size: 30px;
-cursor: pointer;
-color: #ff7a7a;
-font-weight: normal;
-margin-bottom: 30px;
-text-align: right;
-}
-
-#hamburger { 
-  font-size: 30px;
-  cursor: pointer;
-  padding: 5px 10px;
-  color: #1c3d68;
-  text-shadow: none;
-}
-
-        
-/* ================== DIM OVERLAY ================== */
-.screen-dim {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 5;
-}
-
-.screen-dim.active { opacity: 1; }
-
-/* ================== CONTENT ================== */
-.games-section {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  align-items: center;
-  padding-top: 50px;       
-  z-index: 6;
-}
-
-.games-title {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.games-title .small {
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 3px;
-  opacity: 0.85;
-}
-
-.games-title .big {
-  font-size: 38px;
-  letter-spacing: 4px;
-  color: #000;
-}
-
-.games-container {
-  display: flex;
-  gap: 120px;
-}
-
-.game-wrapper {
-  position: relative;
-}
-
-/* IMAGE CARD */
-.game-card {
-  width: 240px;
-  height: 200px;
-  border-radius: 22px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-  position: relative;
-  z-index: 7;
-}
-
-/* DESCRIPTION OVERLAY (RIGHT) */
-.game-desc {
-  position: absolute;
-  top: 0;
-  left: calc(100% + 25px);
-  width: 260px;
-  padding: 20px;
-  background: #0b0f2b;
-  border-radius: 18px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 999;
-  pointer-events: none;
-  box-shadow: 0 20px 45px rgba(0,0,0,0.6);
-}
-
-.game-wrapper:hover .game-desc {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.game-title {
-  margin-top: 14px;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-}
-
-/* ================== FOOTER ================== */
-footer {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-  z-index: 6;
-}
-
-.footer-icons img {
-  width: 35px;
-  margin: 0 18px;
-}
-
-</style>
+<link rel="stylesheet" href="games.css">
 </head>
 
 <body>
-
 <!-- EXPLODING ATOMS BACKGROUND -->
 <canvas id="bg"></canvas>
 
@@ -246,21 +42,27 @@ footer {
 
   <div class="games-container">
 
-    <div class="game-wrapper">
-      <div class="game-card" style="background-image: url('./assets/logo.png');"></div>
-      <div class="game-desc">
-        Explanation.
-      </div>
-      <div class="game-title"> Title</div>
-    </div>
+  <div class="game-wrapper">
+  <div class="game-card" style="background-image: url('./assets/polyatomic.png');">
+    <div class="hover-caption">Nitrate</div>
+  </div>
+
+  <div class="game-desc">
+    Try to identify common polyatomic ions and their charges in this matching game!
+  </div>
+  <div class="game-title">Ion Know That One!</div>
+  </div>
 
   <div class="game-wrapper">
-    <div class="game-card" style="background-image: url('./assets/logo.png')"></div>
-    <div class="game-desc">
-      Explanation.
-    </div>
-    <div class="game-title">Title</div>
+  <div class="game-card" style="background-image: url('./assets/charge.png');">
+    <div class="hover-caption">Transition metals (Groups 8–10)</div>
   </div>
+
+  <div class="game-desc">
+    Practice assigning charges to ions in this interactive game!
+  </div>
+  <div class="game-title">Charge It!</div>
+</div>
 
   </div>
 </section>
@@ -376,37 +178,59 @@ function animate() {
 animate();
 </script>
 
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
 
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
+
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
     Khan
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>AP Chemistry</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+  <div class="ref-sub two">
     Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+  <div class="ref-sub three">
     Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
   </div>
+
 </div>
 
 <script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
 
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
-});
-
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
 </script>
 
 </body>

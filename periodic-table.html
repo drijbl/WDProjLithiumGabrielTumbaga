@@ -11,190 +11,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="stylesheet" href="references.css">
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Rubik One', 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #9b52ee, #279fce);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -320px; 
-            width: 300px;
-            height: 100%;
-            background: #144b63; 
-            color: white;
-            padding: 25px;
-            box-sizing: border-box;
-            transition: left 0.3s ease;
-            z-index: 1000;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-            overflow-y: auto; 
-        }
-
-        .side-menu.open {
-            left: 0; 
-        }
-
-        .side-menu a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            margin: 18px 0;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 10px 15px;
-            transition: background-color 0.2s, transform 0.2s;
-            border-radius: 5px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .side-menu a:hover {
-            background-color: #216d91;
-            transform: translateX(5px);
-        }
-
-        #closeMenu {
-            font-size: 30px;
-            cursor: pointer;
-            color: #ff7a7a;
-            font-weight: normal;
-            margin-bottom: 30px;
-            text-align: right;
-        }
-
-         #hamburger { 
-            font-size: 30px;
-            cursor: pointer;
-            padding: 5px 10px;
-            color: #1c3d68;
-            text-shadow: none;
-        }
-
-        .title {
-            font-family: "Rubik One", sans-serif;
-            font-size: 2.4rem;
-            letter-spacing: 1px;
-            margin-left: 20px; 
-            color: #ffffff; 
-        }
-
-        .categories {
-          margin: 100px auto 25px auto; 
-          display: flex;
-          flex-wrap: wrap;
-          gap: 6px;
-          justify-content: center;
-        }
-
-        .categories button {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.25);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .categories button:hover {
-            background: rgba(255,255,255,0.45);
-        }
-
-        .table-container {
-            display: grid;
-            grid-template-columns: repeat(18, 60px);
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 80px;
-        }
-
-        .f-block-gap {
-            margin-top: 40px; 
-            margin-bottom: 20px;
-        }
-
-        .element {
-            background: rgba(255,255,255,0.3); 
-            border-radius: 12px;
-            padding: 5px;
-            text-align: center;
-            backdrop-filter: blur(6px);
-            transition: 0.15s ease-in-out;
-            overflow: hidden;
-            color: #ffffff; 
-            border: 1px solid rgba(255,255,255,0.1); 
-        }
-
-        .element:hover {
-            background: rgba(255,255,255,0.6); 
-            transform: scale(1.07);
-        }
-
-        .number {
-            font-size: 0.65rem;
-            text-align: left;
-            opacity: 0.95; 
-            margin-bottom: 2px;
-            white-space: nowrap;
-        }
-
-        .symbol {
-            font-size: 1.2rem;
-            font-weight: 400; 
-            margin-bottom: 2px;
-            white-space: nowrap;
-        }
-
-        .name {
-            font-size: 0.3rem;
-            opacity: 0.95; 
-            white-space: nowrap;
-        }
-
-        .mass {
-            font-size: 0.3rem;
-            opacity: 0.85; 
-            margin-top: 1px;
-            white-space: nowrap;
-        }
-
-        .alkali       { box-shadow: 0 0 50px #ff7070; }
-        .alkaline    { box-shadow: 0 0 50px #ffd36a; }
-        .transition  { box-shadow: 0 0 50px #6ab4ff; }
-        .post        { box-shadow: 0 0 50px #a8a8a8; }
-        .metalloid   { box-shadow: 0 0 50px #8aff9e; }
-        .nonmetal    { box-shadow: 0 0 50px #ffffff; }
-        .halogen     { box-shadow: 0 0 50px #b764ff; }
-        .noble       { box-shadow: 0 0 50px #70f7ff; }
-        .lanthanide  { box-shadow: 0 0 50px #ff9cee; }
-        .actinide    { box-shadow: 0 0 50px #ff8b8b; }
-
-        .row-offset {
-            grid-column: 3;
-        }
-
-        #atomsBg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-</style>
+<link rel="stylesheet" href="periodic-table.css">
 </head>
 
 <body>
-
 <canvas id="atomsBg"></canvas>
     
 <div id="hamburger">☰</div>
@@ -212,17 +32,17 @@
 </div>
 
 <div class="categories">
-    <button onclick="filterCategory('all')">All</button>
-    <button onclick="filterCategory('alkali')">Alkali Metals</button>
-    <button onclick="filterCategory('alkaline')">Alkaline Earth</button>
-    <button onclick="filterCategory('transition')">Transition Metals</button>
-    <button onclick="filterCategory('post')">Post-transition</button>
-    <button onclick="filterCategory('metalloid')">Metalloids</button>
-    <button onclick="filterCategory('nonmetal')">Nonmetals</button>
-    <button onclick="filterCategory('halogen')">Halogens</button>
-    <button onclick="filterCategory('noble')">Noble Gases</button>
-    <button onclick="filterCategory('lanthanide')">Lanthanides</button>
-    <button onclick="filterCategory('actinide')">Actinides</button>
+    <button class="all" onclick="filterCategory('all')">All</button>
+    <button class="alkali" onclick="filterCategory('alkali')">Alkali Metals</button>
+    <button class="alkaline" onclick="filterCategory('alkaline')">Alkaline Earth</button>
+    <button class="transition" onclick="filterCategory('transition')">Transition Metals</button>
+    <button class="post" onclick="filterCategory('post')">Post-transition</button>
+    <button class="metalloid" onclick="filterCategory('metalloid')">Metalloids</button>
+    <button class="nonmetal" onclick="filterCategory('nonmetal')">Nonmetals</button>
+    <button class="halogen" onclick="filterCategory('halogen')">Halogens</button>
+    <button class="noble" onclick="filterCategory('noble')">Noble Gases</button>
+    <button class="lanthanide" onclick="filterCategory('lanthanide')">Lanthanides</button>
+    <button class="actinide" onclick="filterCategory('actinide')">Actinides</button>
 </div>
 
 <div class="table-container">
@@ -484,36 +304,59 @@ function animate() {
 animate();
 </script>
     
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
 
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
+
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
     Khan
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>Periodic Table</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+  <div class="ref-sub two">
     Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>Periodic Table</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+  <div class="ref-sub three">
     Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
   </div>
+
 </div>
+
 <script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
 
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
-});
-
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
 </script>
 
 </body>

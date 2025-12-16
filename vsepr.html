@@ -12,211 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="stylesheet" href="references.css">
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Poppins',sans-serif;
-  min-height:100vh;
-  background:linear-gradient(135deg,#9b52ee,#279fce);
-  padding:60px 100px;
-}
-
-canvas#bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-}
-
-.page-shell{
-  position:relative;
-  z-index:1;
-  background:rgba(254,255,252,0.88);
-  border-radius:16px;
-  box-shadow:0 24px 60px rgba(0,0,0,.15);
-  overflow:hidden;
-}
-
-.site-header{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:20px 30px;
-  background:#008080; 
-  border-radius:12px 12px 0 0;
-  color:white;
-}
-
-#hamburger{
-  font-size:30px;
-  cursor:pointer;
-  padding:5px 10px;
-  color:white;
-  background:none;
-  border:none;
-}
-
-.page-title{
-  font-family:'Rubik One',sans-serif;
-  font-size:28px;
-  color:white;
-  font-weight:500; 
-}
-
-.side-menu{
-  position:fixed;
-  top:0;
-  left:-320px;
-  width:300px;
-  height:100%;
-  background:#144b63;
-  color:white;
-  padding:25px;
-  transition:left .3s ease;
-  z-index:1000;
-  box-shadow:2px 0 5px rgba(0,0,0,.2);
-}
-
-.side-menu.open{left:0}
-
-.side-menu a{
-  display:block;
-  margin:18px 0;
-  padding:10px 15px;
-  font-size:20px;
-  font-weight:600;
-  color:white;
-  text-decoration:none;
-  border-radius:5px;
-  transition:background-color .2s,transform .2s;
-}
-
-.side-menu a:hover{
-  background:#216d91;
-  transform:translateX(5px);
-}
-
-#closeMenu{
-  font-size:30px;
-  cursor:pointer;
-  color:#ff7a7a;
-  font-weight:bold;
-  margin-bottom:30px;
-  text-align:right;
-}
-
-.lesson-container{
-  padding:40px 30px 80px;
-  display:flex;
-  flex-direction:column;
-  gap:64px;
-}
-
-.lesson-section {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.lesson-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-.lesson-section h2{
-  font-size:30px;
-  margin-bottom:10px;
-}
-.lesson-section p{
-  font-size:17px;
-  line-height:1.6;
-}
-
-.simulation-section{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:32px;
-}
-
-.simulation-header{
-  background:#008080;
-  color:#FEFFFC;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-}
-
-.simulation-box{
-  width:98%;
-  max-width:1000px;
-  height:450px;
-  background:rgba(200,200,200,.25);
-  border-radius:12px;
-  border:2px solid #000;
-  position:relative;
-}
-
-#vseprCanvasContainer{
-  width:100%;
-  height:100%;
-}
-
-.shape-info-row{
-  position:absolute;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  width:95%;
-  display:flex;
-  justify-content:space-around;
-  text-align:center;
-}
-
-.info-header{font-size:20px;font-weight:700}
-.info-value{font-size:16px}
-
-.simulation-controls{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.counter-container{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.counter-button{
-  background:#008080;
-  color:white;
-  border:none;
-  padding:6px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.counter-value{
-  width:40px;
-  text-align:center;
-  border:1px solid #008080;
-  border-radius:6px;
-}
-
-.site-footer{
-  text-align:center;
-  padding:24px;
-  font-size:14px;
-  border-top:1px solid rgba(0,0,0,.06);
-}
-
-</style>
+<link rel="stylesheet" href="vsepr.css">
 </head>
 
 <body>
@@ -437,37 +233,59 @@ const revealOnScroll = () => {
 window.addEventListener('scroll', revealOnScroll);
 revealOnScroll();
 </script>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
 
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
 
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
     Khan
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>VSEPR Theory</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+  <div class="ref-sub two">
     Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>VSEPR Theory</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+  <div class="ref-sub three">
     Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
   </div>
+
 </div>
+
 <script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
 
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
-});
-
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
 </script>
 
 </body>
