@@ -1,11 +1,6 @@
 import * as THREE from 'https://unpkg.com/three@0.181.2/build/three.module.js';
  
-
-// =======================
-// VSEPR SIMULATOR (UI + 3D)
-// =======================
-
-// ---------- DOM ELEMENTS ----------
+// HTML Elements
 const bondValueEl = document.getElementById('bondValue');
 const loneValueEl = document.getElementById('loneValue');
 const bondPlus = document.getElementById('bondPlus');
@@ -19,9 +14,9 @@ const mgEl = document.getElementById('molecularGeometry');
 const MAX_BONDS = 6;
 const MIN_BONDS = 2;
 const MAX_LONE = 4;
-const MAX_TOTAL = 6; // total electron domains limit
+const MAX_TOTAL = 6; 
 
-// ---------- VSEPR TABLE ----------
+// VSEPR Information
 const vseprTable = {
   'AX2': { edg: 'Linear', mg: 'Linear' },
   'AX3': { edg: 'Trigonal Planar', mg: 'Trigonal Planar' },
@@ -38,11 +33,10 @@ const vseprTable = {
   'AX4E2': { edg: 'Octahedral', mg: 'Square Planar' }
 };
 
-// ---------- STATE ----------
 let bondPairs = 2;
 let lonePairs = 0;
 
-// ---------- THREE.JS SETUP ----------
+// Three.js Setup
 const container = document.getElementById("vseprCanvasContainer");
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
@@ -59,17 +53,14 @@ const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
 dirLight.position.set(5,5,5);
 scene.add(dirLight);
 
-// Molecule group
 let molecule = new THREE.Group();
 scene.add(molecule);
 
-// ---------- MATERIALS ----------
 const centralMat = new THREE.MeshPhongMaterial({ color: 0xff5555 });
 const atomMat = new THREE.MeshPhongMaterial({ color: 0x3399ff });
 const bondMat = new THREE.MeshPhongMaterial({ color: 0x888888 });
 const loneMat = new THREE.MeshPhongMaterial({ color: 0xffff00, transparent: true, opacity: 0.35 });
 
-// ---------- HELPERS ----------
 function sphere(radius, material){
     return new THREE.Mesh(new THREE.SphereGeometry(radius, 32, 32), material);
 }
@@ -84,7 +75,7 @@ function bond(a, b){
     return cyl;
 }
 
-// ---------- VSEPR POSITIONS ----------
+// VSEPR Positions
 const POSITIONS = {
     2: [[1,0,0],[-1,0,0]],
     3: [[1,0,0],[-0.5,0.87,0],[-0.5,-0.87,0]],
@@ -93,7 +84,6 @@ const POSITIONS = {
     6: [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]
 };
 
-// ---------- BUILD MODEL ----------
 function buildModel(bonds, lone){
     molecule.clear();
     const total = bonds + lone;
@@ -119,26 +109,24 @@ function buildModel(bonds, lone){
     }
 }
 
-// ---------- FORMAT AXE ----------
 function formatAXE(bonds, lone) {
   let str = `AX<sub>${bonds}</sub>`;
   if (lone > 0) str += `E<sub>${lone}</sub>`;
   return str;
 }
 
-// ---------- BUTTON STATE ----------
+// Button state
 function updateButtonState(button, disabled) {
   button.disabled = disabled;
   button.style.background = disabled ? '#888888' : '#008080';
 }
 
-// ---------- UPDATE DISPLAY ----------
 function updateDisplay() {
   bondValueEl.textContent = bondPairs;
   loneValueEl.textContent = lonePairs;
 }
 
-// ---------- UPDATE MODEL ----------
+// Update model
 function updateModel() {
   if (bondPairs < MIN_BONDS) bondPairs = MIN_BONDS;
   if (bondPairs > MAX_BONDS) bondPairs = MAX_BONDS;
@@ -162,14 +150,14 @@ function updateModel() {
   buildModel(bondPairs, lonePairs);
 }
 
-// ---------- BUTTON EVENTS ----------
+// Button events
 bondPlus.onclick = () => { bondPairs++; updateModel(); };
 bondMinus.onclick = () => { bondPairs--; updateModel(); };
 lonePlus.onclick = () => { lonePairs++; updateModel(); };
 loneMinus.onclick = () => { lonePairs--; updateModel(); };
 document.getElementById('resetSimulation').onclick = () => { bondPairs=2; lonePairs=0; updateModel(); };
 
-// ---------- ANIMATION ----------
+// Model aniamtions
 function animate(){
     requestAnimationFrame(animate);
     molecule.rotation.y += 0.004;
@@ -177,12 +165,11 @@ function animate(){
 }
 animate();
 
-// ---------- HANDLE RESIZE ----------
+// Resize handling
 window.addEventListener('resize', () => {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
 });
 
-// ---------- INITIALIZE ----------
 updateModel();
