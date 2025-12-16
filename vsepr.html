@@ -8,212 +8,185 @@
   <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
   <title>Chemivis | VSEPR Theory</title>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="./assets/logo.png">
-<link rel="stylesheet" href="references.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./assets/logo.png">
+  <link rel="stylesheet" href="references.css">
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Poppins',sans-serif;
-  min-height:100vh;
-  background:linear-gradient(135deg,#9b52ee,#279fce);
-  padding:60px 100px;
-}
-
-canvas#bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-}
-
-.page-shell{
-  position:relative;
-  z-index:1;
-  background:rgba(254,255,252,0.88);
-  border-radius:16px;
-  box-shadow:0 24px 60px rgba(0,0,0,.15);
-  overflow:hidden;
-}
-
-.site-header{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  padding:20px 30px;
-  background:#008080;
-  border-radius:12px 12px 0 0;
-  color:white;
-}
-
-#hamburger{
-  font-size:30px;
-  cursor:pointer;
-  padding:5px 10px;
-  color:white;
-  background:none;
-  border:none;
-}
-
-.page-title{
-  font-family:'Rubik One',sans-serif;
-  font-size:28px;
-  color:white;
-  font-weight:500;
-}
-
-.side-menu{
-  position:fixed;
-  top:0;
-  left:-320px;
-  width:300px;
-  height:100%;
-  background:#144b63;
-  color:white;
-  padding:25px;
-  transition:left .3s ease;
-  z-index:1000;
-}
-
-.side-menu.open{left:0}
-
-.side-menu a{
-  display:block;
-  margin:18px 0;
-  padding:10px 15px;
-  font-size:20px;
-  font-weight:600;
-  color:white;
-  text-decoration:none;
-  border-radius:5px;
-}
-
-#closeMenu{
-  font-size:30px;
-  cursor:pointer;
-  color:#ff7a7a;
-  font-weight:bold;
-  margin-bottom:30px;
-  text-align:right;
-}
-
-.lesson-container{
-  padding:40px 30px 80px;
-  display:flex;
-  flex-direction:column;
-  gap:64px;
-}
-
-.lesson-section{
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity .8s ease, transform .8s ease;
-}
-
-.lesson-section.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.lesson-section h2{
-  font-size:30px;
-  margin-bottom:12px;
-}
-
-.lesson-section p{
-  font-size:17px;
-  line-height:1.6;
-  margin-bottom:12px;
-}
-
-.simulation-section{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:32px;
-}
-
-.simulation-header{
-  background:#008080;
-  color:#FEFFFC;
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-}
-
-.simulation-box{
-  width:98%;
-  max-width:1000px;
-  height:450px;
-  background:rgba(200,200,200,.25);
-  border-radius:12px;
-  border:2px solid #000;
-  position:relative;
-}
-
-#vseprCanvasContainer{
-  width:100%;
-  height:100%;
-}
-
-.shape-info-row{
-  position:absolute;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  width:95%;
-  display:flex;
-  justify-content:space-around;
-  text-align:center;
-}
-
-.info-header{font-size:20px;font-weight:700}
-.info-value{font-size:16px}
-
-.simulation-controls{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.counter-container{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.counter-button{
-  background:#008080;
-  color:white;
-  border:none;
-  padding:6px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:600;
-}
-
-.counter-value{
-  width:40px;
-  text-align:center;
-  border:1px solid #008080;
-  border-radius:6px;
-}
-
-.site-footer{
-  text-align:center;
-  padding:24px;
-  font-size:14px;
-  border-top:1px solid rgba(0,0,0,.06);
-}
-</style>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',sans-serif;
+      min-height:100vh;
+      background:linear-gradient(135deg,#9b52ee,#279fce);
+      padding:60px 100px;
+    }
+    canvas#bg{
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+    }
+    .page-shell{
+      position:relative;
+      z-index:1;
+      background:rgba(254,255,252,0.88);
+      border-radius:16px;
+      box-shadow:0 24px 60px rgba(0,0,0,.15);
+      overflow:hidden;
+    }
+    .site-header{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      padding:20px 30px;
+      background:#008080;
+      border-radius:12px 12px 0 0;
+      color:white;
+    }
+    #hamburger{
+      font-size:30px;
+      cursor:pointer;
+      padding:5px 10px;
+      color:white;
+      background:none;
+      border:none;
+    }
+    .page-title{
+      font-family:'Rubik One',sans-serif;
+      font-size:28px;
+      color:white;
+      font-weight:500;
+    }
+    .side-menu{
+      position:fixed;
+      top:0;
+      left:-320px;
+      width:300px;
+      height:100%;
+      background:#144b63;
+      color:white;
+      padding:25px;
+      transition:left .3s ease;
+      z-index:1000;
+    }
+    .side-menu.open{left:0}
+    .side-menu a{
+      display:block;
+      margin:18px 0;
+      padding:10px 15px;
+      font-size:20px;
+      font-weight:600;
+      color:white;
+      text-decoration:none;
+      border-radius:5px;
+    }
+    #closeMenu{
+      font-size:30px;
+      cursor:pointer;
+      color:#ff7a7a;
+      font-weight:bold;
+      margin-bottom:30px;
+      text-align:right;
+    }
+    .lesson-container{
+      padding:40px 30px 80px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .lesson-section{
+      opacity:0;
+      transform:translateY(40px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+    .lesson-section.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+    .lesson-section h2{
+      font-size:30px;
+      margin-bottom:12px;
+    }
+    .lesson-section p{
+      font-size:17px;
+      line-height:1.6;
+      margin-bottom:12px;
+    }
+    .simulation-section{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:32px;
+    }
+    .simulation-header{
+      background:#008080;
+      color:#FEFFFC;
+      padding:20px;
+      border-radius:12px;
+      text-align:center;
+    }
+    .simulation-box{
+      width:98%;
+      max-width:1000px;
+      height:450px;
+      background:rgba(200,200,200,.25);
+      border-radius:12px;
+      border:2px solid #000;
+      position:relative;
+    }
+    #vseprCanvasContainer{
+      width:100%;
+      height:100%;
+    }
+    .shape-info-row{
+      position:absolute;
+      bottom:15px;
+      left:50%;
+      transform:translateX(-50%);
+      width:95%;
+      display:flex;
+      justify-content:space-around;
+      text-align:center;
+    }
+    .info-header{font-size:20px;font-weight:700}
+    .info-value{font-size:16px}
+    .simulation-controls{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .counter-container{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .counter-button{
+      background:#008080;
+      color:white;
+      border:none;
+      padding:6px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .counter-value{
+      width:40px;
+      text-align:center;
+      border:1px solid #008080;
+      border-radius:6px;
+    }
+    .site-footer{
+      text-align:center;
+      padding:24px;
+      font-size:14px;
+      border-top:1px solid rgba(0,0,0,.06);
+    }
+  </style>
 </head>
 
 <body>
-
 <canvas id="bg"></canvas>
 
 <div class="page-shell">
@@ -235,42 +208,26 @@ canvas#bg{
 
 <main class="lesson-container">
 
+<!-- Introduction -->
 <section class="lesson-section">
   <h2>Introduction</h2>
-  <p>
-    From basic Chemistry, we know that atoms bond with each other to form molecules,
-    but have you ever wondered what the shapes of these molecules are?
-    Can’t atoms just bond in infinitely many different orientations?
-  </p>
-  <p>
-    To answer this question, we use <strong>VSEPR Theory</strong>.
-  </p>
-  <p>
-    <strong>VSEPR Theory</strong>, or <em>Valence Shell Electron-Pair Repulsion Theory</em>,
-    allows us to predict the three-dimensional structure of molecules by examining
-    the number of bonds and lone electron pairs in their Lewis structures.
-  </p>
+  <p>From basic Chemistry, we know that atoms bond with each other to form molecules, but have you ever wondered what the shapes of these molecules are? Can’t atoms just bond in infinitely many different orientations?</p>
+  <p>To answer this question, we use <strong>VSEPR Theory</strong>.</p>
+  <p><strong>VSEPR Theory</strong>, or <em>Valence Shell Electron-Pair Repulsion Theory</em>, allows us to predict the three-dimensional structure of molecules by examining the number of bonds and lone electron pairs in their Lewis structures.</p>
 </section>
 
+<!-- Core Idea -->
 <section class="lesson-section">
   <h2>Core Idea of VSEPR Theory</h2>
   <p><strong>Electrons repel each other.</strong></p>
-  <p>
-    Because electrons carry the same negative charge, regions of high electron density
-    around a central atom push away from one another. To minimize this repulsion,
-    these regions arrange themselves as far apart as possible in three-dimensional space.
-  </p>
-</section>
-
-<section class="lesson-section">
-  <h2>Types of Electron Pairs</h2>
-  <p>Electrons in the valence shell may exist as:</p>
+  <p>Because electrons carry the same negative charge, regions of high electron density around a central atom push away from one another. To minimize this repulsion, these regions arrange themselves as far apart as possible in three-dimensional space. Electrons in the valence shell may exist as:</p>
   <ul style="margin-left:24px; line-height:1.7;">
     <li><strong>Bonding pairs</strong> – electrons shared between atoms</li>
     <li><strong>Lone pairs</strong> – electrons localized on the central atom</li>
   </ul>
 </section>
 
+<!-- Regions of Electron Density -->
 <section class="lesson-section">
   <h2>Regions of Electron Density</h2>
   <p>Each of the following counts as one region:</p>
@@ -280,6 +237,7 @@ canvas#bg{
   </ul>
 </section>
 
+<!-- Electron-Pair Geometry Table -->
 <section class="lesson-section">
   <h2>Electron-Pair Geometry</h2>
   <table style="width:100%;border-collapse:collapse;text-align:center;">
@@ -292,14 +250,69 @@ canvas#bg{
   </table>
 </section>
 
+<!-- New Section: Electron Domain Geometry -->
 <section class="lesson-section">
-  <h2>Why Molecular Shape Matters</h2>
-  <p>
-    Molecular shape affects polarity, intermolecular forces,
-    physical properties, and chemical reactivity.
-  </p>
+  <h2>Electron Domain Geometry (EDG)</h2>
+  <p><strong>Electron Domain Geometry (EDG)</strong> describes the spatial arrangement of <em>all regions of electron density</em> around the central atom. This includes both bonding pairs and lone pairs.</p>
+  <p>EDG depends only on the <strong>total number of electron regions</strong>, not on whether those regions are bonds or lone pairs. Different molecules can have the same EDG but different shapes.</p>
+  <p>For example, a molecule with four regions of electron density will always have a <strong>tetrahedral EDG</strong>, regardless of how many of those regions are lone pairs.</p>
 </section>
 
+<!-- New Section: Molecular Geometry -->
+<section class="lesson-section">
+  <h2>Molecular Geometry (MG)</h2>
+  <p><strong>Molecular Geometry (MG)</strong> describes the actual shape of a molecule based only on the positions of the atoms, not the lone pairs.</p>
+  <p>Lone pairs occupy space and repel bonding pairs more strongly than bonding pairs repel each other. This causes bond angles to shrink and changes the observed shape of the molecule.</p>
+  <p>For example:</p>
+  <ul style="margin-left:24px; line-height:1.7;">
+    <li><strong>NH₃</strong> has a tetrahedral EDG but a <strong>trigonal pyramidal</strong> MG</li>
+    <li><strong>H₂O</strong> has a tetrahedral EDG but a <strong>bent</strong> MG</li>
+  </ul>
+</section>
+
+<!-- New Section: AXE Notation -->
+<section class="lesson-section">
+  <h2>AXE Notation</h2>
+  <p><strong>AXE notation</strong> is a shorthand system used in VSEPR theory to describe molecular structure.</p>
+  <ul style="margin-left:24px; line-height:1.7;">
+    <li><strong>A</strong> represents the central atom</li>
+    <li><strong>X</strong> represents the number of atoms bonded to the central atom</li>
+    <li><strong>E</strong> represents the number of lone pairs on the central atom</li>
+  </ul>
+  <p>The values of X and E determine both the electron domain geometry and the molecular geometry of a molecule.</p>
+</section>
+
+<!-- New Section: Connecting AXE, EDG, and MG -->
+<section class="lesson-section">
+  <h2>Connecting AXE, EDG, and MG</h2>
+  <p>VSEPR analysis follows a clear sequence:</p>
+  <ol style="margin-left:24px; line-height:1.7;">
+    <li>Determine the AXE notation from the Lewis structure</li>
+    <li>Use the total number of electron regions (X + E) to find the EDG</li>
+    <li>Ignore lone pairs to determine the molecular geometry</li>
+  </ol>
+  <p>For example, an <strong>AX₃E₁</strong> molecule has four electron regions, giving a tetrahedral EDG. Since one region is a lone pair, the molecular geometry becomes <strong>trigonal pyramidal</strong>.</p>
+</section>
+
+<!-- Optional: Common AXE Examples -->
+<section class="lesson-section">
+  <h2>Common AXE Examples</h2>
+  <ul style="margin-left:24px; line-height:1.8;">
+    <li><strong>AX₂</strong> → Linear EDG, Linear MG (CO₂)</li>
+    <li><strong>AX₃</strong> → Trigonal planar EDG, Trigonal planar MG (BF₃)</li>
+    <li><strong>AX₄</strong> → Tetrahedral EDG, Tetrahedral MG (CH₄)</li>
+    <li><strong>AX₃E</strong> → Tetrahedral EDG, Trigonal pyramidal MG (NH₃)</li>
+    <li><strong>AX₂E₂</strong> → Tetrahedral EDG, Bent MG (H₂O)</li>
+  </ul>
+</section>
+
+<!-- Why Molecular Shape Matters -->
+<section class="lesson-section">
+  <h2>Why Molecular Shape Matters</h2>
+  <p>Molecular shape affects polarity, intermolecular forces, physical properties, and chemical reactivity.</p>
+</section>
+
+<!-- Simulation Section -->
 <section class="simulation-section">
   <header class="simulation-header">
     <h2>VSEPR Shape Simulator</h2>
@@ -308,7 +321,6 @@ canvas#bg{
 
   <div class="simulation-box">
     <div id="vseprCanvasContainer"></div>
-
     <div class="shape-info-row">
       <div><div class="info-header">AXE</div><div class="info-value" id="axe">---</div></div>
       <div><div class="info-header">Electron Domain</div><div class="info-value" id="electronDomain">---</div></div>
@@ -347,11 +359,11 @@ canvas#bg{
 <script type="module" src="./vsepr.js"></script>
 
 <script>
-const sections=document.querySelectorAll('.lesson-section');
-const reveal=()=>sections.forEach(s=>{
- if(s.getBoundingClientRect().top<window.innerHeight*.8)s.classList.add('visible');
-});
-addEventListener('scroll',reveal);reveal();
+  const sections=document.querySelectorAll('.lesson-section');
+  const reveal=()=>sections.forEach(s=>{
+   if(s.getBoundingClientRect().top<window.innerHeight*.8)s.classList.add('visible');
+  });
+  addEventListener('scroll',reveal);reveal();
 </script>
 
 </body>
