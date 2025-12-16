@@ -44,7 +44,7 @@ canvas#bg{
   align-items:center;
   gap:20px;
   padding:20px 30px;
-  background:#008080; 
+  background:#008080;
   border-radius:12px 12px 0 0;
   color:white;
 }
@@ -62,7 +62,7 @@ canvas#bg{
   font-family:'Rubik One',sans-serif;
   font-size:28px;
   color:white;
-  font-weight:500; 
+  font-weight:500;
 }
 
 .side-menu{
@@ -76,7 +76,6 @@ canvas#bg{
   padding:25px;
   transition:left .3s ease;
   z-index:1000;
-  box-shadow:2px 0 5px rgba(0,0,0,.2);
 }
 
 .side-menu.open{left:0}
@@ -90,12 +89,6 @@ canvas#bg{
   color:white;
   text-decoration:none;
   border-radius:5px;
-  transition:background-color .2s,transform .2s;
-}
-
-.side-menu a:hover{
-  background:#216d91;
-  transform:translateX(5px);
 }
 
 #closeMenu{
@@ -114,25 +107,26 @@ canvas#bg{
   gap:64px;
 }
 
-.lesson-section {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+.lesson-section{
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .8s ease, transform .8s ease;
 }
 
-.lesson-section.visible {
-  opacity: 1;
-  transform: translateY(0);
+.lesson-section.visible{
+  opacity:1;
+  transform:translateY(0);
 }
-
 
 .lesson-section h2{
   font-size:30px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
+
 .lesson-section p{
   font-size:17px;
   line-height:1.6;
+  margin-bottom:12px;
 }
 
 .simulation-section{
@@ -215,7 +209,6 @@ canvas#bg{
   font-size:14px;
   border-top:1px solid rgba(0,0,0,.06);
 }
-
 </style>
 </head>
 
@@ -244,59 +237,67 @@ canvas#bg{
 
 <section class="lesson-section">
   <h2>Introduction</h2>
-  <p>VSEPR theory, or Valence Shell Electron Pair Repulsion theory, is used to predict the three-dimensional shapes of molecules by considering that electron pairs around a central atom repel each other and arrange themselves as far apart as possible. This includes both bonding pairs, which are shared electrons forming single, double, or triple bonds, and lone pairs, which are unshared electrons on the central atom. By counting these electron domains, VSEPR theory can determine the electron geometry of a molecule, which may differ from its molecular geometry if lone pairs are present. For example, molecules with two, three, four, five, or six electron domains typically have a linear, trigonal planar, tetrahedral, trigonal bipyramidal, or octahedral electron geometry, respectively, with molecular shapes adjusted depending on the number of lone pairs.</p>
+  <p>
+    From basic Chemistry, we know that atoms bond with each other to form molecules,
+    but have you ever wondered what the shapes of these molecules are?
+    Can’t atoms just bond in infinitely many different orientations?
+  </p>
+  <p>
+    To answer this question, we use <strong>VSEPR Theory</strong>.
+  </p>
+  <p>
+    <strong>VSEPR Theory</strong>, or <em>Valence Shell Electron-Pair Repulsion Theory</em>,
+    allows us to predict the three-dimensional structure of molecules by examining
+    the number of bonds and lone electron pairs in their Lewis structures.
+  </p>
 </section>
 
 <section class="lesson-section">
-  <h2>Geometries and Bond Angles</h2>
-  <table style="width:100%; border-collapse: collapse; text-align:center;">
-    <thead>
-      <tr>
-        <th style="border: 1px solid #000; padding:8px;">Electron Domains</th>
-        <th style="border: 1px solid #000; padding:8px;">Electron Geometry</th>
-        <th style="border: 1px solid #000; padding:8px;">Molecular Geometry</th>
-        <th style="border: 1px solid #000; padding:8px;">Bond Angles</th>
-        <th style="border: 1px solid #000; padding:8px;">Example</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style="border: 1px solid #000; padding:8px;">2</td>
-        <td style="border: 1px solid #000; padding:8px;">Linear</td>
-        <td style="border: 1px solid #000; padding:8px;">Linear</td>
-        <td style="border: 1px solid #000; padding:8px;">180°</td>
-        <td style="border: 1px solid #000; padding:8px;">CO₂</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #000; padding:8px;">3</td>
-        <td style="border: 1px solid #000; padding:8px;">Trigonal Planar</td>
-        <td style="border: 1px solid #000; padding:8px;">Trigonal Planar — Bent</td>
-        <td style="border: 1px solid #000; padding:8px;">120° — &lt;120°</td>
-        <td style="border: 1px solid #000; padding:8px;">BF₃ — SO₂</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #000; padding:8px;">4</td>
-        <td style="border: 1px solid #000; padding:8px;">Tetrahedral</td>
-        <td style="border: 1px solid #000; padding:8px;">Tetrahedral — Trigonal Pyramidal — Bent</td>
-        <td style="border: 1px solid #000; padding:8px;">109.5° — ~107° — ~104.5°</td>
-        <td style="border: 1px solid #000; padding:8px;">CH₄ — NH₃ — H₂O</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #000; padding:8px;">5</td>
-        <td style="border: 1px solid #000; padding:8px;">Trigonal Bipyramidal</td>
-        <td style="border: 1px solid #000; padding:8px;">Trigonal Bipyramidal — See-saw — T-shaped — Linear</td>
-        <td style="border: 1px solid #000; padding:8px;">90° — 120° — 180°</td>
-        <td style="border: 1px solid #000; padding:8px;">PCl₅ — SF₄ — ClF₃ — XeF₂</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #000; padding:8px;">6</td>
-        <td style="border: 1px solid #000; padding:8px;">Octahedral</td>
-        <td style="border: 1px solid #000; padding:8px;">Octahedral — Square Pyramidal — Square Planar</td>
-        <td style="border: 1px solid #000; padding:8px;">90° — 180°</td>
-        <td style="border: 1px solid #000; padding:8px;">SF₆ — BrF₅ — XeF₄</td>
-      </tr>
-    </tbody>
+  <h2>Core Idea of VSEPR Theory</h2>
+  <p><strong>Electrons repel each other.</strong></p>
+  <p>
+    Because electrons carry the same negative charge, regions of high electron density
+    around a central atom push away from one another. To minimize this repulsion,
+    these regions arrange themselves as far apart as possible in three-dimensional space.
+  </p>
+</section>
+
+<section class="lesson-section">
+  <h2>Types of Electron Pairs</h2>
+  <p>Electrons in the valence shell may exist as:</p>
+  <ul style="margin-left:24px; line-height:1.7;">
+    <li><strong>Bonding pairs</strong> – electrons shared between atoms</li>
+    <li><strong>Lone pairs</strong> – electrons localized on the central atom</li>
+  </ul>
+</section>
+
+<section class="lesson-section">
+  <h2>Regions of Electron Density</h2>
+  <p>Each of the following counts as one region:</p>
+  <ul style="margin-left:24px; line-height:1.7;">
+    <li>Single, double, or triple bond</li>
+    <li>Lone pair</li>
+  </ul>
+</section>
+
+<section class="lesson-section">
+  <h2>Electron-Pair Geometry</h2>
+  <table style="width:100%;border-collapse:collapse;text-align:center;">
+    <tr><th style="border:1px solid #000">Regions</th><th style="border:1px solid #000">Geometry</th><th style="border:1px solid #000">Angles</th></tr>
+    <tr><td style="border:1px solid #000">2</td><td style="border:1px solid #000">Linear</td><td style="border:1px solid #000">180°</td></tr>
+    <tr><td style="border:1px solid #000">3</td><td style="border:1px solid #000">Trigonal planar</td><td style="border:1px solid #000">120°</td></tr>
+    <tr><td style="border:1px solid #000">4</td><td style="border:1px solid #000">Tetrahedral</td><td style="border:1px solid #000">109.5°</td></tr>
+    <tr><td style="border:1px solid #000">5</td><td style="border:1px solid #000">Trigonal bipyramidal</td><td style="border:1px solid #000">90°, 120°</td></tr>
+    <tr><td style="border:1px solid #000">6</td><td style="border:1px solid #000">Octahedral</td><td style="border:1px solid #000">90°</td></tr>
   </table>
+</section>
+
+<section class="lesson-section">
+  <h2>Why Molecular Shape Matters</h2>
+  <p>
+    Molecular shape affects polarity, intermolecular forces,
+    physical properties, and chemical reactivity.
+  </p>
 </section>
 
 <section class="simulation-section">
@@ -343,131 +344,14 @@ canvas#bg{
 <footer class="site-footer">© 2025 Chemivis</footer>
 </div>
 
-<script>
-const menu=document.getElementById("sideMenu");
-const hamburger=document.getElementById("hamburger");
-const closeMenu=document.getElementById("closeMenu");
-
-hamburger.onclick=()=>menu.classList.add("open");
-closeMenu.onclick=()=>menu.classList.remove("open");
-</script>
-
-<script>
-const canvas=document.getElementById("bg"),c=canvas.getContext("2d");
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-resize();addEventListener("resize",resize);
-
-class Atom{
- constructor(){
-  this.x=Math.random()*canvas.width;
-  this.y=Math.random()*canvas.height;
-  this.r=3+Math.random()*3;
-  this.vx=(Math.random()-.5)*.7;
-  this.vy=(Math.random()-.5)*.7;
-  this.exploded=false;
- }
- draw(){
-  c.beginPath();
-  c.fillStyle="white";
-  c.arc(this.x,this.y,this.r,0,Math.PI*2);
-  c.fill();
- }
- explode(){
-  this.exploded=true;
-  explosions.push(new Explosion(this.x,this.y));
- }
- update(atoms){
-  this.x+=this.vx; this.y+=this.vy;
-  if(this.x<0||this.x>canvas.width)this.vx*=-1;
-  if(this.y<0||this.y>canvas.height)this.vy*=-1;
-  for(let a of atoms){
-   if(a===this||a.exploded)continue;
-   if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
-    this.explode();a.explode();
-   }
-  }
-  this.draw();
- }
-}
-
-class Explosion{
- constructor(x,y){
-  this.p=[];
-  for(let i=0;i<20;i++)this.p.push({
-   x,y,vx:(Math.random()-.5)*3,
-   vy:(Math.random()-.5)*3,life:40+Math.random()*20
-  });
- }
- update(){
-  this.p.forEach(pt=>{
-   pt.x+=pt.vx; pt.y+=pt.vy; pt.life--;
-   c.fillStyle=`rgba(255,255,255,${pt.life/60})`;
-   c.beginPath(); c.arc(pt.x,pt.y,2,0,Math.PI*2); c.fill();
-  });
-  this.p=this.p.filter(pt=>pt.life>0);
- }
-}
-
-const atoms=[],explosions=[];
-for(let i=0;i<40;i++)atoms.push(new Atom());
-
-(function animate(){
- requestAnimationFrame(animate);
- c.clearRect(0,0,canvas.width,canvas.height);
- atoms.forEach(a=>!a.exploded&&a.update(atoms));
- explosions.forEach(e=>e.update());
-})();
-</script>
-
 <script type="module" src="./vsepr.js"></script>
 
 <script>
-const sections = document.querySelectorAll('.lesson-section');
-
-const revealOnScroll = () => {
-  const triggerBottom = window.innerHeight * 0.80; 
-  sections.forEach(section => {
-    const sectionTop = section.getBoundingClientRect().top;
-    if(sectionTop < triggerBottom){
-      section.classList.add('visible');
-    }
-  });
-};
-
-window.addEventListener('scroll', revealOnScroll);
-revealOnScroll();
-</script>
-
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
-
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
-    Khan
-  </div>
-
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
-    Libre
-  </div>
-
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
-    Britannica
-  </div>
-</div>
-<script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
-
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
+const sections=document.querySelectorAll('.lesson-section');
+const reveal=()=>sections.forEach(s=>{
+ if(s.getBoundingClientRect().top<window.innerHeight*.8)s.classList.add('visible');
 });
-
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+addEventListener('scroll',reveal);reveal();
 </script>
 
 </body>
