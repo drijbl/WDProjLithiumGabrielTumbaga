@@ -11,6 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="stylesheet" href="references.css">
+<<<<<<< HEAD
+  <link rel="stylesheet" href="balancing.css">
+=======
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -212,6 +215,7 @@ canvas#bg {
   cursor: pointer;
 }
 </style>
+>>>>>>> ed5853ebc12aa23316625e0421cdffce6bb5deb3
 </head>
 
 <body>
@@ -394,6 +398,8 @@ pickEquation();
 </script>
 
 <!-- ===== Scripts ===== -->
+<<<<<<< HEAD
+=======
 <script>
 const menu = document.getElementById("sideMenu");
 hamburger.onclick = () => menu.classList.add("open");
@@ -472,20 +478,122 @@ addEventListener('scroll',reveal); reveal();
     Britannica
   </div>
 </div>
+>>>>>>> ed5853ebc12aa23316625e0421cdffce6bb5deb3
 <script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
+const menu = document.getElementById("sideMenu");
+hamburger.onclick = () => menu.classList.add("open");
+closeMenu.onclick = () => menu.classList.remove("open");
+</script>
 
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
-});
+<script>
+// ===== Exploding atoms background =====
+const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize(); addEventListener("resize",resize);
 
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+class Atom{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.r=3+Math.random()*3;
+    this.vx=(Math.random()-.5)*.7;
+    this.vy=(Math.random()-.5)*.7;
+    this.dead=false;
+  }
+  draw(){c.beginPath();c.fillStyle="white";c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fill()}
+  explode(){this.dead=true; explosions.push({x:this.x,y:this.y,life:40})}
+  update(atoms){
+    this.x+=this.vx; this.y+=this.vy;
+    if(this.x<0||this.x>canvas.width)this.vx*=-1;
+    if(this.y<0||this.y>canvas.height)this.vy*=-1;
+    for(let a of atoms){
+      if(a===this||a.dead)continue;
+      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
+        this.explode(); a.explode();
+      }
+    }
+    this.draw();
+  }
+}
+
+const atoms=[], explosions=[];
+for(let i=0;i<40;i++) atoms.push(new Atom());
+
+(function animate(){
+  requestAnimationFrame(animate);
+  c.clearRect(0,0,canvas.width,canvas.height);
+  atoms.forEach(a=>!a.dead&&a.update(atoms));
+  explosions.forEach(e=>{
+    c.fillStyle=`rgba(255,255,255,${e.life/40})`;
+    c.beginPath(); c.arc(e.x,e.y,4,0,Math.PI*2); c.fill();
+    e.life--;
+  });
+})();
+</script>
+
+<script>
+// ===== Section reveal =====
+const sections=document.querySelectorAll('.lesson-section');
+function reveal(){
+  const t=innerHeight*.8;
+  sections.forEach(s=>s.getBoundingClientRect().top<t&&s.classList.add('visible'));
+}
+addEventListener('scroll',reveal); reveal();
+</script>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
+
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
+
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
+    Khan
+    <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank"></a>
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>Balancing chemical equations</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
+  </div>
+
+  <div class="ref-sub two">
+    Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>Chemical equations and reactions</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
+  </div>
+
+  <div class="ref-sub three">
+    Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
+
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
 </script>
 
 </body>

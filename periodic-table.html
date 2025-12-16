@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="./assets/logo.png">
 <link rel="stylesheet" href="references.css">
+<link rel="stylesheet" href="periodic-table.css">
 
     <style>
         * {
@@ -222,7 +223,6 @@
 </head>
 
 <body>
-
 <canvas id="atomsBg"></canvas>
     
 <div id="hamburger">☰</div>
@@ -512,36 +512,59 @@ function animate() {
 animate();
 </script>
     
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
 
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
+
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
     Khan
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>Periodic Table</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+  <div class="ref-sub two">
     Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>Periodic Table</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+  <div class="ref-sub three">
     Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
   </div>
+
 </div>
+
 <script>
-const refMenu = document.querySelector(".references");
-const refMain = document.querySelector(".ref-main");
-const refDim = document.querySelector(".ref-dim");
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
 
-refMain.addEventListener("click", () => {
-  refMenu.classList.toggle("active");
-  refDim.classList.toggle("active");
-});
-
-refDim.addEventListener("click", () => {
-  refMenu.classList.remove("active");
-  refDim.classList.remove("active");
-});
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
 </script>
 
 </body>
