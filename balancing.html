@@ -90,11 +90,16 @@ canvas#bg {
   color: white;
   text-decoration: none;
   border-radius: 5px;
+
+  transition: 
+    transform 0.25s ease,
+    background-color 0.25s ease;
+  will-change: transform;
 }
 
 .side-menu a:hover {
-  background: #216d91;
-  transform: translateX(5px);
+  background-color: #216d91;
+  transform: translate3d(8px, 0, 0);
 }
 
 #closeMenu {
