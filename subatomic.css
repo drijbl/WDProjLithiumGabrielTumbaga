@@ -1,5 +1,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ===== BODY ==== */
 body {
   font-family: 'Poppins', sans-serif;
   min-height: 100vh;
@@ -7,6 +8,7 @@ body {
   padding: 60px 100px;
 }
 
+/* ===== Background canvas ===== */
 canvas#bg {
   position: fixed;
   inset: 0;
@@ -14,6 +16,7 @@ canvas#bg {
   pointer-events: none;
 }
 
+/* ===== Page shell ===== */
 .page-shell {
   position: relative;
   z-index: 1;
@@ -24,6 +27,7 @@ canvas#bg {
   min-height: 400px;
 }
 
+/* ===== Headers ===== */
 .site-header {
   display: flex;
   align-items: center;
@@ -34,6 +38,13 @@ canvas#bg {
   color: white;
 }
 
+.page-title {
+  font-family: 'Rubik One', sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+/* ===== Navigation Bar ===== */
 #hamburger {
   font-size: 30px;
   cursor: pointer;
@@ -41,12 +52,6 @@ canvas#bg {
   color: white;
   background: none;
   border: none;
-}
-
-.page-title {
-  font-family: 'Rubik One', sans-serif;
-  font-size: 28px;
-  font-weight: 500;
 }
 
 .side-menu {
@@ -65,6 +70,7 @@ canvas#bg {
 
 .side-menu.open { left: 0; }
 
+/*Side Menu Links*/
 .side-menu a {
   display: block;
   margin: 18px 0;
@@ -91,6 +97,7 @@ canvas#bg {
   text-align: right;
 }
 
+/* ===== Lesson Sections ===== */
 .lesson-section {
   padding: 30px;
   opacity: 0;
