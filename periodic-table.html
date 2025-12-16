@@ -81,12 +81,15 @@
         }
 
         .title {
-            font-family: "Rubik One", sans-serif;
-            font-size: 2.4rem;
-            letter-spacing: 1px;
-            margin-left: 20px; 
-            color: #ffffff; 
+          position: absolute;
+          top: 20px;          
+          left: 50%;      
+          transform: translateX(-50%);
+          font-family: "Rubik One", sans-serif;
+          font-size: 2.4rem;
+          color: #ffffff; 
         }
+
 
         .categories {
           margin: 100px auto 25px auto; 
@@ -97,18 +100,41 @@
         }
 
         .categories button {
-            padding: 6px 14px;
-            background: rgba(255,255,255,0.25);
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid white;   /* default outline for "All" */
+    border-radius: 12px;
+    color: #ffffff;            /* text always white */
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.categories button:hover {
+    background: rgba(255,255,255,0.45);
+}
+
+/* Category-specific outlines */
+.categories button.alkali     { border-color: #ff7070; }
+.categories button.alkaline   { border-color: #ffd36a; }
+.categories button.transition { border-color: #6ab4ff; }
+.categories button.post       { border-color: #bfbfbf; }
+.categories button.metalloid  { border-color: #8aff9e; }
+.categories button.nonmetal   { border-color: #ffffff; }
+.categories button.halogen    { border-color: #b764ff; }
+.categories button.noble      { border-color: #70f7ff; }
+.categories button.lanthanide { border-color: #ff9cee; }
+.categories button.actinide   { border-color: #ff8b8b; }
+        
+        .categories .cat {
+          border: 2px solid currentColor;
+          background: rgba(255,255,255,0.18);
+          backdrop-filter: blur(6px);
         }
-        .categories button:hover {
-            background: rgba(255,255,255,0.45);
-        }
+
+      .categories .cat:hover {
+        background: rgba(255,255,255,0.35);
+      }
 
         .table-container {
             display: grid;
@@ -125,8 +151,8 @@
 
         .element {
             background: rgba(255,255,255,0.3); 
-            border-radius: 12px;
-            padding: 5px;
+            border-radius: 12px 10px;
+            padding: 6px;
             text-align: center;
             backdrop-filter: blur(6px);
             transition: 0.15s ease-in-out;
@@ -136,15 +162,16 @@
         }
 
         .element:hover {
-            background: rgba(255,255,255,0.6); 
-            transform: scale(1.07);
+          background: rgba(255,255,255,0.6); 
+          transform: scale(1.07);
+          box-shadow: 0 0 20px currentColor;
         }
 
         .number {
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             text-align: left;
-            opacity: 0.95; 
-            margin-bottom: 2px;
+            opacity: 0.95;
+            margin-bottom: 4px;
             white-space: nowrap;
         }
 
@@ -156,28 +183,29 @@
         }
 
         .name {
-            font-size: 0.3rem;
+            font-size: 0.4rem;
             opacity: 0.95; 
             white-space: nowrap;
         }
 
         .mass {
-            font-size: 0.3rem;
+            font-size: 0.4rem;
             opacity: 0.85; 
             margin-top: 1px;
             white-space: nowrap;
         }
 
-        .alkali       { box-shadow: 0 0 50px #ff7070; }
-        .alkaline    { box-shadow: 0 0 50px #ffd36a; }
-        .transition  { box-shadow: 0 0 50px #6ab4ff; }
-        .post        { box-shadow: 0 0 50px #a8a8a8; }
-        .metalloid   { box-shadow: 0 0 50px #8aff9e; }
-        .nonmetal    { box-shadow: 0 0 50px #ffffff; }
-        .halogen     { box-shadow: 0 0 50px #b764ff; }
-        .noble       { box-shadow: 0 0 50px #70f7ff; }
-        .lanthanide  { box-shadow: 0 0 50px #ff9cee; }
-        .actinide    { box-shadow: 0 0 50px #ff8b8b; }
+        .alkali       { border: 2px solid #ff7070; }
+        .alkaline     { border: 2px solid #ffd36a; }
+        .transition   { border: 2px solid #6ab4ff; }
+        .post         { border: 2px solid #bfbfbf; }
+        .metalloid    { border: 2px solid #8aff9e; }
+        .nonmetal     { border: 2px solid #ffffff; }
+        .halogen      { border: 2px solid #b764ff; }
+        .noble        { border: 2px solid #70f7ff; }
+        .lanthanide   { border: 2px solid #ff9cee; }
+        .actinide     { border: 2px solid #ff8b8b; }
+
 
         .row-offset {
             grid-column: 3;
@@ -212,17 +240,17 @@
 </div>
 
 <div class="categories">
-    <button onclick="filterCategory('all')">All</button>
-    <button onclick="filterCategory('alkali')">Alkali Metals</button>
-    <button onclick="filterCategory('alkaline')">Alkaline Earth</button>
-    <button onclick="filterCategory('transition')">Transition Metals</button>
-    <button onclick="filterCategory('post')">Post-transition</button>
-    <button onclick="filterCategory('metalloid')">Metalloids</button>
-    <button onclick="filterCategory('nonmetal')">Nonmetals</button>
-    <button onclick="filterCategory('halogen')">Halogens</button>
-    <button onclick="filterCategory('noble')">Noble Gases</button>
-    <button onclick="filterCategory('lanthanide')">Lanthanides</button>
-    <button onclick="filterCategory('actinide')">Actinides</button>
+    <button class="all" onclick="filterCategory('all')">All</button>
+    <button class="alkali" onclick="filterCategory('alkali')">Alkali Metals</button>
+    <button class="alkaline" onclick="filterCategory('alkaline')">Alkaline Earth</button>
+    <button class="transition" onclick="filterCategory('transition')">Transition Metals</button>
+    <button class="post" onclick="filterCategory('post')">Post-transition</button>
+    <button class="metalloid" onclick="filterCategory('metalloid')">Metalloids</button>
+    <button class="nonmetal" onclick="filterCategory('nonmetal')">Nonmetals</button>
+    <button class="halogen" onclick="filterCategory('halogen')">Halogens</button>
+    <button class="noble" onclick="filterCategory('noble')">Noble Gases</button>
+    <button class="lanthanide" onclick="filterCategory('lanthanide')">Lanthanides</button>
+    <button class="actinide" onclick="filterCategory('actinide')">Actinides</button>
 </div>
 
 <div class="table-container">
