@@ -46,6 +46,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.domElement.style.pointerEvents = 'none'; // <--- allow clicks through canvas
 container.appendChild(renderer.domElement);
+renderer.domElement.style.touchAction = 'none';
 
 // Lights
 scene.add(new THREE.AmbientLight(0xffffff, 0.6));
@@ -159,17 +160,26 @@ document.getElementById('resetSimulation').onclick = () => { bondPairs=2; lonePa
 
 // Model aniamtions
 function animate(){
-    requestAnimationFrame(animate);
-    molecule.rotation.y += 0.004;
-    renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+  const speed = window.innerWidth < 768 ? 0.002 : 0.004;
+  molecule.rotation.y += speed;
+  renderer.render(scene, camera);
 }
+
 animate();
 
 // Resize handling
-window.addEventListener('resize', () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
-});
+function resizeRenderer() {
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+
+window.addEventListener('resize', resizeRenderer);
+window.addEventListener('orientationchange', resizeRenderer);
+resizeRenderer();
 
 updateModel();

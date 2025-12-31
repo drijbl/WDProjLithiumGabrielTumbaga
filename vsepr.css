@@ -4,7 +4,8 @@ body{
   font-family:'Poppins',sans-serif;
   min-height:100vh;
   background:linear-gradient(135deg,#9b52ee,#279fce);
-  padding:60px 100px;
+  padding:60px clamp(16px, 5vw, 100px);
+  overflow-x:hidden;
 }
 
 /* Background Canvas */
@@ -63,6 +64,13 @@ canvas#bg{
   transition:left .3s ease;
   z-index:1000;
   box-shadow:2px 0 5px rgba(0,0,0,.2);
+}
+
+@media (max-width: 480px) {
+  .side-menu {
+    width: 85vw;
+    left: -85vw;
+  }
 }
 
 .side-menu.open{left:0}
@@ -141,7 +149,7 @@ canvas#bg{
 .simulation-box{
   width:98%;
   max-width:1000px;
-  height:450px;
+  height: min(450px, 70vh);
   background:rgba(200,200,200,.25);
   border-radius:12px;
   border:2px solid #000;
@@ -191,6 +199,7 @@ canvas#bg{
   font-weight:600;
 }
 
+
 .counter-value{
   width:40px;
   text-align:center;
@@ -204,4 +213,30 @@ canvas#bg{
   padding:24px;
   font-size:14px;
   border-top:1px solid rgba(0,0,0,.06);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .page-title {
+    font-size: 22px;
+  }
+
+  .lesson-section h2 {
+    font-size: 24px;
+  }
+
+  .shape-info-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .simulation-box {
+    height: 60vh;
+  }
+
 }

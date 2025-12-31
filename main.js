@@ -21,6 +21,9 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
+renderer.domElement.style.display = 'block';
+renderer.domElement.style.width = '100vw';
+renderer.domElement.style.height = '100vh';
 
 // Lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
@@ -162,6 +165,33 @@ function onMouseMove(event) {
 
 document.addEventListener('mousemove', onMouseMove);
 
+// Touch support for mobile devices
+document.addEventListener('touchstart', e => {
+  const touch = e.touches[0];
+
+  mouse.x = (touch.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(Object.values(atoms));
+
+  if (intersects.length > 0) {
+    const atom = intersects[0].object;
+    const data = atom.userData;
+
+    tooltip.style.display = 'block';
+    tooltip.style.left = touch.clientX + 10 + 'px';
+    tooltip.style.top = touch.clientY + 10 + 'px';
+    tooltip.innerHTML = `
+      ${data.name}<br>
+      Atomic Number: ${data.atomicNumber}<br>
+      Atomic Weight: ${data.atomicWeight}
+    `;
+  } else {
+    tooltip.style.display = 'none';
+  }
+});
+
 // Rotation
 function toggleRotation() {
   isRotating = !isRotating;
@@ -213,12 +243,65 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+// Phone touch controls
+let touchDown = false;
+let lastTouchX = 0;
+let lastTouchY = 0;
+
+document.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    touchDown = true;
+    lastTouchX = e.touches[0].clientX;
+    lastTouchY = e.touches[0].clientY;
+  }
+});
+
+document.addEventListener('touchend', () => {
+  touchDown = false;
+});
+
+document.addEventListener('touchmove', e => {
+  if (!touchDown) return;
+
+  const touch = e.touches[0];
+  const deltaX = touch.clientX - lastTouchX;
+  const deltaY = touch.clientY - lastTouchY;
+
+  molecule.rotation.y += deltaX * 0.01;
+  molecule.rotation.x += deltaY * 0.01;
+
+  lastTouchX = touch.clientX;
+  lastTouchY = touch.clientY;
+});
+
+let lastPinchDistance = null;
+
+document.addEventListener('touchmove', e => {
+  if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (lastPinchDistance !== null) {
+      const delta = distance - lastPinchDistance;
+      camera.position.z -= delta * 0.01;
+      camera.position.z = Math.max(4, Math.min(camera.position.z, 20));
+    }
+
+    lastPinchDistance = distance;
+  }
+});
+
+document.addEventListener('touchend', () => {
+  lastPinchDistance = null;
+});
+
 // Animation loop
 function animate() {
   requestAnimationFrame(animate);
 
   // Rotation speed
-  if (isRotating && !mouseDown) {
+  if (isRotating && !mouseDown && !touchDown) {
     molecule.rotation.y += 0.03;
     molecule.rotation.x += 0.02;
   }
