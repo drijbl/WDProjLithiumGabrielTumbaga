@@ -37,7 +37,7 @@ header {
   padding: 25px;
   box-sizing: border-box;
   transition: left 0.3s ease;
-  z-index: 1000;
+  z-index: 2000;
   box-shadow: 2px 0 5px rgba(0,0,0,0.2);
   overflow-y: auto; 
 }
@@ -79,6 +79,8 @@ text-align: right;
   padding: 5px 10px;
   color: #1c3d68;
   text-shadow: none;
+  z-index: 1999;
+  position: relative;
 }
 
         

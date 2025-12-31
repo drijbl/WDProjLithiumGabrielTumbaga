@@ -142,4 +142,17 @@
   .references.active .three {
     transform: translate(10px, -120px) scale(1);
   }
+  
+  /* Reposition APA popups for mobile */
+  .apa-popup {
+    right: 50%;
+    top: -10px;
+    transform: translate(50%, -100%) scale(0.95);
+    width: 200px;
+  }
+
+  .ref-sub:hover .apa-popup {
+    opacity: 1;
+    transform: translate(50%, -100%) scale(1);
+  }
 }

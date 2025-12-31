@@ -180,3 +180,82 @@ footer {
   }
 
 }
+/* ============ MOBILE (phones ≤ 600px) ============ */
+@media (max-width: 600px) {
+
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+
+  #hamburger {
+    font-size: 26px;
+  }
+
+  .side-menu {
+    width: 80%;      
+    left: -80%;
+    padding: 20px;
+  }
+
+  .side-menu a {
+    font-size: 18px;
+    margin: 14px 0;
+  }
+
+  main {
+    top: 20px;
+    width: 95%;
+  }
+
+  .title {
+    font-size: 60px;   
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
+  footer {
+    position: static;
+    margin-top: 30px;
+  }
+
+  .footer-icons img {
+    width: 28px;
+    margin: 0 10px;
+  }
+
+  canvas {
+    position: fixed; 
+  }
+}
+
+/* ============ TABLETS (601px–1024px) ============ */
+@media (min-width: 601px) and (max-width: 1024px) {
+
+  .side-menu {
+    width: 260px;
+    left: -260px;
+  }
+
+  .title {
+    font-size: 80px;    /* mid size for tablet */
+  }
+
+  .subtitle {
+    font-size: 26px;
+  }
+
+  footer {
+    bottom: 10px;
+  }
+}
+
+/* ============ DEFAULT (LAPTOP & DESKTOP) ============ */
+@media (min-width: 1025px) {
+  body {
+    overflow: hidden;
+  }
+}
