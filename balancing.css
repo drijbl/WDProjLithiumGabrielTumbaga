@@ -1,10 +1,11 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #9b52ee, #279fce);
-  padding: 60px 100px;
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  background:linear-gradient(135deg,#9b52ee,#279fce);
+  padding:60px clamp(16px, 5vw, 100px);
+  overflow-x:hidden;
 }
 
 /* ===== Background canvas ===== */
@@ -129,9 +130,9 @@ canvas#bg {
   background: white;
   border-radius: 12px;
   text-align: center;
-  font-size: 34px;
   font-weight: 600;
-  letter-spacing: 4px;
+  font-size: clamp(20px, 4vw, 34px);
+  letter-spacing: clamp(1px, 0.5vw, 4px);
   margin-bottom: 30px;
 }
 
@@ -201,24 +202,21 @@ canvas#bg {
 @media (max-width: 768px) {
 
   body {
-    padding: 10px;
+    padding: 12px;
   }
 
-  nav {
+  .atom-visualizer {
     flex-direction: column;
-    align-items: center;
+    gap: 20px;
   }
 
-  .container,
-  .content,
-  .game,
-  .main {
+  .equation-box {
+    font-size: clamp(20px, 4vw, 34px);
+    letter-spacing: clamp(1px, 0.5vw, 4px);
+  }
+
+  .next-btn {
     width: 100%;
+    font-size: 16px;
   }
-
-  button, a {
-    font-size: 1rem;
-    padding: 12px 16px;
-  }
-
 }

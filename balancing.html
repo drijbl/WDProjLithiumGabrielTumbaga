@@ -256,27 +256,67 @@ function reveal(){
 addEventListener('scroll',reveal); reveal();
 </script>
 
-<!-- REFERENCES MENU -->
-<div class="references">
-  <div class="ref-main">REFERENCES</div>
+<!-- ===== REFERENCES DIM ===== -->
+<div class="ref-dim" id="refDim"></div>
 
-  <div class="ref-sub one" onclick="window.open('https://www.khanacademy.org/science/ap-chemistry', '_blank')">
+<!-- ===== REFERENCES MENU ===== -->
+<div class="references" id="refMenu">
+
+  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+  <div class="ref-sub one">
     Khan
+    <div class="apa-popup">
+      Khan Academy. (n.d.). <i>Subatomic Particles</i>.
+      Retrieved from
+      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
+        khanacademy.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub two" onclick="window.open('https://chem.libretexts.org', '_blank')">
+  <div class="ref-sub two">
     Libre
+    <div class="apa-popup">
+      LibreTexts. (n.d.). <i>Sub-Atomic Particles</i>.
+      Retrieved from
+      <a href="https://chem.libretexts.org" target="_blank">
+        chem.libretexts.org
+      </a>
+    </div>
   </div>
 
-  <div class="ref-sub three" onclick="window.open('https://www.britannica.com/science/chemistry', '_blank')">
+  <div class="ref-sub three">
     Britannica
+    <div class="apa-popup">
+      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
+      Retrieved from
+      <a href="https://www.britannica.com/science/chemistry" target="_blank">
+        britannica.com
+      </a>
+    </div>
   </div>
+
 </div>
 
+<!-- References Toggle -->
 <script>
-const menu = document.getElementById("sideMenu");
-hamburger.onclick = () => menu.classList.add("open");
-closeMenu.onclick = () => menu.classList.remove("open");
+function toggleRefs() {
+  document.getElementById("refMenu").classList.toggle("active");
+  document.getElementById("refDim").classList.toggle("active");
+}
+
+document.getElementById("refDim").onclick = () => {
+  document.getElementById("refMenu").classList.remove("active");
+  document.getElementById("refDim").classList.remove("active");
+};
+
+document.querySelectorAll('.ref-sub').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    btn.classList.toggle('active');
+  });
+});
 </script>
 
 <script>

@@ -24,11 +24,11 @@
 <div class="card hidden" id="game">
   <div class="hud">
     <div class="hearts" id="hearts">❤️❤️❤️</div>
-    <div class="round" id="round">Round 1</div>
+    <div class="round" id="round">Round 1 / ∞</div>
   </div>
 
   <div class="ion-name" id="question"></div>
-  <div class="hint">Press <b>SPACE</b> to reveal</div>
+  <div class="hint" id="hint">Click to reveal</div>
 
   <div class="answer hidden" id="answer"></div>
 
@@ -45,7 +45,9 @@
   <button class="restart" onclick="restart()">Play Again</button>
 </div>
 
+
 <script>
+// ====================== DATA ======================
 const ions = [
   { name: "acetate", formula: "CH₃COO⁻" },
   { name: "bicarbonate", formula: "HCO₃⁻" },
@@ -65,15 +67,28 @@ function shuffle(a) {
   return a;
 }
 
-let deck, index, round, hearts, revealed;
+// ====================== VARIABLES ======================
+let deck = [];
+let index = 0;
+let round = 1;
+let hearts = 3;
+let showingAnswer = false;
 
+// ====================== ELEMENTS ======================
+const question = document.getElementById("question");
+const answer = document.getElementById("answer");
+const hint = document.getElementById("hint");
+const buttons = document.getElementById("buttons");
+
+// ====================== GAME LOOP ======================
 function startGame() {
   document.getElementById("menu").classList.add("hidden");
   document.getElementById("game").classList.remove("hidden");
   hearts = 3;
   round = 1;
   resetDeck();
-  showCard();
+  nextCard();
+  updateHearts();
 }
 
 function resetDeck() {
@@ -81,28 +96,34 @@ function resetDeck() {
   index = 0;
 }
 
-function showCard() {
-  revealed = false;
-  document.getElementById("question").textContent = deck[index].name;
-  document.getElementById("answer").classList.add("hidden");
-  document.getElementById("buttons").classList.add("hidden");
-  document.getElementById("round").textContent = `Round ${round} / ∞`;
-}
-
-function reveal() {
-  if (revealed) return;
-  revealed = true;
-  document.getElementById("answer").textContent = deck[index].formula;
-  document.getElementById("answer").classList.remove("hidden");
-  document.getElementById("buttons").classList.remove("hidden");
-}
-
-document.addEventListener("keydown", e => {
-  if (e.code === "Space" && !document.getElementById("game").classList.contains("hidden")) {
-    e.preventDefault();
-    reveal();
+function nextCard() {
+  if (index >= deck.length) {
+    round++;
+    resetDeck();
   }
-});
+
+  const current = deck[index];
+
+  question.textContent = current.name;
+  answer.textContent = current.formula;
+
+  answer.classList.add("hidden");
+  buttons.classList.add("hidden");
+  hint.textContent = "Click to reveal";
+  showingAnswer = false;
+
+  document.getElementById("round").textContent = `Round ${round} / ∞`;
+
+  index++;
+}
+
+// ====================== ACTIONS ======================
+function reveal() {
+  answer.classList.remove("hidden");
+  buttons.classList.remove("hidden");
+  hint.textContent = "Click to continue";
+  showingAnswer = true;
+}
 
 function markCorrect() {
   nextCard();
@@ -110,20 +131,16 @@ function markCorrect() {
 
 function markWrong() {
   hearts--;
+  updateHearts();
+  if (hearts === 0) return endGame();
+  nextCard();
+}
+
+function updateHearts() {
   document.getElementById("hearts").textContent = "❤️".repeat(hearts);
-  if (hearts === 0) endGame();
-  else nextCard();
 }
 
-function nextCard() {
-  index++;
-  if (index >= deck.length) {
-    round++;
-    resetDeck();
-  }
-  showCard();
-}
-
+// ====================== END GAME ======================
 function endGame() {
   document.getElementById("game").classList.add("hidden");
   document.getElementById("gameOver").classList.remove("hidden");
@@ -134,23 +151,30 @@ function restart() {
   document.getElementById("game").classList.remove("hidden");
   startGame();
 }
-</script>
 
-<script>
-    const menu = document.getElementById("sideMenu");
-    document.getElementById("hamburger").onclick = () => menu.classList.add("open");
-    document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
+// ====================== CONTROLS ======================
 
-    function filterCategory(cat) {
-        const els = document.querySelectorAll(".element");
-        els.forEach(e => {
-            if (cat === "all") {
-                e.style.opacity = "1";
-            } else {
-                e.style.opacity = e.classList.contains(cat) ? "1" : "0.15";
-            }
-        });
-    }
+// SPACEBAR SUPPORT
+document.addEventListener("keydown", e => {
+  if (e.code === "Space" && !document.getElementById("game").classList.contains("hidden")) {
+    e.preventDefault();
+    if (showingAnswer) nextCard();
+    else reveal();
+  }
+});
+
+// CLICK REVEAL / NEXT
+question.addEventListener("click", e => {
+  e.stopPropagation();
+  if (showingAnswer) nextCard();
+  else reveal();
+});
+
+hint.addEventListener("click", e => {
+  e.stopPropagation();
+  if (showingAnswer) nextCard();
+  else reveal();
+});
 </script>
 
 </body>

@@ -28,7 +28,7 @@
   </div>
 
   <div class="metal-name" id="metal"></div>
-  <div class="hint">Press <b>SPACE</b> to reveal</div>
+  <div class="hint" id="hint">Click to reveal</div>
 
   <div class="answer hidden" id="answer"></div>
 
@@ -45,7 +45,9 @@
   <button class="restart" onclick="restart()">Play Again</button>
 </div>
 
+
 <script>
+// ====================== DATA ======================
 const metals = [ 
   { symbol: "Au", name: "Gold", charges: "+1, +3" },
   { symbol: "Cu", name: "Copper", charges: "+1, +2" },
@@ -67,13 +69,15 @@ let showingAnswer = false;
 let round = 1;
 let hearts = 3;
 
+// ====================== ELEMENTS ======================
 const metalDiv = document.getElementById("metal");
 const answerDiv = document.getElementById("answer");
 const roundDiv = document.getElementById("round");
 const heartsDiv = document.getElementById("hearts");
 const buttonsDiv = document.getElementById("buttons");
+const hint = document.getElementById("hint");
 
-// Game Functions
+// ====================== GAME FUNCTIONS ======================
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -107,16 +111,16 @@ function nextMetal() {
   answerDiv.textContent = `Oxidation States: ${current.charges}`;
   answerDiv.classList.add("hidden");
   buttonsDiv.classList.add("hidden");
+  hint.textContent = "Click to reveal";
   showingAnswer = false;
   roundDiv.textContent = `Round ${round} / ∞`;
 }
 
 function revealAnswer() {
-  if (!showingAnswer) {
-    answerDiv.classList.remove("hidden");
-    buttonsDiv.classList.remove("hidden");
-    showingAnswer = true;
-  }
+  answerDiv.classList.remove("hidden");
+  buttonsDiv.classList.remove("hidden");
+  hint.textContent = "Click to continue";
+  showingAnswer = true;
 }
 
 function markCorrect() {
@@ -149,7 +153,9 @@ function restart() {
   nextMetal();
 }
 
-// Space key to reveal answer
+// ====================== CONTROLS ======================
+
+// SPACEBAR STILL WORKS
 document.addEventListener("keydown", e => {
   if (e.code === "Space" && !document.getElementById("game").classList.contains("hidden")) {
     e.preventDefault();
@@ -157,6 +163,20 @@ document.addEventListener("keydown", e => {
     else revealAnswer();
   }
 });
+
+// CLICK TO REVEAL / NEXT
+hint.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (showingAnswer) nextMetal();
+  else revealAnswer();
+});
+
+metalDiv.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (showingAnswer) nextMetal();
+  else revealAnswer();
+});
+
 </script>
 
 </body>
