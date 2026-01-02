@@ -5,150 +5,194 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chemivis - Scenes 1 & 2</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #9b52ee, #279fce);
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #e0e0e0;
-  }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e0e0e0;
+}
 
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-  }
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
 
-  .scene {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
+.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
 
-  .scene.active {
-    display: flex;
-    opacity: 1;
-  }
+.scene.active {
+  display: flex;
+  opacity: 1;
+}
 
-  .content {
-    position: relative;
-    text-align: center;
-    z-index: 1;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards 0.3s;
-  }
+.content {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-  .typing-text {
-    font-size: 32px;
-    font-weight: 500;
-    color: #f0f0f0;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: .12em solid #f0f0f0;
-    width: 0;
-    animation: typing 3s steps(25, end) forwards, blink 0.75s step-end infinite;
-  }
+.typing-text {
+  font-size: 32px;
+  font-weight: 500;
+  color: #f0f0f0;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .12em solid #f0f0f0;
+  width: 0;
+  animation-fill-mode: forwards;
+}
 
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 25ch; }
-  }
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #f0f0f0; }
+}
 
-  @keyframes blink {
-    from, to { border-color: transparent; }
-    50% { border-color: #f0f0f0; }
-  }
+.next-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  pointer-events: none; 
+  animation: fadeIn 1s forwards;
+}
 
-  .next-btn {
-    display: inline-block;
-    margin-top: 30px;
-    padding: 12px 32px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-  }
 
-  .next-btn:hover {
-    background: rgba(255,255,255,0.15);
-    transform: scale(1.05);
-  }
+.next-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
 
-  /* Scene 2 layout */
-  .scene2-content {
-    display: flex;
-    width: 80%;
-    justify-content: space-between;
-    align-items: center;
-    color: #f0f0f0;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards 0.3s;
-  }
+.scene2-content {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  color: #f0f0f0;
+}
 
-  .scene2-text {
-    width: 40%;
-    font-size: 28px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.scene2-text {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .scene2-text .chemistry {
-    margin-top: 10px;
-    font-size: 28px;
-    font-weight: 500;
-  }
+.scene2-text .chemistry {
+  margin-top: 10px;
+}
 
-  #molecule-canvas {
-    width: 50%;
-    height: 60vh;
-    border-radius: 10px;
-  }
+#molecule-canvas {
+  width: 50%;
+  height: 60vh;
+  border-radius: 10px;
+}
+
+.slide1-text {
+  animation:
+    typing-slide1 2s steps(20, end) forwards,
+    blink 0.75s step-end infinite;
+}
+
+@keyframes typing-slide1 {
+  from { width: 0; }
+  to { width: 18.5ch; }
+}
+
+.slide2-line1 {
+  animation:
+    typing-slide2a 2s steps(20, end) forwards,
+    hide-cursor 0.01s forwards;
+  animation-delay: 0s, 2s;
+}
+
+@keyframes hide-cursor {
+  to { border-right-color: transparent; }
+}
+
+@keyframes typing-slide2a {
+  from { width: 0; }
+  to { width: 17ch; }
+}
+
+.slide2-line2 {
+  border-right: none; 
+}
+
+.slide2-line2 {
+  width: 0;
+  animation:
+    show-caret 0s forwards,
+    typing-slide2b 1.4s steps(9, end) forwards,
+    blink 0.75s step-end infinite;
+  animation-delay: 2.05s, 2.05s, 2.05s;
+}
+
+@keyframes show-caret {
+  to { border-right: .12em solid #f0f0f0; }
+}
+
+@keyframes typing-slide2b {
+  from { width: 0; }
+  to { width: 8.7ch; }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1.2s ease; 
+  pointer-events: none;          
+}
 
 </style>
 </head>
+
 <body>
 
-<!-- Scene 1 -->
 <div class="scene scene1 active">
   <canvas id="bg"></canvas>
   <div class="content">
-    <div class="typing-text">Welcome to Chemivis</div>
-    <button class="next-btn" id="toScene2">Next</button>
+    <div class="typing-text slide1-text">Welcome to Chemivis</div>
+    <button class="next-btn" id="toScene2" style="animation-delay: 2.5s;">Next</button>
   </div>
 </div>
 
-<!-- Scene 2 -->
 <div class="scene scene2">
   <div class="scene2-content">
     <div class="scene2-text">
-      <div class="typing-text">Visualize the unseen</div>
-      <div class="chemistry">chemistry</div>
-      <button class="next-btn">Next</button>
+      <div class="typing-text slide2-line1">Visualize the unseen</div>
+      <div class="typing-text slide2-line2 chemistry">chemistry</div>
+      <button class="next-btn" style="animation-delay: 5.6s;">Next</button>
     </div>
     <canvas id="molecule-canvas"></canvas>
   </div>
@@ -158,204 +202,170 @@
 <script src="https://cdn.jsdelivr.net/npm/three@0.181.2/examples/js/controls/OrbitControls.js"></script>
 
 <script>
-// ---------------- SCENE 1 ----------------
+
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
 });
 
-// Particle for explosion
+const nextBtn1 = document.getElementById('toScene2');
+
+nextBtn1.addEventListener('animationend', () => {
+  nextBtn1.style.pointerEvents = 'auto'; 
+});
+
 class Particle {
   constructor(x, y) {
     this.x = x; this.y = y;
-    this.r = 2 + Math.random()*2;
-    this.vx = (Math.random()-0.5)*6;
-    this.vy = (Math.random()-0.5)*6;
-    this.life = 30 + Math.random()*20;
+    this.r = 2 + Math.random() * 2;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.life = 30 + Math.random() * 20;
   }
   update() {
-    this.x += this.vx; this.y += this.vy;
+    this.x += this.vx;
+    this.y += this.vy;
     this.life--;
     ctx.beginPath();
-    ctx.fillStyle = `rgba(255,255,255,${this.life/50})`;
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${this.life / 50})`;
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     ctx.fill();
   }
 }
 
 class Atom {
-  constructor(){
-    this.fade=0; this.reset();
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 4 + Math.random() * 4;
+    this.vx = (Math.random() - 0.5) * 2;
+    this.vy = (Math.random() - 0.5) * 2;
+    this.exploded = false;
   }
-  reset(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.r=4+Math.random()*4;
-    this.vx=(Math.random()-0.5)*2;
-    this.vy=(Math.random()-0.5)*2;
-    this.exploded=false;
-    this.fade=0;
+  explode() {
+    this.exploded = true;
+    for (let i = 0; i < 15; i++) particles.push(new Particle(this.x, this.y));
   }
-  draw(){
-    ctx.beginPath();
-    ctx.fillStyle=`rgba(255,255,255,${this.fade})`;
-    ctx.shadowColor='white';
-    ctx.shadowBlur=10;
-    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fill();
-    if(this.fade<1)this.fade+=0.02;
-  }
-  explode(){
-    this.exploded=true;
-    for(let i=0;i<15;i++) particles.push(new Particle(this.x,this.y));
-    setTimeout(()=>{ this.reset(); },1000);
-  }
-  update(atomsArray){
-    if(this.exploded) return;
-    this.x+=this.vx; this.y+=this.vy;
-
-    if(this.x<0||this.x>canvas.width) this.vx*=-1;
-    if(this.y<0||this.y>canvas.height) this.vy*=-1;
-
-    // Collision detection
-    for(let a of atomsArray){
-      if(a===this||a.exploded) continue;
-      const dx = a.x-this.x;
-      const dy = a.y-this.y;
-      const dist = Math.hypot(dx,dy);
-      if(dist<this.r+a.r){
-        this.explode(); a.explode();
+  update(atoms) {
+    if (this.exploded) return;
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    for (let a of atoms) {
+      if (a !== this && !a.exploded) {
+        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+          this.explode(); a.explode();
+        }
       }
     }
-
-    this.draw();
+    ctx.beginPath();
+    ctx.fillStyle = '#fff';
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
   }
 }
 
-const atoms=[];
-const particles=[];
-for(let i=0;i<50;i++) atoms.push(new Atom());
+const atoms = Array.from({ length: 50 }, () => new Atom());
+const particles = [];
 
-function animateScene1(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  atoms.forEach(a=>a.update(atoms));
-  particles.forEach((p,i)=>{
+function animateScene1() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => a.update(atoms));
+  particles.forEach((p, i) => {
     p.update();
-    if(p.life<=0) particles.splice(i,1);
+    if (p.life <= 0) particles.splice(i, 1);
   });
   requestAnimationFrame(animateScene1);
 }
 animateScene1();
 
-// Scene switch
-const scene1=document.querySelector('.scene1');
-const scene2=document.querySelector('.scene2');
-document.getElementById('toScene2').addEventListener('click', ()=>{
-  atoms.forEach(a=>a.explode());
-  setTimeout(()=>{
+const scene1 = document.querySelector('.scene1');
+const scene2 = document.querySelector('.scene2');
+
+document.getElementById('toScene2').onclick = () => {
+  nextBtn1.disabled = true;
+  nextBtn1.style.pointerEvents = 'none';
+  
+  atoms.forEach(a => a.explode());
+
+  const content = scene1.querySelector('.content');
+  content.classList.add('fade-out');
+
+  setTimeout(() => {
     scene1.classList.remove('active');
     scene2.classList.add('active');
     initMolecule();
-  },1200);
-});
+  }, 1200); 
+};
 
-// ---------------- SCENE 2 (Three.js Ethanol) ----------------
-function initMolecule(){
-  const canvasM = document.getElementById('molecule-canvas');
+
+function initMolecule() {
+  const c = document.getElementById('molecule-canvas');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, canvasM.clientWidth / canvasM.clientHeight, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(50, c.clientWidth / c.clientHeight, 0.1, 100);
   camera.position.z = 8;
 
-  const renderer = new THREE.WebGLRenderer({ canvas: canvasM, antialias: true, alpha: true });
-  renderer.setSize(canvasM.clientWidth, canvasM.clientHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  const renderer = new THREE.WebGLRenderer({ canvas: c, alpha: true, antialias: true });
+  renderer.setSize(c.clientWidth, c.clientHeight);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = true;
 
-  const ambientLight=new THREE.AmbientLight(0xffffff,0.4); scene.add(ambientLight);
-  const directionalLight=new THREE.DirectionalLight(0xffffff,0.8);
-  directionalLight.position.set(5,5,5); scene.add(directionalLight);
-  const pointLight1=new THREE.PointLight(0xffffff,0.6);
-  pointLight1.position.set(-5,-5,-5); scene.add(pointLight1);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const light = new THREE.DirectionalLight(0xffffff, 0.8);
+  light.position.set(5, 5, 5);
+  scene.add(light);
 
-  function createAtom(color,name){
-    const geometry=new THREE.SphereGeometry(0.3,32,32);
-    const material=new THREE.MeshPhysicalMaterial({color,clearcoat:0.1});
-    const mesh=new THREE.Mesh(geometry,material);
-    mesh.userData={name}; return mesh;
-  }
-  function createBond(start,end){
-    const dir=new THREE.Vector3().subVectors(end,start);
-    const length=dir.length(); const bondRadius=0.06;
-    const geometry=new THREE.CylinderGeometry(bondRadius,bondRadius,length,16);
-    const material=new THREE.MeshPhysicalMaterial({ color:0xffcbe5, clearcoat:0.1 });
-    const bond=new THREE.Mesh(geometry,material);
-    bond.position.copy(start).lerp(end,0.5);
-    bond.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());
-    return bond;
-  }
+  const atom = (color) =>
+    new THREE.Mesh(new THREE.SphereGeometry(0.3, 32, 32), new THREE.MeshStandardMaterial({ color }));
 
-  const molecule=new THREE.Group();
-  const atomsE={
-    C1:createAtom(0xff96ca,'C'), C2:createAtom(0xff96ca,'C'), O:createAtom(0xff69b4,'O'),
-    H1:createAtom(0x20cbec,'H'), H2:createAtom(0x20cbec,'H'), H3:createAtom(0x20cbec,'H'),
-    H4:createAtom(0x20cbec,'H'), H5:createAtom(0x20cbec,'H'), H6:createAtom(0x20cbec,'H')
+  const bond = (a, b) => {
+    const d = new THREE.Vector3().subVectors(b, a);
+    const g = new THREE.CylinderGeometry(0.06, 0.06, d.length(), 16);
+    const m = new THREE.MeshStandardMaterial({ color: 0xffcbe5 });
+    const c = new THREE.Mesh(g, m);
+    c.position.copy(a).lerp(b, 0.5);
+    c.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize());
+    return c;
   };
 
-  atomsE.C1.position.set(0,0,0);
-  atomsE.C2.position.set(1.54,0,0);
-  atomsE.H1.position.set(-0.5,-0.9,0);
-  atomsE.H2.position.set(-0.5,0.45,0.7);
-  atomsE.H3.position.set(-0.5,0.45,-0.7);
-  atomsE.H4.position.set(1.9,-0.45,0.7);
-  atomsE.H5.position.set(1.9,-0.45,-0.7);
-  atomsE.O.position.set(2,0.9,0);
-  atomsE.H6.position.set(2.5,1.2,-0.7);
+  const group = new THREE.Group();
+  const C1 = atom(0xff96ca), C2 = atom(0xff96ca), O = atom(0xff69b4);
+  const H = [...Array(6)].map(() => atom(0x20cbec));
 
-  Object.values(atomsE).forEach(a=>molecule.add(a));
+  C1.position.set(0, 0, 0);
+  C2.position.set(1.54, 0, 0);
+  O.position.set(2, 0.9, 0);
 
-  const bonds=[
-    createBond(atomsE.C1.position,atomsE.C2.position),
-    createBond(atomsE.C2.position,atomsE.O.position),
-    createBond(atomsE.C1.position,atomsE.H1.position),
-    createBond(atomsE.C1.position,atomsE.H2.position),
-    createBond(atomsE.C1.position,atomsE.H3.position),
-    createBond(atomsE.C2.position,atomsE.H4.position),
-    createBond(atomsE.C2.position,atomsE.H5.position),
-    createBond(atomsE.O.position,atomsE.H6.position)
-  ];
-  bonds.forEach(b=>molecule.add(b));
+  H[0].position.set(-0.5, -0.9, 0);
+  H[1].position.set(-0.5, 0.45, 0.7);
+  H[2].position.set(-0.5, 0.45, -0.7);
+  H[3].position.set(1.9, -0.45, 0.7);
+  H[4].position.set(1.9, -0.45, -0.7);
+  H[5].position.set(2.5, 1.2, -0.7);
 
-  molecule.scale.set(1.8,1.8,1.8);
-  molecule.position.set(0,-1.0,0);
-  scene.add(molecule);
+  [C1, C2, O, ...H].forEach(a => group.add(a));
+  [
+    bond(C1.position, C2.position),
+    bond(C2.position, O.position),
+    ...H.map((h, i) => bond(i < 3 ? C1.position : i < 5 ? C2.position : O.position, h.position))
+  ].forEach(b => group.add(b));
 
-  let isRotating=true, mouseDown=false, mouseX=0, mouseY=0;
-  canvasM.addEventListener('mousedown', e=>{ mouseDown=true; mouseX=e.clientX; mouseY=e.clientY; });
-  canvasM.addEventListener('mouseup', ()=>{ mouseDown=false; });
-  canvasM.addEventListener('mousemove', e=>{
-    if(mouseDown){ molecule.rotation.y += (e.clientX-mouseX)*0.01; molecule.rotation.x += (e.clientY-mouseY)*0.01; }
-    mouseX=e.clientX; mouseY=e.clientY;
-  });
+  group.scale.set(1.8, 1.8, 1.8);
+  scene.add(group);
 
-  window.addEventListener('resize', ()=>{
-    camera.aspect = canvasM.clientWidth / canvasM.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(canvasM.clientWidth,canvasM.clientHeight);
-  });
-
-  function animateMolecule(){
-    requestAnimationFrame(animateMolecule);
-    if(isRotating && !mouseDown){ molecule.rotation.y +=0.03; molecule.rotation.x +=0.02; }
-    renderer.render(scene,camera);
+  function animate() {
+    group.rotation.y += 0.01;
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
   }
-  animateMolecule();
+  animate();
 }
 </script>
 
