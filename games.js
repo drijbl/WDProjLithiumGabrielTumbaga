@@ -171,7 +171,7 @@ bTrans.onclick = async () => {
         if (m.dmg) {
             eHP = Math.max(0, eHP - m.dmg);
             addRec(`${m.name}. Dealt ${m.dmg} dmg.`, 'p');
-            document.getElementById('p2-img').classList.add('shake');
+            hit('p2-wrap');
         } else if (m.heal) {
             pHP = Math.min(100, pHP + m.heal);
             addRec(`${m.name}. Healed ${m.heal} HP.`, 'p');
@@ -183,7 +183,6 @@ bTrans.onclick = async () => {
     updateHP();
 
     setTimeout(async () => {
-        document.getElementById('p2-img').classList.remove('shake');
         if (eHP <= 0) {
             showEnd('victory');
         } else {
@@ -225,18 +224,28 @@ async function enemyTurn() {
 
     pHP = Math.max(0, pHP - chosen.dmg);
     addRec(`${chosen.name}. Dealt ${chosen.dmg} dmg.`, 'e');
-    document.getElementById('p1-img').classList.add('shake');
+    hit('p1-wrap');
 
     updateHP();
 
     setTimeout(() => {
-        document.getElementById('p1-img').classList.remove('shake');
         if (pHP <= 0) {
             showEnd('defeat');
         } else {
             unlockNextTurn();
         }
     }, 1000);
+}
+
+function hit(wrapperId) {
+  const el = document.getElementById(wrapperId);
+  if (!el) {
+    console.error('HIT TARGET NOT FOUND:', wrapperId);
+    return;
+  }
+  el.classList.remove('damage');
+  void el.offsetWidth;
+  el.classList.add('damage');
 }
 
 function unlockNextTurn() {
