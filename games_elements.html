@@ -1,210 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chemivis | Master Alchemist</title>
-    <link href="games_elements.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Master Alchemist | Transmutation War</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="games_elements.css">
 </head>
 <body>
+<a href="games.html" class="back-btn">← BACK</a>
 
-    <h1>MASTER ALCHEMIST</h1>
+<header><h1>MASTER ALCHEMIST</h1></header>
 
-    <div id="game-container">
+<div id="game-layout">
+    <div id="main-column">
         <div id="stage">
-            <div class="hp-container" id="hp-p1-wrap">
-                <div style="font-size: 10px; font-weight: bold;">ALCHEMIST</div>
-                <div class="hp-bar-bg"><div id="hp-p1" class="hp-fill"></div></div>
+            <div id="p1-hud-wrap" class="hp-hud">
+                <div class="hp-meta"><span>YOU</span><span id="p1-hp-txt">100/100</span></div>
+                <div class="hp-track"><div id="p1-bar" class="hp-fill"></div></div>
             </div>
 
-            <div class="fighter" id="p1">
-                <img src="https://cdna.artstation.com/p/assets/images/images/011/386/176/original/asif-bashir-knight-idle.gif" class="fighter-sprite" alt="Player">
-            </div>
-            <div class="fighter" id="p2">
-                <img src="https://i.pinimg.com/originals/74/0b/43/740b439690180424683058a96431f337.gif" class="fighter-sprite" alt="Enemy">
+            <div class="fighter-cont" id="p1-cont">
+                <img id="p1-img" src="https://cdna.artstation.com/p/assets/images/images/011/386/176/original/asif-bashir-knight-idle.gif" class="sprite" alt="P1">
             </div>
 
-            <div class="hp-container" id="hp-p2-wrap" style="text-align: right;">
-                <div style="font-size: 10px; font-weight: bold;">ENEMY</div>
-                <div class="hp-bar-bg"><div id="hp-p2" class="hp-fill"></div></div>
+            <div class="fighter-cont" id="p2-cont">
+                <img id="p2-img" src="https://i.pinimg.com/originals/74/0b/43/740b439690180424683058a96431f337.gif" class="sprite" alt="P2">
+            </div>
+
+            <div id="p2-hud-wrap" class="hp-hud">
+                <div class="hp-meta"><span>ENEMY</span><span id="p2-hp-txt">100/100</span></div>
+                <div class="hp-track"><div id="p2-bar" class="hp-fill"></div></div>
             </div>
         </div>
 
         <div id="dashboard">
-            <div class="display-area">
-                <div class="status-box" id="p1-status">
-                    <div class="formula-text" id="p1-formula">SELECT ELEMENTS</div>
-                    <div id="p1-compound" class="compound-name">-</div>
-                    <div class="action-text" id="p1-action">YOUR TURN</div>
+            <div id="synth-box">
+                <div class="beaker-cont">
+                    <div class="beaker"></div>
+                      <div class="beaker"><div id="beaker-fill" class="beaker-fill"></div></div>
+                    </div>
+                  <div id="synth-text">SYNTHESIZING...</div>
                 </div>
-                <div class="status-box" id="p2-status">
-                    <div class="formula-text">ENEMY REACTION</div>
-                    <div id="p2-compound" class="compound-name">-</div>
-                    <div class="action-text" id="p2-action">WAITING...</div>
+
+            <div class="monitor-row">
+                <div class="monitor-box">
+                    <label>TRANSMUTATION LOG</label>
+                    <span id="turn-txt" class="val">YOUR TURN, ALCHEMIST</span>
+                    <div id="stab-tag" class="sub-val" style="display: none;">STABILIZED!</div>
+                </div>
+                <div class="monitor-box">
+                    <label>FORMULA DETECTED</label>
+                    <span id="formula-name" class="val">- SCANNING -</span>
+                    <div id="formula-txt" style="font-size: 0.7rem; color: #777; font-weight: bold; margin-top: 5px;"></div>
                 </div>
             </div>
-            <div id="element-grid"></div>
+
+            <div id="action-zone">
+                <div id="step-1">
+                    <div class="step-heading heading-s1">Step I: Elemental Selection</div>
+                    <div id="element-grid"></div>
+                    <button id="btn-lock" class="btn-main btn-inactive" disabled>Lock In Elements</button>
+                </div>
+
+                <div id="step-2" style="display: none;">
+                    <div class="cancel-link" id="btn-cancel">× Cancel</div>
+                    <div class="step-heading heading-s2">Step II: Define Quantities</div>
+                    <div id="quant-items" class="quant-wrap"></div>
+                    <button id="btn-transmute" class="btn-main btn-fire">Transmute</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="overlay">
-        <div id="result-text">VICTORY!</div>
-        <div class="btn-group">
-            <a href="games.html" class="nav-btn">Exit Game</a>
-            <button onclick="location.reload()" class="nav-btn">Play Again</button>
+    <div id="records-sidebar">
+        <div class="rec-head">📜 ALCHEMICAL RECORDS</div>
+        <div id="rec-list">
+            <div style="color: #666; text-align: center; margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 2px;">TOME IS EMPTY...</div>
         </div>
     </div>
+</div>
 
-    <script>
-        const formatFormula = (str) => str.replace(/(\d+)/g, '<sub>$1</sub>');
+<div id="vic-scr" class="end-scr">
+    <div class="end-title victory">VICTORY</div>
+    <div class="end-btns">
+        <button class="e-btn btn-w" id="btn-retry-v">RETRY TRANSMUTATION</button>
+        <button class="e-btn btn-o">BACK</button>
+    </div>
+</div>
 
-        const elements = [
-            { s: 'C', n: 'Carbon' }, { s: 'Cl', n: 'Chlorine' }, { s: 'Cu', n: 'Copper' },
-            { s: 'Fe', n: 'Iron' }, { s: 'H', n: 'Hydrogen' }, { s: 'Mg', n: 'Magnesium' },
-            { s: 'N', n: 'Nitrogen' }, { s: 'Na', n: 'Sodium' }, { s: 'O', n: 'Oxygen' },
-            { s: 'S', n: 'Sulfur' }, { s: 'He', n: 'Helium' }, { s: 'Ne', n: 'Neon' }
-        ];
+<div id="def-scr" class="end-scr">
+    <div class="end-title defeat">DEFEAT</div>
+    <div class="end-btns">
+        <button class="e-btn btn-w" id="btn-retry-d">PLAY AGAIN</button>
+        <button class="e-btn btn-o" id="btn-back-games">BACK TO GAMES</button>
+    </div>
+</div>
 
-        const reactions = {
-            'H+O': { name: 'Water', formula: 'H2O' },
-            'Cl+Na': { name: 'Table Salt', formula: 'NaCl' },
-            'C+O': { name: 'Carbon Dioxide', formula: 'CO2' },
-            'Fe+O': { name: 'Rust', formula: 'Fe2O3' },
-            'H+Cl': { name: 'Hydrochloric Acid', formula: 'HCl' },
-            'Mg+O': { name: 'Magnesium Oxide', formula: 'MgO' },
-            'Cu+O': { name: 'Copper Oxide', formula: 'CuO' },
-            'S+O': { name: 'Sulfur Dioxide', formula: 'SO2' },
-            'H+N': { name: 'Ammonia', formula: 'NH3' },
-            'C+H': { name: 'Methane', formula: 'CH4' },
-            'Cl+Mg': { name: 'Magnesium Chloride', formula: 'MgCl2' },
-            'N+O': { name: 'Nitrogen Dioxide', formula: 'NO2' },
-            'H+S': { name: 'Hydrogen Sulfide', formula: 'H2S' },
-            'He': { name: 'Helium Shield', formula: 'He', heal: 20 },
-            'Ne': { name: 'Neon Buffer', formula: 'Ne', heal: 20 }
-        };
+<script>
+document.getElementById('btn-back-games').addEventListener('click', function() {
+    window.location.href = 'games.html';
+});
+</script>
 
-        const enemyPool = [
-            { name: 'Sulfuric Acid', formula: 'H2SO4' },
-            { name: 'Nitric Acid', formula: 'HNO3' },
-            { name: 'Carbon Monoxide', formula: 'CO' },
-            { name: 'Iron Sulfide', formula: 'FeS' },
-            { name: 'Sodium Chloride', formula: 'NaCl' }
-        ];
-
-        let p1HP = 100, p2HP = 100, currentCombo = [], isBusy = false;
-        const getDmg = () => Math.floor(Math.random() * (28 - 18 + 1)) + 18;
-
-        const grid = document.getElementById('element-grid');
-        elements.forEach(el => {
-            const btn = document.createElement('div');
-            btn.className = 'element-btn';
-            btn.innerHTML = `<span class="symbol">${el.s}</span><span class="name">${el.n}</span>`;
-            btn.onclick = () => {
-                if (isBusy || currentCombo.includes(el.s)) return;
-                currentCombo.push(el.s);
-                btn.classList.add('active');
-                document.getElementById('p1-formula').innerText = currentCombo.join(' + ');
-                if (currentCombo.length >= 2 || el.s === 'He' || el.s === 'Ne') playerTurn();
-            };
-            grid.appendChild(btn);
-        });
-
-        function playerTurn() {
-            isBusy = true;
-            toggleGrid(true);
-            const key = currentCombo.sort().join('+');
-            const rx = reactions[key] || reactions[currentCombo[0]];
-            
-            const compoundDiv = document.getElementById('p1-compound');
-            const actionText = document.getElementById('p1-action');
-
-            if (rx && (currentCombo.length === 1 ? (rx.formula === 'He' || rx.formula === 'Ne') : true)) {
-                compoundDiv.innerHTML = `${rx.name} [${formatFormula(rx.formula)}]`;
-                if (rx.heal) {
-                    p1HP = Math.min(100, p1HP + rx.heal);
-                    actionText.innerText = "HEALED!";
-                } else {
-                    p2HP -= getDmg();
-                    actionText.innerText = "SUCCESSFUL REACTION!";
-                    document.getElementById('p2').classList.add('shake', 'hit');
-                }
-            } else {
-                compoundDiv.innerHTML = "<span style='color:#ff4e50'>INVALID COMBO</span>";
-                actionText.innerText = "TURN SKIPPED";
-            }
-
-            updateHP();
-
-            // WAIT for HP bar to move before deciding what to do next
-            setTimeout(() => {
-                if (p2HP <= 0) {
-                    endGame(true);
-                } else {
-                    setTimeout(opponentTurn, 800);
-                }
-            }, 600);
-        }
-
-        function opponentTurn() {
-            const rx = enemyPool[Math.floor(Math.random() * enemyPool.length)];
-            document.getElementById('p2-compound').innerHTML = `${rx.name} [${formatFormula(rx.formula)}]`;
-            document.getElementById('p2-action').innerText = "ATTACKING!";
-            
-            p1HP -= getDmg();
-            document.getElementById('p1').classList.add('shake', 'hit');
-            
-            updateHP();
-
-            setTimeout(() => {
-                if (p1HP <= 0) {
-                    endGame(false);
-                } else {
-                    setTimeout(reset, 800);
-                }
-            }, 600);
-        }
-
-        function reset() {
-            currentCombo = []; isBusy = false; toggleGrid(false);
-            document.querySelectorAll('.element-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('p1').classList.remove('shake', 'hit');
-            document.getElementById('p2').classList.remove('shake', 'hit');
-            document.getElementById('p1-action').innerText = "YOUR TURN";
-            document.getElementById('p1-formula').innerText = "SELECT ELEMENTS";
-            document.getElementById('p1-compound').innerText = "-";
-            document.getElementById('p2-compound').innerText = "-";
-            document.getElementById('p2-action').innerText = "WAITING...";
-        }
-
-        function updateHP() {
-            p1HP = Math.max(0, p1HP); 
-            p2HP = Math.max(0, p2HP);
-            document.getElementById('hp-p1').style.width = p1HP + '%';
-            document.getElementById('hp-p2').style.width = p2HP + '%';
-        }
-
-        function endGame(victory) {
-            const overlay = document.getElementById('overlay');
-            const resText = document.getElementById('result-text');
-            
-            // Add a final pause so the user can see the 0 HP
-            setTimeout(() => {
-                overlay.style.display = 'flex';
-                if (victory) {
-                    resText.innerText = 'VICTORY!';
-                    resText.className = 'victory-text';
-                } else {
-                    resText.innerText = 'DEFEAT';
-                    resText.className = 'defeat-text';
-                }
-            }, 500);
-        }
-
-        function toggleGrid(dis) {
-            document.querySelectorAll('.element-btn').forEach(b => {
-                dis ? b.classList.add('disabled') : b.classList.remove('disabled');
-            });
-        }
-    </script>
+<script src="games.js"></script>
 </body>
 </html>
