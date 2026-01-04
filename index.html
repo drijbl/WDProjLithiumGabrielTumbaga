@@ -307,6 +307,11 @@ document.getElementById('toScene2').onclick = () => {
 
 
 function initMolecule() {
+// molecule.js
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.181.2/examples/jsm/controls/OrbitControls.js';
+
+export function initMolecule() {
   const c = document.getElementById('molecule-canvas');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, c.clientWidth / c.clientHeight, 0.1, 100);
@@ -315,7 +320,7 @@ function initMolecule() {
   const renderer = new THREE.WebGLRenderer({ canvas: c, alpha: true, antialias: true });
   renderer.setSize(c.clientWidth, c.clientHeight);
 
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   const light = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -367,6 +372,8 @@ function initMolecule() {
   }
   animate();
 }
+}
+
 </script>
 
 </body>
