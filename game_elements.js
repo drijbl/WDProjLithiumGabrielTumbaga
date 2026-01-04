@@ -1,5 +1,4 @@
 const REACTIONS = [
-    { name: 'Pure Water', formula: 'H2O', elements: { H: 2, O: 1 }, heal: 20 },
     { name: 'Table Salt', formula: 'NaCl', elements: { Na: 1, Cl: 1 }, dmg: 25 },
     { name: 'Carbon Dioxide', formula: 'CO2', elements: { C: 1, O: 2 }, dmg: 30 },
     { name: 'Ferric Oxide', formula: 'Fe2O3', elements: { Fe: 2, O: 3 }, dmg: 45 },
@@ -18,6 +17,8 @@ const REACTIONS = [
     { name: 'Sodium Acetate', formula: 'NaC2H3O2', elements: { Na: 1, C: 2, H: 3, O: 2 }, dmg: 52 },
     { name: 'Sodium Bicarbonate', formula: 'NaHCO3', elements: { Na: 1, H: 1, C: 1, O: 3 }, heal: 40 },
     { name: 'Iron Sulfide', formula: 'FeS', elements: { Fe: 1, S: 1 }, dmg: 30 },
+    { name: 'Iron (III) Chloride', formula: 'FeCl3', elements: { Fe: 1, Cl: 3 }, dmg: 30 },
+    { name: 'Water', formula: 'H2O', elements: { H: 2, O: 1 }, heal: 20 },
     { name: 'Helium Shield', formula: 'He', elements: { He: 1 }, heal: 15 },
     { name: 'Neon Buffer', formula: 'Ne', elements: { Ne: 1 }, heal: 15 }
 ];
