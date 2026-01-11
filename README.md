@@ -35,6 +35,16 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 > This section compiles short, interactive chemistry games that reinforce learning. These activities will generally be about basic inorganic chemistry topics, such as nomenclature, identifying ions, and matching formulas to names. These games serve as fun ways to review the concepts covered in the previous pages, as well as other lessons users might come across while studying chemistry.
 ><img width="754" height="423" alt="image" src="https://github.com/user-attachments/assets/ba3cf891-4fad-4ff6-b307-d72f461ad796" />
 
+**Project Proposal Update (3rd Quarter)**
+##HTML Form##
+> The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to the "Practice games" section, and the collected data will be used in the three different existing games as a leadeboard. There would also be a user icon at the top right of the "Practice Games" page.
+><img width="754" height="423"
+
+##New Additions to the Website##
+> Aside from HTML forms and applications, we plan to add another game by modifying our home page. The additional game, called “Master Alchemy,” is the main game featured on the Practice Games page. Inspired by local arcade-style games, Master Alchemy challenges players to defeat their opponent by combining common elements into chemical compounds. The damage dealt is based on the compound’s reactivity, while certain elements can be used to heal.
+
+> Our home page will be enhanced with additional animations and interactive features. It will be divided into three stages. The first stage will display the website title with animated and exploding atoms in the background. Upon clicking the “Next” button, users will be directed to the second stage, which features the website subtitle with animated protons, neutrons, and electrons appearing along the sides. Clicking “Next” one last time would lead to the final stage of the home page, where the website title is centered and surrounded by icons that represents the different pages of the site.
+
 ### JS Implementation ##
 JavaScript will power most of the interactive features of Chemivis, making static visuals respond to user actions across the website.
 - **Interactive Periodic Table:** JS will trigger pop-ups displaying detailed element information and atomic models when a user clicks on an element.
