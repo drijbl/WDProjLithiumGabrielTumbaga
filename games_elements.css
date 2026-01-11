@@ -286,8 +286,6 @@
         box-shadow: 0 0 20px rgba(255,255,255,0.05);
     }
     .beaker-fill { position: absolute; bottom: 0; width: 100%; height: 0%; background: var(--magic-blue); transition: height 1.5s ease-in-out; }
-    
-    /* Streams removed as requested */
     .stream { display: none; }
 
     #synth-text { margin-top: 25px; font-size: 1.6rem; font-weight: 900; letter-spacing: 5px; color: #fff; text-shadow: 0 0 10px #fff; }
