@@ -130,7 +130,7 @@ const bonds = [
 
 bonds.forEach(bond => molecule.add(bond));
 
-molecule.scale.set(1.8, 1.8, 1.8); // Scaling up the molecule
+molecule.scale.set(1.3, 1.3, 1.3); // Scaling up the molecule
 molecule.position.set(0, -1.0, 0); // Centering the molecule
 
 scene.add(molecule);

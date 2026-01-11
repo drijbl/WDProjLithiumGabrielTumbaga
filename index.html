@@ -1,256 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CS3 Website Project" />
-  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
-  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
-  <title>Chemivis</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemivis - Scenes 1 & 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="stylesheet" href="index.css">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e0e0e0;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 1;
+}
+
+.scene.active {
+  display: flex;
+  opacity: 1;
+  z-index: 2;
+}
+
+.content {
+  position: relative;
+  text-align: center;
+  z-index: 10;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.typing-text {
+  font-size: 32px;
+  font-weight: 500;
+  color: #f0f0f0;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .12em solid #f0f0f0;
+  width: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: #f0f0f0; }
+}
+
+.next-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  pointer-events: none; 
+  animation: fadeIn 1s forwards;
+  z-index: 20;
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 100;
+  display: none;
+  white-space: nowrap;
+}
+
+.next-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.05);
+}
+
+.scene2-content {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  color: #f0f0f0;
+}
+
+.scene2-text {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.scene2-text .chemistry {
+  margin-top: 10px;
+}
+
+.scene3-title {
+  font-size: 100px;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: 5px;
+  margin-bottom: 0;
+  line-height: 1;
+  text-shadow:
+    0 0 10px rgba(180, 140, 227, 0.7),
+    0 0 20px rgba(92, 192, 230, 0.5);
+}
+
+#molecule-canvas {
+  width: 50%;
+  height: 60vh;
+  border-radius: 10px;
+}
+
+.slide1-text {
+  animation:
+    typing-slide1 2s steps(20, end) forwards,
+    blink 0.75s step-end infinite;
+}
+
+@keyframes typing-slide1 {
+  from { width: 0; }
+  to { width: 18.5ch; }
+}
+
+.slide2-line1 {
+  animation:
+    typing-slide2a 2s steps(20, end) forwards,
+    hide-cursor 0.01s forwards;
+  animation-delay: 0s, 2s;
+}
+
+@keyframes hide-cursor {
+  to { border-right-color: transparent; }
+}
+
+@keyframes typing-slide2a {
+  from { width: 0; }
+  to { width: 17ch; }
+}
+
+.slide2-line2 {
+  border-right: none; 
+}
+
+.slide2-line2 {
+  width: 0;
+  animation:
+    show-caret 0s forwards,
+    typing-slide2b 1.4s steps(9, end) forwards,
+    blink 0.75s step-end infinite;
+  animation-delay: 2.05s, 2.05s, 2.05s;
+}
+
+@keyframes show-caret {
+  to { border-right: .12em solid #f0f0f0; }
+}
+
+@keyframes typing-slide2b {
+  from { width: 0; }
+  to { width: 8.7ch; }
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1.2s ease; 
+  pointer-events: none;
+}
+
+</style>
 </head>
 
 <body>
+
+<div class="scene scene1 active">
   <canvas id="bg"></canvas>
-  <header>
-    <div id="hamburger">☰</div>
-  </header>
-
-  <!-- Navigation menu -->
-  <div class="side-menu" id="sideMenu">
-    <div id="closeMenu">✖</div>
-    <a href="index.html">HOME</a>
-    <a href="periodic-table.html">PERIODIC TABLE</a>
-    <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-    <a href="vsepr.html">VSEPR</a>
-    <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-    <a href="games.html">PRACTICE GAMES</a>
+  <div class="content">
+    <div class="typing-text slide1-text">Welcome to Chemivis</div>
+    <button class="next-btn" id="toScene2" style="animation-delay: 2.5s;">Next</button>
   </div>
+</div>
 
-  <!-- Main landing content -->
-  <main>
-    <div class="title">CHEMIVIS</div>
-    <div class="subtitle">
-      <span>VISUALIZING THE FUNDAMENTALS OF</span><br>
-      <span>THE UNSEEN CHEMISTRY</span>
+<div class="scene scene2">
+  <div class="scene2-content">
+    <div class="scene2-text">
+      <div class="typing-text slide2-line1">Visualize the unseen</div>
+      <div class="typing-text slide2-line2 chemistry">chemistry</div>
+      <button class="next-btn" id="toScene3" style="animation-delay: 4s;">Next</button>
     </div>
-  </main>
+    <canvas id="molecule-canvas"></canvas>
+  </div>
+</div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-icons">
-      <img src="./assets/facebook.svg" alt="Facebook">
-      <img src="./assets/instagram.svg" alt="Instagram">
-      <img src="./assets/github.png" alt="GitHub">
-    </div>
-  </footer>
+<div class="scene scene3">
+  <div class="scene3-content">
+    <div class="scene3-title">Chemivis</div>
+    <div class="tooltip"></div>
+    <canvas id="molecule-canvas"></canvas>
+  </div>
+</div>
 
-  <!-- Tooltip for 3D Molecule -->
-  <div class="tooltip"></div>
+<script>
 
-  <!-- Navigation menu functionality -->
-  <script>
-    const menu = document.getElementById("sideMenu");
-    document.getElementById("hamburger").onclick = () => menu.classList.add("open");
-    document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
-  </script>
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
-  <!-- Exploding atoms background script -->
-  <script>
-    const canvas = document.getElementById("bg");
-    const c = canvas.getContext("2d");
+window.addEventListener('resize', () => {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+});
 
-    function resize() {
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
-    }
+const nextBtn1 = document.getElementById('toScene2');
+const nextBtn2 = document.getElementById('toScene3');
 
-    resize();
-    window.addEventListener("resize", resize);
+nextBtn1.addEventListener('animationend', () => {
+  nextBtn1.style.pointerEvents = 'auto'; 
+});
 
-    // Atom class represents a single particle in the BG
-    class Atom {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.r = 3 + Math.random() * 3;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.exploded = false;
-      }
+nextBtn2.addEventListener('animationend', () => {
+  nextBtn2.style.pointerEvents = 'auto'; 
+});
 
-      // Map atoms on BG
-      draw() {
-        c.beginPath();
-        c.fillStyle = "white";
-        c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        c.fill();
-      }
+class Particle {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.r = 2 + Math.random() * 2;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.life = 30 + Math.random() * 20;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    ctx.beginPath();
+    ctx.fillStyle = `rgba(255,255,255,${this.life / 50})`;
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
 
-      // Explode when two attoms collide 
-      explode() {
-        this.exploded = true;
-        explosions.push(new Explosion(this.x, this.y));
-      }
-
-      update(atoms) {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-        // Check collision with other atoms
-        for (let a of atoms) {
-          if (a === this || a.exploded) continue;
-          let dx = a.x - this.x;
-          let dy = a.y - this.y;
-          let dist = Math.hypot(dx, dy);
-          if (dist < this.r + a.r) {
-            this.explode();
-            a.explode();
-          }
-        }
-
-        this.draw();
-      }
-    }
-
-    // Burst effect upon collision
-    class Explosion {
-      constructor(x, y) {
-        this.particles = [];
-        for (let i = 0; i < 20; i++) {
-          this.particles.push({
-            x,
-            y,
-            vx: (Math.random() - 0.5) * 3,
-            vy: (Math.random() - 0.5) * 3,
-            life: 40 + Math.random() * 20
-          });
+class Atom {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 4 + Math.random() * 4;
+    this.vx = (Math.random() - 0.5) * 2;
+    this.vy = (Math.random() - 0.5) * 2;
+    this.exploded = false;
+  }
+  explode() {
+    this.exploded = true;
+    for (let i = 0; i < 15; i++) particles.push(new Particle(this.x, this.y));
+  }
+  update(atoms) {
+    if (this.exploded) return;
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    for (let a of atoms) {
+      if (a !== this && !a.exploded) {
+        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+          this.explode(); a.explode();
         }
       }
-
-      update() {
-        for (let p of this.particles) {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life--;
-          c.fillStyle = "rgba(255,255,255," + p.life / 60 + ")";
-          c.beginPath();
-          c.arc(p.x, p.y, 2, 0, Math.PI * 2);
-          c.fill();
-        }
-        this.particles = this.particles.filter(p => p.life > 0);
-      }
     }
+    ctx.beginPath();
+    ctx.fillStyle = '#fff';
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
 
-    const atoms = [];
-    const explosions = [];
+const atoms = Array.from({ length: 50 }, () => new Atom());
+const particles = [];
 
-    for (let i = 0; i < 40; i++) atoms.push(new Atom());
+function animateScene1() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => a.update(atoms));
+  particles.forEach((p, i) => {
+    p.update();
+    if (p.life <= 0) particles.splice(i, 1);
+  });
+  requestAnimationFrame(animateScene1);
+}
+animateScene1();
 
-    function animate() {
-      requestAnimationFrame(animate);
-      c.clearRect(0, 0, canvas.width, canvas.height);
+const scene1 = document.querySelector('.scene1');
+const scene2 = document.querySelector('.scene2');
+const scene3 = document.querySelector('.scene3');
 
-      atoms.forEach(a => !a.exploded && a.update(atoms));
-      explosions.forEach(e => e.update());
-    }
+document.getElementById('toScene2').onclick = () => {
+  nextBtn1.disabled = true;
+  nextBtn1.style.pointerEvents = 'none';
+  
+  atoms.forEach(a => a.explode());
 
-    animate();
-  </script>
+  const content = scene1.querySelector('.content');
+  content.classList.add('fade-out');
 
-  <!-- Secondary exploding atoms background (larger bursts)  -->
-  <canvas id="atomsBg"></canvas>
-  <script>
-    const cvs = document.getElementById('atomsBg');
-    const ctx = cvs.getContext('2d');
+  setTimeout(() => {
+    scene1.classList.remove('active');
+    scene2.classList.add('active');
+    import('./molecule_left.js');
+  }, 1200); 
+};
 
-    function resize() {
-      cvs.width = innerWidth;
-      cvs.height = innerHeight;
-    }
+document.getElementById('toScene3').onclick = () => {
+  nextBtn2.disabled = true;
+  nextBtn2.style.pointerEvents = 'none';
 
-    resize();
-    addEventListener('resize', resize);
+  const content = scene2.querySelector('.scene2-text');
+  content.classList.add('fade-out');
 
-    const atoms = [];
-    const COUNT = 35;
-    for (let i = 0; i < COUNT; i++) {
-      atoms.push({
-        x: Math.random() * cvs.width,
-        y: Math.random() * cvs.height,
-        r: 5 + Math.random() * 3,
-        vx: (Math.random() * 3 - 1.5),
-        vy: (Math.random() * 3 - 1.5)
-      });
-    }
+  setTimeout(() => {
+    scene2.classList.remove('active');
+    scene3.classList.add('active');
+    import('./main.js');
+  }, 1200);
+}
 
-    function explode(a) {
-      for (let i = 0; i < 15; i++) {
-        atoms.push({
-          x: a.x,
-          y: a.y,
-          r: 2,
-          vx: (Math.random() * 4 - 2),
-          vy: (Math.random() * 4 - 2),
-          life: 30
-        });
-      }
-    }
-
-    function loop() {
-      ctx.clearRect(0, 0, cvs.width, cvs.height);
-
-      for (let i = 0; i < atoms.length; i++) {
-        let a = atoms[i];
-        a.x += a.vx * 10;
-        a.y += a.vy * 10;
-
-        if (a.x < 0 || a.x > cvs.width) a.vx *= -1;
-        if (a.y < 0 || a.y > cvs.height) a.vy *= -1;
-
-        if (a.life !== undefined) {
-          a.life--;
-          if (a.life <= 0) {
-            atoms.splice(i, 1);
-            i--;
-            continue;
-          }
-        }
-
-        ctx.beginPath();
-        ctx.fillStyle = 'white';
-        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      for (let i = 0; i < atoms.length; i++) {
-        for (let j = i + 1; j < atoms.length; j++) {
-          const a = atoms[i], b = atoms[j];
-          const dx = a.x - b.x, dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < a.r + b.r + 10) {
-            explode(a);
-            explode(b);
-            atoms.splice(j, 1);
-            atoms.splice(i, 1);
-          }
-        }
-      }
-
-      requestAnimationFrame(loop);
-    }
-
-    loop();
-  </script>
-
-  <!-- 3D Molecule Script -->
-  <script type="module" src="./main.js"></script>
+</script>
 
 </body>
 </html>
