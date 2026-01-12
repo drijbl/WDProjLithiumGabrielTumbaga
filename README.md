@@ -38,12 +38,14 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 **Project Proposal Update (3rd Quarter)**
 ### HTML Forms
 > The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to the "Practice games" section, and the collected data will be used in the three different existing games as a leadeboard. There would also be a user icon at the top right of the "Practice Games" page.
-> <br><br> HTML Forms: <br> <img width="637" height="358" alt="image" src="https://github.com/user-attachments/assets/e70809b4-b1c9-4073-b75b-3a88eb77d372" /> <br>
+> <br><br> HTML Forms: <br> <img width="708" height="398" alt="image" src="https://github.com/user-attachments/assets/3e84ccf2-dd10-4fc0-a26a-bc36238d8e93" />
+ <br>
+> <br> <img width="713" height="400" alt="image" src="https://github.com/user-attachments/assets/f57d910f-ed8f-4ae9-9292-8aa5d6524e76" /> <br>
+> <br> <img width="711" height="400" alt="image" src="https://github.com/user-attachments/assets/d1cf36d2-290b-4d53-9dea-a2c3198d3015" /> <br>
 > Practice Games Page: <br> <img width="639" height="359" alt="image" src="https://github.com/user-attachments/assets/68fadb2c-c656-456a-9629-d4307dcfb2db" /> <br>
-> First Game: <br> <img width="638" height="357" alt="image" src="https://github.com/user-attachments/assets/b8e522dd-59ae-4256-9461-846cab913193" /> <br>
-> <img width="640" height="358" alt="image" src="https://github.com/user-attachments/assets/61987af2-d545-48e4-8844-ae5542527a16" /> <br>
-> Second Game: <br> <img width="639" height="360" alt="image" src="https://github.com/user-attachments/assets/a33c12a7-5c3c-4464-a102-431d63f16aa4" /> <br>
-> Third Game: <br> <img width="640" height="362" alt="image" src="https://github.com/user-attachments/assets/c467af56-c4b4-4df5-8f66-1ad8bd6398ea" /> <br> <br>
+> Second Game: <br> <img width="712" height="403" alt="image" src="https://github.com/user-attachments/assets/d64ffdd6-2bd2-44b0-b16a-37088d651b99" /> <br> <img width="1009" height="565" alt="image" src="https://github.com/user-attachments/assets/f4001f65-9473-4c10-afb7-a1565471c636" /> <br>
+> Third Game: <br> <img width="715" height="399" alt="image" src="https://github.com/user-attachments/assets/62718913-12ad-4729-b41b-06131a7d869f" /> <br> <br <img width="1009" height="565" alt="image" src="https://github.com/user-attachments/assets/3cbb0f29-2f16-47b2-a4e9-a517745ab53e" />
+<br>
 
 ### New Additions to the Website
 **Main Game:** *Master Alchemy* <br>
