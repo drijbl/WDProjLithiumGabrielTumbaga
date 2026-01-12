@@ -38,7 +38,7 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 **Project Proposal Update (3rd Quarter)**
 ### HTML Forms
 > The HTML forms will be used in the Practice Games section for answer submission and session tracking. In the Polyatomic Ions and Transition Metals games, users input game answers through forms, which JS verifies to award points (scoring is discussed in the website additions) or deduct lives. At the start of each session, users enter a username via a form, which serves as a session identifier. The final score is then recorded under that username, with the highest scores displayed on a session-based leaderboard. 
-<br><br> HTML Forms: <br> <img width="535" height="301" alt="image" src="https://github.com/user-attachments/assets/9b785ff2-e6dc-4daa-bd11-2139b47e4a21" /> <br>
+<br><br> Username Input: <br> <img width="535" height="301" alt="image" src="https://github.com/user-attachments/assets/9b785ff2-e6dc-4daa-bd11-2139b47e4a21" /> <br>
 
 > Second Game: <br> <img width="756" height="427" alt="image" src="https://github.com/user-attachments/assets/bcaa220b-31cf-4443-b0e7-6555bd145394" />
  <br> 
