@@ -37,15 +37,14 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 
 **Project Proposal Update (3rd Quarter)**
 ### HTML Forms
-> The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to the "Practice games" section, and the collected data will be used in the three different existing games as a leadeboard. There would also be a user icon at the top right of the "Practice Games" page.
-> <br><br> HTML Forms: <br> <img width="708" height="398" alt="image" src="https://github.com/user-attachments/assets/3e84ccf2-dd10-4fc0-a26a-bc36238d8e93" />
+> The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to either the "Charge It!" or "Ion Know That One!" game, and the collected data will be used in the three different existing games as a leadeboard.
+<br><br> HTML Forms: <br> <img width="708" height="398" alt="image" src="https://github.com/user-attachments/assets/3e84ccf2-dd10-4fc0-a26a-bc36238d8e93" />
  <br>
-> <br> <img width="713" height="400" alt="image" src="https://github.com/user-attachments/assets/f57d910f-ed8f-4ae9-9292-8aa5d6524e76" /> <br>
+<br> <img width="713" height="400" alt="image" src="https://github.com/user-attachments/assets/f57d910f-ed8f-4ae9-9292-8aa5d6524e76" /> <br>
 > <br> <img width="711" height="400" alt="image" src="https://github.com/user-attachments/assets/d1cf36d2-290b-4d53-9dea-a2c3198d3015" /> <br>
-> Practice Games Page: <br> <img width="639" height="359" alt="image" src="https://github.com/user-attachments/assets/68fadb2c-c656-456a-9629-d4307dcfb2db" /> <br>
-> Second Game: <br> <img width="712" height="403" alt="image" src="https://github.com/user-attachments/assets/d64ffdd6-2bd2-44b0-b16a-37088d651b99" /> <br> <img width="1009" height="565" alt="image" src="https://github.com/user-attachments/assets/f4001f65-9473-4c10-afb7-a1565471c636" /> <br>
-> Third Game: <br> <img width="715" height="399" alt="image" src="https://github.com/user-attachments/assets/62718913-12ad-4729-b41b-06131a7d869f" /> <br> <br <img width="1009" height="565" alt="image" src="https://github.com/user-attachments/assets/3cbb0f29-2f16-47b2-a4e9-a517745ab53e" />
-<br>
+Second Game: <br> <img width="759" height="426" alt="image" src="https://github.com/user-attachments/assets/2e1165e4-a297-465b-a853-c3aeb10b5e8c" /> <br> 
+Third Game: <br> <img width="762" height="427" alt="image" src="https://github.com/user-attachments/assets/86623bee-d681-48d2-b5ab-b22d70e02d73" /> <br>
+User-input answer: <br> <img width="759" height="425" alt="image" src="https://github.com/user-attachments/assets/137efb42-05cc-4a9c-a948-d3e14b24c663" />
 
 ### New Additions to the Website
 **Main Game:** *Master Alchemy* <br>
