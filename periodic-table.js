@@ -341,30 +341,21 @@ const elements = [
   filterContainer?.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
-
+  
     // button style update
-    document.querySelectorAll('#filterContainer button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#filterContainer button')
+      .forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
-    // get category
+  
     activeCategory = btn.dataset.cat || 'all';
-
-    // fade out all elements
-    elementNodes.forEach(({ node }) => {
-      node.style.transition = 'opacity 0.5s ease';
-      node.style.opacity = 0;
-      node.style.pointerEvents = 'none';
+  
+    elementNodes.forEach(({ node, data }) => {
+      const match = activeCategory === 'all' || data.cat === activeCategory;
+  
+      node.classList.toggle('dimmed', !match);
+      node.style.pointerEvents = match ? 'auto' : 'none';
     });
-
-    // toggle visibility after fade
-    setTimeout(() => {
-      elementNodes.forEach(({ node, data }) => {
-        const show = activeCategory === 'all' || data.cat === activeCategory;
-        node.style.pointerEvents = show ? 'auto' : 'none';
-        node.style.opacity = show ? 1 : 0;
-      });
-    }, 500);
-  });
+  });  
 
   modalClose.onclick = () => {
     modalOverlay.classList.remove('active');
