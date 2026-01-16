@@ -52,7 +52,7 @@ canvas#bg {
   color: white;
   background: none;
   border: none;
-  z-index: 1999;
+  z-index: 999;
   position: relative;
 }
 
