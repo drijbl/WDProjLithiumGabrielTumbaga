@@ -36,14 +36,26 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 ><img width="754" height="423" alt="image" src="https://github.com/user-attachments/assets/ba3cf891-4fad-4ff6-b307-d72f461ad796" />
 
 **Project Proposal Update (3rd Quarter)**
-##HTML Form##
-> The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to the "Practice games" section, and the collected data will be used in the three different existing games as a leadeboard. There would also be a user icon at the top right of the "Practice Games" page.
-><img width="754" height="423"
+### HTML Forms
+> The HTML forms will be used in the Practice Games section for answer submission and session tracking. In the Polyatomic Ions and Transition Metals games, users input game answers through forms, which JS verifies to award points (scoring is discussed in the website additions) or deduct lives. At the start of each session, users enter a username via a form, which serves as a session identifier. The final score is then recorded under that username, with the highest scores displayed on a session-based leaderboard. 
+<br><br> Username Input: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/9b785ff2-e6dc-4daa-bd11-2139b47e4a21" /> <br>
 
-##New Additions to the Website##
+> User-input answer: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/f1e87388-de35-4bd9-8f02-39cb2aad1ca0" />
+ <br>
+
+> Game Over: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/81b6adc3-e19b-4f81-9ee3-9de1a411a144" /> <br>
+
+### New Additions to the Website
+**Main Game:** *Master Alchemy* <br>
 > Aside from HTML forms and applications, we plan to add another game by modifying our home page. The additional game, called “Master Alchemy,” is the main game featured on the Practice Games page. Inspired by local arcade-style games, Master Alchemy challenges players to defeat their opponent by combining common elements into chemical compounds. The damage dealt is based on the compound’s reactivity, while certain elements can be used to heal.
+> <img width="639" height="360" alt="image" src="https://github.com/user-attachments/assets/2807e221-f6ec-4415-bd35-dc4da4726f59" />
+> <img width="637" height="361" alt="image" src="https://github.com/user-attachments/assets/421ef164-4c3c-4561-b7ef-87c23fabe794" />
 
-> Our home page will be enhanced with additional animations and interactive features. It will be divided into three stages. The first stage will display the website title with animated and exploding atoms in the background. Upon clicking the “Next” button, users will be directed to the second stage, which features the website subtitle with animated protons, neutrons, and electrons appearing along the sides. Clicking “Next” one last time would lead to the final stage of the home page, where the website title is centered and surrounded by icons that represents the different pages of the site.
+**Home Page Revisions** <br>
+> Our home page will be enhanced with additional animations and interactive features. It will be divided into three stages. The first stage will display the website title with animated and exploding atoms in the background. Upon clicking the “Next” button, users will be directed to the second stage, which features the website subtitle with the interactive molecule appearing along the side. Clicking “Next” one last time would lead to the final stage of the home page, where the website title is centered and surrounded by icons that represents the different pages of the site.
+> <br><br> 1st stage: <br> <img width="640" height="358" alt="image" src="https://github.com/user-attachments/assets/400365bb-f23f-4839-a918-54069f8c6d0d" /> <br>
+> 2nd stage: <br> <img width="636" height="361" alt="image" src="https://github.com/user-attachments/assets/8430daba-2bf3-4b49-81e1-1c7ab4a64355" /> <br>
+> 3rd stage: <br> <img width="639" height="358" alt="image" src="https://github.com/user-attachments/assets/d6c112cf-d204-42fa-aa2b-b6309d84edd8" /> <br>
 
 ### JS Implementation ##
 JavaScript will power most of the interactive features of Chemivis, making static visuals respond to user actions across the website.

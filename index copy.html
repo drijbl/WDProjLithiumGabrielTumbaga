@@ -224,7 +224,7 @@ canvas {
       <div class="typing-text slide2-line2 chemistry">chemistry</div>
       <button class="next-btn" id="toScene3" style="animation-delay: 4s;">Next</button>
     </div>
-    <div id="scene2-three"></div>
+    <canvas id="molecule-canvas"></canvas>
   </div>
 </div>
 
@@ -232,6 +232,7 @@ canvas {
   <div class="scene3-content">
     <div class="scene3-title">Chemivis</div>
     <div class="tooltip"></div>
+    <canvas id="molecule-canvas"></canvas>
   </div>
 </div>
 
@@ -341,7 +342,7 @@ document.getElementById('toScene2').onclick = () => {
   setTimeout(() => {
     scene1.classList.remove('active');
     scene2.classList.add('active');
-    import('./molecule_left.js');
+    import('./molecule_left.js').then(m => m.start());
   }, 1200); 
 };
 
