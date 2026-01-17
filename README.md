@@ -37,13 +37,13 @@ Expanded: <br> <img width="754" height="425" alt="image" src="https://github.com
 
 **Project Proposal Update (3rd Quarter)**
 ### HTML Forms
-> The HTML Form serves as a database that will compile the user's username and password. The forms would pop-up when the user decides to go to the "Practice games" section, and the collected data will be used in the three different existing games as a leadeboard. There would also be a user icon at the top right of the "Practice Games" page.
-> <br><br> HTML Forms: <br> <img width="637" height="358" alt="image" src="https://github.com/user-attachments/assets/e70809b4-b1c9-4073-b75b-3a88eb77d372" /> <br>
-> Practice Games Page: <br> <img width="639" height="359" alt="image" src="https://github.com/user-attachments/assets/68fadb2c-c656-456a-9629-d4307dcfb2db" /> <br>
-> First Game: <br> <img width="638" height="357" alt="image" src="https://github.com/user-attachments/assets/b8e522dd-59ae-4256-9461-846cab913193" /> <br>
-> <img width="640" height="358" alt="image" src="https://github.com/user-attachments/assets/61987af2-d545-48e4-8844-ae5542527a16" /> <br>
-> Second Game: <br> <img width="639" height="360" alt="image" src="https://github.com/user-attachments/assets/a33c12a7-5c3c-4464-a102-431d63f16aa4" /> <br>
-> Third Game: <br> <img width="640" height="362" alt="image" src="https://github.com/user-attachments/assets/c467af56-c4b4-4df5-8f66-1ad8bd6398ea" /> <br> <br>
+> The HTML forms will be used in the Practice Games section for answer submission and session tracking. In the Polyatomic Ions and Transition Metals games, users input game answers through forms, which JS verifies to award points (scoring is discussed in the website additions) or deduct lives. At the start of each session, users enter a username via a form, which serves as a session identifier. The final score is then recorded under that username, with the highest scores displayed on a session-based leaderboard. 
+<br><br> Username Input: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/9b785ff2-e6dc-4daa-bd11-2139b47e4a21" /> <br>
+
+> User-input answer: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/f1e87388-de35-4bd9-8f02-39cb2aad1ca0" />
+ <br>
+
+> Game Over: <br> <img width="753" height="422" alt="image" src="https://github.com/user-attachments/assets/81b6adc3-e19b-4f81-9ee3-9de1a411a144" /> <br>
 
 ### New Additions to the Website
 **Main Game:** *Master Alchemy* <br>
