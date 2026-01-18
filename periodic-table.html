@@ -15,50 +15,69 @@
 </head>
 <body>
 
-    <div id="hamburger">☰</div>
+<div id="hamburger">☰</div>
 
-    <div class="side-menu" id="sideMenu">
-        <span id="closeMenu">✕</span>
-        <a href="#">Explorer</a>
-        <a href="#">Isotopes</a>
-        <a href="#">Compounds</a>
-        <a href="#">Quiz</a>
-    </div>
+<!-- Navigation menu -->
+  <nav class="side-menu" id="sideMenu">
+    <div id="closeMenu">✖</div>
+    <a href="index.html">HOME</a>
+    <a href="periodic-table.html">PERIODIC TABLE</a>
+    <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+    <a href="vsepr.html">VSEPR</a>
+    <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+    <a href="games.html">PRACTICE GAMES</a>
+  </nav>
+</div>
 
-    <h1 class="title">Periodic Table</h1>
+<!-- Navigation menu toggle -->
+<script>
+    const menu = document.getElementById("sideMenu");
+    const hamburger = document.getElementById("hamburger");
+    const closeMenu = document.getElementById("closeMenu");
 
-    <div class="categories" id="filterContainer">
-        <button class="active" data-cat="all">All</button>
-        <button class="alkali" data-cat="alkali">Alkali</button>
-        <button class="alkaline" data-cat="alkaline">Alkaline</button>
-        <button class="transition" data-cat="transition">Transition</button>
-        <button class="post" data-cat="post">Post-Transition</button>
-        <button class="metalloid" data-cat="metalloid">Metalloids</button>
-        <button class="nonmetal" data-cat="nonmetal">Nonmetals</button>
-        <button class="halogen" data-cat="halogen">Halogens</button>
-        <button class="noble" data-cat="noble">Noble Gases</button>
-        <button class="lanthanide" data-cat="lanthanide">Lanthanides</button>
-        <button class="actinide" data-cat="actinide">Actinides</button>
-    </div>
+    hamburger.onclick = () => menu.classList.add("open");
+    closeMenu.onclick = () => menu.classList.remove("open"); //open and close hamburger/side menu
+</script>
 
-    <div class="table-viewport" id="tableViewport">
-        <div class="table-container" id="periodicTable"></div>
-    </div>
+<h1 class="title">Periodic Table</h1>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-card">
-            <span id="modalClose">✕</span>
-            <div id="modalStaticInfo"></div>
-            <div class="modal-tabs">
-                <div class="modal-tab active" data-tab="overview">Overview</div>
-                <div class="modal-tab" data-tab="isotopes">Isotopes</div>
-            </div>
-            <div id="modalTabContent"></div>
+<div class="categories" id="filterContainer">
+    <button class="active" data-cat="all">All</button>
+    <button class="alkali" data-cat="alkali">Alkali</button>
+    <button class="alkaline" data-cat="alkaline">Alkaline</button>
+    <button class="transition" data-cat="transition">Transition</button>
+    <button class="post" data-cat="post-transition">Post-Transition</button>
+    <button class="metalloid" data-cat="metalloid">Metalloids</button>
+    <button class="nonmetal" data-cat="nonmetal">Nonmetals</button>
+    <button class="halogen" data-cat="halogen">Halogens</button>
+    <button class="noble" data-cat="noble">Noble Gases</button>
+    <button class="lanthanide" data-cat="lanthanide">Lanthanides</button>
+    <button class="actinide" data-cat="actinide">Actinides</button>
+</div>
+
+<div class="table-viewport" id="tableViewport">
+    <div class="table-container" id="periodicTable"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+        <span id="modalClose">✕</span>
+        <div id="modalStaticInfo"></div>
+        <div class="modal-tabs">
+            <div class="modal-tab active" data-tab="overview">Overview</div>
+            <div class="modal-tab" data-tab="isotopes">Isotopes</div>
         </div>
+        <div id="modalTabContent"></div>
     </div>
+</div>
 
-    <canvas id="atomsBg"></canvas>
+<div id="searchBarContainer" style="margin: 10px auto; max-width: 650px; padding: 0 15px;">
+  <input type="text" id="elementSearch" placeholder="Search elements..." style="width: 100%; padding: 8px; font-size: 1rem; border-radius: 8px; border: none; outline: none;"/>
+</div>
 
-    <script src="periodic-table.js"></script>
+<canvas id="atomsBg"></canvas>
+
+<script src="periodic-table.js"></script>
+
 </body>
 </html>

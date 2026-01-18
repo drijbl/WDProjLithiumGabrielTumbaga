@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 /* Element Data */
 const elements = [
   // Row 1
@@ -15,7 +16,7 @@ const elements = [
   // Row 3
   { num: 11, sym: 'Na', nam: 'Sodium', mas: '22.990', cat: 'alkali', col: 1, row: 3, gp: 1, per: 3, bp: 1156, mp: 370.87, state: 'Solid', conf: '[Ne] 3s¹', desc: 'Soft silvery metal, highly reactive.', isotopes: [{m:'²³Na', n:'Sodium-23', a:'100%'}] },
   { num: 12, sym: 'Mg', nam: 'Magnesium', mas: '24.305', cat: 'alkaline', col: 2, row: 3, gp: 2, per: 3, bp: 1363, mp: 923, state: 'Solid', conf: '[Ne] 3s²', desc: 'Lightweight structural metal.', isotopes: [{m:'²⁴Mg', n:'Magnesium-24', a:'79%'}, {m:'²⁵Mg', n:'Magnesium-25', a:'10%'}, {m:'²⁶Mg', n:'Magnesium-26', a:'11%'}] },
-  { num: 13, sym: 'Al', nam: 'Aluminum', mas: '26.982', cat: 'post', col: 13, row: 3, gp: 13, per: 3, bp: 2743, mp: 933.47, state: 'Solid', conf: '[Ne] 3s² 3p¹', desc: 'Abundant metal, durable and lightweight.', isotopes: [{m:'²⁷Al', n:'Aluminum-27', a:'100%'}] },
+  { num: 13, sym: 'Al', nam: 'Aluminum', mas: '26.982', cat: 'post-transition', col: 13, row: 3, gp: 13, per: 3, bp: 2743, mp: 933.47, state: 'Solid', conf: '[Ne] 3s² 3p¹', desc: 'Abundant metal, durable and lightweight.', isotopes: [{m:'²⁷Al', n:'Aluminum-27', a:'100%'}] },
   { num: 14, sym: 'Si', nam: 'Silicon', mas: '28.085', cat: 'metalloid', col: 14, row: 3, gp: 14, per: 3, bp: 3538, mp: 1687, state: 'Solid', conf: '[Ne] 3s² 3p²', desc: 'Key semiconductor for electronics.', isotopes: [{m:'²⁸Si', n:'Silicon-28', a:'92.2%'}] },
   { num: 15, sym: 'P', nam: 'Phosphorus', mas: '30.974', cat: 'nonmetal', col: 15, row: 3, gp: 15, per: 3, bp: 553, mp: 317.3, state: 'Solid', conf: '[Ne] 3s² 3p³', desc: 'Essential for DNA and cellular energy.', isotopes: [{m:'³¹P', n:'Phosphorus-31', a:'100%'}] },
   { num: 16, sym: 'S', nam: 'Sulfur', mas: '32.06', cat: 'nonmetal', col: 16, row: 3, gp: 16, per: 3, bp: 717.8, mp: 388.36, state: 'Solid', conf: '[Ne] 3s² 3p⁴', desc: 'Yellow nonmetal used in matches and tires.', isotopes: [{m:'³²S', n:'Sulfur-32', a:'95%'}] },
@@ -34,7 +35,7 @@ const elements = [
   { num: 28, sym: 'Ni', nam: 'Nickel', mas: '58.69', cat: 'transition', col: 10, row: 4, gp: 10, per: 4, bp: 3186, mp: 1728, state: 'Solid', conf: '[Ar] 3d⁸ 4s²', desc: 'Common metal in stainless steel.', isotopes: [] },
   { num: 29, sym: 'Cu', nam: 'Copper', mas: '63.55', cat: 'transition', col: 11, row: 4, gp: 11, per: 4, bp: 2835, mp: 1358, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s¹', desc: 'High electrical conductivity.', isotopes: [] },
   { num: 30, sym: 'Zn', nam: 'Zinc', mas: '65.38', cat: 'transition', col: 12, row: 4, gp: 12, per: 4, bp: 1180, mp: 693, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s²', desc: 'Used to galvanize steel.', isotopes: [] },
-  { num: 31, sym: 'Ga', nam: 'Gallium', mas: '69.72', cat: 'post', col: 13, row: 4, gp: 13, per: 4, bp: 2477, mp: 303, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s² 4p¹', desc: 'Melts in hands.', isotopes: [] },
+  { num: 31, sym: 'Ga', nam: 'Gallium', mas: '69.72', cat: 'post-transition', col: 13, row: 4, gp: 13, per: 4, bp: 2477, mp: 303, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s² 4p¹', desc: 'Melts in hands.', isotopes: [] },
   { num: 32, sym: 'Ge', nam: 'Germanium', mas: '72.63', cat: 'metalloid', col: 14, row: 4, gp: 14, per: 4, bp: 3106, mp: 1211, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s² 4p²', desc: 'Semiconductor metal.', isotopes: [] },
   { num: 33, sym: 'As', nam: 'Arsenic', mas: '74.92', cat: 'metalloid', col: 15, row: 4, gp: 15, per: 4, bp: 887, mp: 1090, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s² 4p³', desc: 'Toxic metalloid.', isotopes: [] },
   { num: 34, sym: 'Se', nam: 'Selenium', mas: '78.97', cat: 'nonmetal', col: 16, row: 4, gp: 16, per: 4, bp: 958, mp: 494, state: 'Solid', conf: '[Ar] 3d¹⁰ 4s² 4p⁴', desc: 'Used in photocells.', isotopes: [] },
@@ -52,8 +53,8 @@ const elements = [
   { num: 46, sym: 'Pd', nam: 'Palladium', mas: '106.4', cat: 'transition', col: 10, row: 5, gp: 10, per: 5, bp: 3236, mp: 1828, state: 'Solid', conf: '[Kr] 4d¹⁰', desc: 'Used in catalysts.', isotopes: [] },
   { num: 47, sym: 'Ag', nam: 'Silver', mas: '107.9', cat: 'transition', col: 11, row: 5, gp: 11, per: 5, bp: 2435, mp: 1235, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s¹', desc: 'Highest electrical conductivity.', isotopes: [] },
   { num: 48, sym: 'Cd', nam: 'Cadmium', mas: '112.4', cat: 'transition', col: 12, row: 5, gp: 12, per: 5, bp: 1040, mp: 594, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s²', desc: 'Used in batteries.', isotopes: [] },
-  { num: 49, sym: 'In', nam: 'Indium', mas: '114.8', cat: 'post', col: 13, row: 5, gp: 13, per: 5, bp: 2345, mp: 430, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p¹', desc: 'Used in touchscreens.', isotopes: [] },
-  { num: 50, sym: 'Sn', nam: 'Tin', mas: '118.7', cat: 'post', col: 14, row: 5, gp: 14, per: 5, bp: 2875, mp: 505, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p²', desc: 'Malleable metal.', isotopes: [] },
+  { num: 49, sym: 'In', nam: 'Indium', mas: '114.8', cat: 'post-transition', col: 13, row: 5, gp: 13, per: 5, bp: 2345, mp: 430, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p¹', desc: 'Used in touchscreens.', isotopes: [] },
+  { num: 50, sym: 'Sn', nam: 'Tin', mas: '118.7', cat: 'post-transition', col: 14, row: 5, gp: 14, per: 5, bp: 2875, mp: 505, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p²', desc: 'Malleable metal.', isotopes: [] },
   { num: 51, sym: 'Sb', nam: 'Antimony', mas: '121.8', cat: 'metalloid', col: 15, row: 5, gp: 15, per: 5, bp: 1860, mp: 904, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p³', desc: 'Used in retardants.', isotopes: [] },
   { num: 52, sym: 'Te', nam: 'Tellurium', mas: '127.6', cat: 'metalloid', col: 16, row: 5, gp: 16, per: 5, bp: 1261, mp: 723, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p⁴', desc: 'Rare stable metalloid.', isotopes: [] },
   { num: 53, sym: 'I', nam: 'Iodine', mas: '126.9', cat: 'halogen', col: 17, row: 5, gp: 17, per: 5, bp: 457, mp: 387, state: 'Solid', conf: '[Kr] 4d¹⁰ 5s² 5p⁵', desc: 'Lustrous black solid.', isotopes: [] },
@@ -69,9 +70,9 @@ const elements = [
   { num: 78, sym: 'Pt', nam: 'Platinum', mas: '195.1', cat: 'transition', col: 10, row: 6, gp: 10, per: 6, bp: 4098, mp: 2041, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d⁹ 6s¹', desc: 'Precious noble metal.', isotopes: [] },
   { num: 79, sym: 'Au', nam: 'Gold', mas: '197.0', cat: 'transition', col: 11, row: 6, gp: 11, per: 6, bp: 3129, mp: 1337, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s¹', desc: 'Precious yellow metal.', isotopes: [] },
   { num: 80, sym: 'Hg', nam: 'Mercury', mas: '200.6', cat: 'transition', col: 12, row: 6, gp: 12, per: 6, bp: 630, mp: 234, state: 'Liquid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s²', desc: 'Liquid at STP.', isotopes: [] },
-  { num: 81, sym: 'Tl', nam: 'Thallium', mas: '204.4', cat: 'post', col: 13, row: 6, gp: 13, per: 6, bp: 1746, mp: 577, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹', desc: 'Toxic grey metal.', isotopes: [] },
-  { num: 82, sym: 'Pb', nam: 'Lead', mas: '207.2', cat: 'post', col: 14, row: 6, gp: 14, per: 6, bp: 2022, mp: 601, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²', desc: 'Heavy toxic metal.', isotopes: [] },
-  { num: 83, sym: 'Bi', nam: 'Bismuth', mas: '209.0', cat: 'post', col: 15, row: 6, gp: 15, per: 6, bp: 1837, mp: 545, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³', desc: 'Pinkish white metal.', isotopes: [] },
+  { num: 81, sym: 'Tl', nam: 'Thallium', mas: '204.4', cat: 'post-transition', col: 13, row: 6, gp: 13, per: 6, bp: 1746, mp: 577, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹', desc: 'Toxic grey metal.', isotopes: [] },
+  { num: 82, sym: 'Pb', nam: 'Lead', mas: '207.2', cat: 'post-transition', col: 14, row: 6, gp: 14, per: 6, bp: 2022, mp: 601, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²', desc: 'Heavy toxic metal.', isotopes: [] },
+  { num: 83, sym: 'Bi', nam: 'Bismuth', mas: '209.0', cat: 'post-transition', col: 15, row: 6, gp: 15, per: 6, bp: 1837, mp: 545, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³', desc: 'Pinkish white metal.', isotopes: [] },
   { num: 84, sym: 'Po', nam: 'Polonium', mas: '(209)', cat: 'post', col: 16, row: 6, gp: 16, per: 6, bp: 1235, mp: 527, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴', desc: 'Radioactive element.', isotopes: [] },
   { num: 85, sym: 'At', nam: 'Astatine', mas: '(210)', cat: 'metalloid', col: 17, row: 6, gp: 17, per: 6, bp: 610, mp: 575, state: 'Solid', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵', desc: 'Rarest natural metalloid.', isotopes: [] },
   { num: 86, sym: 'Rn', nam: 'Radon', mas: '(222)', cat: 'noble', col: 18, row: 6, gp: 18, per: 6, bp: 211, mp: 202, state: 'Gas', conf: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶', desc: 'Radioactive inert gas.', isotopes: [] },
@@ -86,10 +87,10 @@ const elements = [
   { num: 110, sym: 'Ds', nam: 'Darmstadtium', mas: '(281)', cat: 'transition', col: 10, row: 7, gp: 10, per: 7, bp: 0, mp: 0, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d⁸ 7s²', desc: 'Named after Darmstadt.', isotopes: [] },
   { num: 111, sym: 'Rg', nam: 'Roentgenium', mas: '(282)', cat: 'transition', col: 11, row: 7, gp: 11, per: 7, bp: 0, mp: 0, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d⁹ 7s²', desc: 'Synthetic transition metal.', isotopes: [] },
   { num: 112, sym: 'Cn', nam: 'Copernicium', mas: '(285)', cat: 'transition', col: 12, row: 7, gp: 12, per: 7, bp: 357, mp: 283, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s²', desc: 'Synthetic element.', isotopes: [] },
-  { num: 113, sym: 'Nh', nam: 'Nihonium', mas: '(286)', cat: 'post', col: 13, row: 7, gp: 13, per: 7, bp: 1430, mp: 700, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹', desc: 'Synthetic element.', isotopes: [] },
-  { num: 114, sym: 'Fl', nam: 'Flerovium', mas: '(289)', cat: 'post', col: 14, row: 7, gp: 14, per: 7, bp: 420, mp: 340, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²', desc: 'Synthetic metal.', isotopes: [] },
-  { num: 115, sym: 'Mc', nam: 'Moscovium', mas: '(290)', cat: 'post', col: 15, row: 7, gp: 15, per: 7, bp: 1400, mp: 670, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³', desc: 'Named after Moscow region.', isotopes: [] },
-  { num: 116, sym: 'Lv', nam: 'Livermorium', mas: '(293)', cat: 'post', col: 16, row: 7, gp: 16, per: 7, bp: 1035, mp: 708, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴', desc: 'Named after Livermore lab.', isotopes: [] },
+  { num: 113, sym: 'Nh', nam: 'Nihonium', mas: '(286)', cat: 'post-transition', col: 13, row: 7, gp: 13, per: 7, bp: 1430, mp: 700, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹', desc: 'Synthetic element.', isotopes: [] },
+  { num: 114, sym: 'Fl', nam: 'Flerovium', mas: '(289)', cat: 'post-transition', col: 14, row: 7, gp: 14, per: 7, bp: 420, mp: 340, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²', desc: 'Synthetic metal.', isotopes: [] },
+  { num: 115, sym: 'Mc', nam: 'Moscovium', mas: '(290)', cat: 'post-transition', col: 15, row: 7, gp: 15, per: 7, bp: 1400, mp: 670, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³', desc: 'Named after Moscow region.', isotopes: [] },
+   { num: 116, sym: 'Lv', nam: 'Livermorium', mas: '(293)', cat: 'post', col: 16, row: 7, gp: 16, per: 7, bp: 1035, mp: 708, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴', desc: 'Named after Livermore lab.', isotopes: [] },
   { num: 117, sym: 'Ts', nam: 'Tennessine', mas: '(294)', cat: 'halogen', col: 17, row: 7, gp: 17, per: 7, bp: 883, mp: 723, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵', desc: 'Second heaviest element.', isotopes: [] },
   { num: 118, sym: 'Og', nam: 'Oganesson', mas: '(294)', cat: 'noble', col: 18, row: 7, gp: 18, per: 7, bp: 350, mp: 325, state: 'Solid', conf: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶', desc: 'Heaviest known element.', isotopes: [] },
 
@@ -127,316 +128,394 @@ const elements = [
   { num: 102, sym: 'No', nam: 'Nobelium', mas: '(259)', cat: 'actinide', col: 16, row: 10, gp: 'N/A', per: 7, bp: 0, mp: 1100, state: 'Solid', conf: '[Rn] 5f¹⁴ 7s²', desc: 'Named after Nobel.', isotopes: [] },
   { num: 103, sym: 'Lr', nam: 'Lawrencium', mas: '(262)', cat: 'actinide', col: 17, row: 10, gp: 'N/A', per: 7, bp: 0, mp: 1900, state: 'Solid', conf: '[Rn] 5f¹⁴ 7s² 7p¹', desc: 'Synthetic metal.', isotopes: [] }
 ];
-/* ===================== UTIL ===================== */
-const kToC = (k) => k <= 0 ? 'N/A' : (Math.round((k - 273.15) * 100) / 100) + ' °C';
 
-/* ===================== ELEMENT REFS ===================== */
-const viewport = document.getElementById('tableViewport');
-const tableContainer = document.getElementById('periodicTable');
-const filterContainer = document.getElementById('filterContainer');
-const modalOverlay = document.getElementById('modalOverlay');
-const modalStaticInfo = document.getElementById('modalStaticInfo');
-const modalTabContent = document.getElementById('modalTabContent');
-const modalClose = document.getElementById('modalClose');
-const hamburger = document.getElementById('hamburger');
-const sideMenu = document.getElementById('sideMenu');
-const closeMenu = document.getElementById('closeMenu');
+// ===================== UTIL =====================
+  const kToC = (k) => k <= 0 ? 'N/A' : (Math.round((k - 273.15) * 100) / 100) + ' °C';
 
-/* ===================== PAN / ZOOM STATE ===================== */
-let scale = 0.8;
-let translateX = 0;
-let translateY = 0;
-let isPanning = false;
-let lastX = 0;
-let lastY = 0;
-let lastPinchDist = 0;
+  // ===================== ELEMENT REFS =====================
+  const viewport = document.getElementById('tableViewport');
+  const tableContainer = document.getElementById('periodicTable');
+  const filterContainer = document.getElementById('filterContainer');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalStaticInfo = document.getElementById('modalStaticInfo');
+  const modalTabContent = document.getElementById('modalTabContent');
+  const modalClose = document.getElementById('modalClose');
+  const hamburger = document.getElementById('hamburger');
+  const sideMenu = document.getElementById('sideMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  const searchInput = document.getElementById('elementSearch');
 
-/* ===================== TRANSFORM ===================== */
-function updateTransform() {
+  // ===================== PAN / ZOOM STATE =====================
+  let scale = 0.8;
+  let translateX = 0;
+  let translateY = 0;
+  let isPanning = false;
+  let lastX = 0;
+  let lastY = 0;
+  let lastPinchDist = 0;
+
+  // ===================== FILTER STATE =====================
+  let activeCategory = 'all';
+
+  // ===================== ELEMENT NODES (Persistent Elements) =====================
+  const elementNodes = [];
+
+  // ===================== UPDATE TRANSFORM =====================
+  function updateTransform() {
     if (!tableContainer) return;
     tableContainer.style.transform =
-        `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-}
+      `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  }
 
-/* ===================== CENTER TABLE ===================== */
-function centerTable() {
+  // ===================== CENTER TABLE =====================
+  function centerTable() {
     if (!tableContainer || !viewport) return;
-
     const tableRect = tableContainer.getBoundingClientRect();
     const viewRect = viewport.getBoundingClientRect();
-
     translateX = (viewRect.width - tableRect.width * scale) / 2;
     translateY = (viewRect.height - tableRect.height * scale) / 2;
-
     updateTransform();
-}
+  }
 
-/* ===================== MOUSE PAN ===================== */
-viewport?.addEventListener('mousedown', (e) => {
+  // ===================== PAN / ZOOM EVENTS =====================
+  viewport?.addEventListener('mousedown', (e) => {
     isPanning = true;
     lastX = e.clientX;
     lastY = e.clientY;
-});
-
-window.addEventListener('mousemove', (e) => {
+  });
+  window.addEventListener('mousemove', (e) => {
     if (!isPanning) return;
     translateX += e.clientX - lastX;
     translateY += e.clientY - lastY;
     lastX = e.clientX;
     lastY = e.clientY;
     updateTransform();
-});
-
-window.addEventListener('mouseup', () => isPanning = false);
-
-/* ===================== ZOOM ===================== */
-viewport?.addEventListener('wheel', (e) => {
+  });
+  window.addEventListener('mouseup', () => (isPanning = false));
+  viewport?.addEventListener('wheel', (e) => {
     e.preventDefault();
     const zoomSpeed = 0.001;
     scale = Math.min(Math.max(scale - e.deltaY * zoomSpeed, 0.25), 3);
     updateTransform();
-}, { passive: false });
-
-/* ===================== TOUCH PAN / ZOOM ===================== */
-viewport?.addEventListener('touchstart', (e) => {
+  }, { passive: false });
+  viewport?.addEventListener('touchstart', (e) => {
     if (e.touches.length === 1) {
-        isPanning = true;
-        lastX = e.touches[0].clientX;
-        lastY = e.touches[0].clientY;
+      isPanning = true;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
     } else if (e.touches.length === 2) {
-        isPanning = false;
-        lastPinchDist = Math.hypot(
-            e.touches[0].clientX - e.touches[1].clientX,
-            e.touches[0].clientY - e.touches[1].clientY
-        );
+      lastPinchDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
     }
-});
-
-viewport?.addEventListener('touchmove', (e) => {
+  });
+  viewport?.addEventListener('touchmove', (e) => {
     if (e.touches.length === 1 && isPanning) {
-        translateX += e.touches[0].clientX - lastX;
-        translateY += e.touches[0].clientY - lastY;
-        lastX = e.touches[0].clientX;
-        lastY = e.touches[0].clientY;
-        updateTransform();
+      translateX += e.touches[0].clientX - lastX;
+      translateY += e.touches[0].clientY - lastY;
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+      updateTransform();
     } else if (e.touches.length === 2) {
-        const dist = Math.hypot(
-            e.touches[0].clientX - e.touches[1].clientX,
-            e.touches[0].clientY - e.touches[1].clientY
-        );
-        scale *= dist / lastPinchDist;
-        lastPinchDist = dist;
-        updateTransform();
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      scale *= dist / lastPinchDist;
+      lastPinchDist = dist;
+      updateTransform();
     }
-});
-
-viewport?.addEventListener('touchend', () => {
+  });
+  viewport?.addEventListener('touchend', () => {
     isPanning = false;
     lastPinchDist = 0;
-});
+  });
 
-/* ===================== TABLE ===================== */
-let activeCategory = 'all';
-let selectedElement = null;
+  // ===================== RENDER ELEMENTS =====================
+ function renderTable() {
+  if (!tableContainer) return;
 
-function renderTable() {
-    if (!tableContainer) return;
-    tableContainer.innerHTML = '';
+  // Clear existing elements before creating new ones
+  tableContainer.innerHTML = '';
+  elementNodes.length = 0;
 
-    elements.forEach(el => {
-        const d = document.createElement('div');
-        d.className = `element ${el.cat}`;
-        d.style.gridColumn = el.col;
-        d.style.gridRow = el.row;
+  // Create all element nodes and store references
+  elements.forEach(el => {
+    const d = document.createElement('div');
+    d.className = `element ${el.cat}`;
+    d.style.gridColumn = el.col;
+    d.style.gridRow = el.row;
+    d.innerHTML = `
+      <div class="number">${el.num}</div>
+      <div class="symbol">${el.sym}</div>
+      <div class="name">${el.nam}</div>
+      <div class="mass">${el.mas}</div>
+    `;
+    d.onclick = (e) => {
+      if (isPanning) return;
+      openModal(el);
+      e.stopPropagation();
+    };
+    tableContainer.appendChild(d);
+    elementNodes.push({ node: d, data: el });
+  });
 
-        if (activeCategory !== 'all' && el.cat !== activeCategory)
-            d.classList.add('dimmed');
-
-        d.innerHTML = `
-            <div class="number">${el.num}</div>
-            <div class="symbol">${el.sym}</div>
-            <div class="name">${el.nam}</div>
-            <div class="mass">${el.mas}</div>
-        `;
-
-        d.onclick = (e) => {
-            if (isPanning) return;
-            openModal(el);
-            e.stopPropagation();
-        };
-
-        tableContainer.appendChild(d);
-    });
-
-    const gap = document.createElement('div');
-    gap.className = 'f-block-gap';
-    gap.style.gridRow = '8';
-    tableContainer.appendChild(gap);
-
-    requestAnimationFrame(centerTable);
+  const gap = document.createElement('div');
+  gap.className = 'f-block-gap';
+  gap.style.gridRow = '8';
+  tableContainer.appendChild(gap);
 }
 
-document.querySelectorAll('.modal-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        const target = tab.dataset.tab;
-        if (target) updateModalTab(target);
-    });
-});
-
-/* ===================== MODAL ===================== */
-function openModal(el) {
+  // ===================== MODAL LOGIC =====================
+  let selectedElement = null;
+  function openModal(el) {
     selectedElement = el;
-
     modalStaticInfo.innerHTML = `
-        <div class="modal-header-info">
-            <div class="modal-sym-box ${el.cat}">
-                <div class="symbol">${el.sym}</div>
-            </div>
-            <div class="modal-title">
-                <div class="modal-cat-tag">${el.cat}</div>
-                <h2>${el.nam}</h2>
-            </div>
+      <div class="modal-header-info">
+        <div class="modal-sym-box ${el.cat}">
+          <div class="symbol">${el.sym}</div>
         </div>
-        <div class="modal-desc">
-            <strong>Overview:</strong> ${el.desc}
+        <div class="modal-title">
+          <div class="modal-cat-tag">${el.cat}</div>
+          <h2>${el.nam}</h2>
         </div>
+      </div>
+      <div class="modal-desc">
+        <strong>Overview:</strong> ${el.desc}
+      </div>
     `;
-
     updateModalTab('overview');
     modalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-}
+  }
 
-function updateModalTab(tab) {
+  // ===================== SMOOTH TAB SWITCHING =====================
+  function updateModalTab(tab) {
     if (!selectedElement) return;
+    // toggle active class on tabs
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    
+    // animate opacity for smooth transition
+    modalTabContent.style.transition = 'opacity 0.3s ease';
+    modalTabContent.style.opacity = 0;
 
-    document.querySelectorAll('.modal-tab')
-        .forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-
-    if (tab === 'overview') {
+    setTimeout(() => {
+      if (tab === 'overview') {
         modalTabContent.innerHTML = `
-            <div class="modal-grid">
-                <div class="stat-item"><div class="stat-label">Atomic Mass</div><div class="stat-value">${selectedElement.mas}</div></div>
-                <div class="stat-item"><div class="stat-label">Group</div><div class="stat-value">${selectedElement.gp}</div></div>
-                <div class="stat-item"><div class="stat-label">Period</div><div class="stat-value">${selectedElement.per}</div></div>
-                <div class="stat-item"><div class="stat-label">State</div><div class="stat-value">${selectedElement.state}</div></div>
-                <div class="stat-item"><div class="stat-label">Boiling Point</div><div class="stat-value">${kToC(selectedElement.bp)}</div></div>
-                <div class="stat-item"><div class="stat-label">Melting Point</div><div class="stat-value">${kToC(selectedElement.mp)}</div></div>
-                <div class="stat-item" style="grid-column:span 2;">
-                    <div class="stat-label">Electron Config</div>
-                    <div class="stat-value">${selectedElement.conf}</div>
-                </div>
+          <div class="modal-grid">
+            <div class="stat-item"><div class="stat-label">Atomic Mass</div><div class="stat-value">${selectedElement.mas}</div></div>
+            <div class="stat-item"><div class="stat-label">Group</div><div class="stat-value">${selectedElement.gp}</div></div>
+            <div class="stat-item"><div class="stat-label">Period</div><div class="stat-value">${selectedElement.per}</div></div>
+            <div class="stat-item"><div class="stat-label">State</div><div class="stat-value">${selectedElement.state}</div></div>
+            <div class="stat-item"><div class="stat-label">Boiling Point</div><div class="stat-value">${kToC(selectedElement.bp)}</div></div>
+            <div class="stat-item"><div class="stat-label">Melting Point</div><div class="stat-value">${kToC(selectedElement.mp)}</div></div>
+            <div class="stat-item" style="grid-column:span 2;">
+              <div class="stat-label">Electron Config</div>
+              <div class="stat-value">${selectedElement.conf}</div>
             </div>
+          </div>
         `;
-    } else {
+      } else {
         const isos = selectedElement.isotopes?.length
-            ? selectedElement.isotopes.map(i => `
-                <div class="isotope-item">
-                    <span>${i.m} — ${i.n}</span>
-                    <span>${i.a}</span>
-                    <span class="${i.stable ? 'stable' : 'unstable'}">
-                        ${i.stable ? 'Stable' : 'Unstable'}
-                    </span>
-                </div>
+          ? selectedElement.isotopes.map(i => `
+              <div class="isotope-item">
+                <span>${i.m} — ${i.n}</span>
+                <span>${i.a}</span>
+                <span class="iso-status ${i.stable ? 'stable' : 'radioactive'}">
+                  ${i.stable ? 'Stable' : 'Unstable'}
+                </span>
+              </div>
             `).join('')
-            : '<p style="opacity:.5;text-align:center;">No isotope data.</p>';
+          : '<p style="opacity:.5;text-align:center;">No isotope data.</p>';
 
         modalTabContent.innerHTML = `<div class="isotope-list">${isos}</div>`;
-    }
-}
+      }
+      // fade back in
+      modalTabContent.style.opacity = 1;
+    }, 300); // match transition duration
+  }
 
-/* ===================== UI EVENTS ===================== */
-filterContainer?.addEventListener('click', (e) => {
+  // ===================== UI Events =====================
+  // Filter buttons
+  filterContainer?.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
-    filterContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCategory = btn.dataset.cat || 'all';
-    renderTable();
-});
 
-modalClose.onclick = () => {
+    // button style update
+    document.querySelectorAll('#filterContainer button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // get category
+    activeCategory = btn.dataset.cat || 'all';
+
+    // fade out all elements
+    elementNodes.forEach(({ node }) => {
+      node.style.transition = 'opacity 0.5s ease';
+      node.style.opacity = 0;
+      node.style.pointerEvents = 'none';
+    });
+
+    // toggle visibility after fade
+    setTimeout(() => {
+      elementNodes.forEach(({ node, data }) => {
+        const show = activeCategory === 'all' || data.cat === activeCategory;
+        node.style.pointerEvents = show ? 'auto' : 'none';
+        node.style.opacity = show ? 1 : 0;
+      });
+    }, 500);
+  });
+
+  modalClose.onclick = () => {
     modalOverlay.classList.remove('active');
     document.body.style.overflow = 'auto';
-};
+  };
+  hamburger.onclick = () => sideMenu.classList.add('open');
+  closeMenu.onclick = () => sideMenu.classList.remove('open');
 
-hamburger.onclick = () => sideMenu.classList.add('open');
-closeMenu.onclick = () => sideMenu.classList.remove('open');
+  // Search
+  searchInput?.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    document.querySelectorAll('.element').forEach(div => {
+      const sym = div.querySelector('.symbol').textContent.toLowerCase();
+      const name = div.querySelector('.name').textContent.toLowerCase();
+      if (sym.includes(query) || name.includes(query)) {
+        div.classList.remove('dimmed');
+        div.style.opacity = 1;
+      } else {
+        div.classList.add('dimmed');
+        div.style.opacity = 0.15;
+      }
+    });
+  });
 
-/* ===================== ATOMS BACKGROUND ===================== */
-const canvas = document.getElementById('atomsBg');
-const ctx = canvas.getContext('2d');
+  // ===================== BACKGROUND ANIMATION =====================
+  const canvas = document.createElement('canvas');
+  canvas.id = 'atomsBg';
+  document.body.appendChild(canvas);
+  Object.assign(canvas.style, {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    zIndex: '0'
+  });
+  const ctx = canvas.getContext('2d');
 
-let dots = [];
-let explosions = [];
+  let dots = [];
+  let particles = [];
 
-function initDots() {
+  function initDots() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     dots = [];
-
     for (let i = 0; i < 30; i++) {
-        dots.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.9,
-            vy: (Math.random() - 0.5) * 0.9,
-            r: Math.random() * 3 + 2
-        });
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.9,
+        vy: (Math.random() - 0.5) * 0.9,
+        r: Math.random() * 3 + 2
+      });
     }
-}
+  }
 
-function explode(x, y) {
-    explosions.push({ x, y, r: 0, alpha: 1 });
-}
+  function explode(x, y) {
+    for (let i = 0; i < 20; i++) {
+      particles.push({
+        x: x,
+        y: y,
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4,
+        r: Math.random() * 1.5 + 0.5,
+        alpha: 1
+      });
+    }
+  }
 
-function animateAtoms() {
+  function animateParticles() {
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= 0.02;
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+      }
+    }
+  }
+
+  function animateAtoms() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     for (let i = 0; i < dots.length; i++) {
-        const a = dots[i];
-        a.x += a.vx;
-        a.y += a.vy;
+      const a = dots[i];
+      a.x += a.vx;
+      a.y += a.vy;
 
-        if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
-        if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
+      if (a.x < 0 || a.x > canvas.width) a.vx *= -1;
+      if (a.y < 0 || a.y > canvas.height) a.vy *= -1;
 
-        for (let j = i + 1; j < dots.length; j++) {
-            const b = dots[j];
-            const dx = a.x - b.x;
-            const dy = a.y - b.y;
-            if (Math.hypot(dx, dy) < a.r + b.r) {
-                explode(a.x, a.y);
-                a.x = Math.random() * canvas.width;
-                a.y = Math.random() * canvas.height;
-            }
+      for (let j = i + 1; j < dots.length; j++) {
+        const b = dots[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        if (Math.hypot(dx, dy) < a.r + b.r) {
+          explode(a.x, a.y);
+          a.x = Math.random() * canvas.width;
+          a.y = Math.random() * canvas.height;
         }
+      }
 
-        ctx.beginPath();
-        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'white';
-        ctx.fill();
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'white';
+      ctx.fill();
     }
 
-    explosions.forEach((e, i) => {
-        e.r += 2;
-        e.alpha -= 0.05;
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255,255,255,${e.alpha})`;
-        ctx.stroke();
-        if (e.alpha <= 0) explosions.splice(i, 1);
+    animateParticles();
+
+    ctx.globalAlpha = 0.7;
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'white';
+      ctx.fill();
     });
+    ctx.globalAlpha = 1;
 
     requestAnimationFrame(animateAtoms);
-}
+  }
 
-/* ===================== INIT ===================== */
-window.addEventListener('resize', () => {
+  window.addEventListener('resize', () => {
     initDots();
     centerTable();
-});
+  });
 
-initDots();
-animateAtoms();
-renderTable();
+  initDots();
+  animateAtoms();
+
+  // Render table initially
+  renderTable();
+
+  const yourButton = document.getElementById('yourButtonId');
+  if (yourButton) {
+    yourButton.addEventListener('click', () => {
+      if (tableContainer) {
+        tableContainer.style.display = 'block';
+        renderTable();
+        centerTable();
+      }
+    });
+  }
+
+  // Call renderTable once to create elements initially
+  renderTable();
+
+  // Add event listeners to modal tabs
+  document.querySelectorAll('.modal-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      updateModalTab(tab.dataset.tab);
+    });
+  });
+});

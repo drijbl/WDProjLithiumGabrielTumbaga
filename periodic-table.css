@@ -1,64 +1,72 @@
 /* Base Styles */
-        * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-        .table-viewport {
-            touch-action: none;
-        }
+.table-viewport {
+    touch-action: none;
+}
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: #1c3d68;
-            overflow: hidden;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #9b52ee, #279fce);
-            background-attachment: fixed;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-        }
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #1c3d68;
+    overflow: hidden;
+}
 
-        #atomsBg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background: transparent;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #9b52ee, #279fce);
+    background-attachment: fixed;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
 
-        /* Side Menu */
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 300px;
-            height: 100%;
-            background: #144b63;
-            color: white;
-            padding: 25px;
-            transition: left 0.3s ease;
-            z-index: 2000;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-            overflow-y: auto;
-            touch-action: auto;
-        }
-        .side-menu.open { left: 0; }
-        .side-menu a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            margin: 18px 0;
-            font-size: 20px;
-            font-weight: 600;
-            padding: 10px 15px;
-            transition: background-color 0.2s;
-            border-radius: 5px;
-        }
-        .side-menu a:hover { background-color: #216d91; }
+#atomsBg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Side Menu */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 300px;
+    height: 100%;
+    background: #144b63;
+    color: white;
+    padding: 25px;
+    transition: left 0.3s ease;
+    z-index: 2000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    touch-action: auto;
+}
+
+.side-menu.open { left: 0; }
+
+.side-menu a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin: 18px 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  transition: background-color 0.2s, transform 0.2s; /* add transform here */
+  border-radius: 5px;
+}
+
+.side-menu a:hover {
+  background-color: #216d91;
+  transform: translateX(5px); /* add this */
+}
+
         #closeMenu {
             font-size: 30px;
             cursor: pointer;
@@ -73,7 +81,7 @@
             padding: 5px;
             color: #1c3d68;
             z-index: 1999;
-            position: fixed;
+            position: relative;
             top: 20px;
             left: 20px;
             background: transparent;
@@ -86,6 +94,7 @@
             margin: 0;
             font-family: "Rubik One", sans-serif;
             font-size: clamp(1.5rem, 4vw, 2.8rem);
+            font-weight: normal
             color: #ffffff;
             z-index: 10;
             position: relative;
@@ -156,7 +165,7 @@
             padding: 3px;
             text-align: center;
             backdrop-filter: blur(6px);
-            transition: background 0.15s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             color: #ffffff;
             border: 1px solid rgba(255,255,255,0.15);
             cursor: pointer;
@@ -173,6 +182,21 @@
                 filter 0.35s ease;
         }
 
+        #periodicTable {
+            position: relative;
+        }
+
+        /* Hover effects for elements */
+        #periodicTable .element {
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+
+        #periodicTable .element:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
 .element.dimmed {
     opacity: 0.15;
     filter: grayscale(100%);
@@ -185,10 +209,13 @@
   transform: scale(1);
 }
 
-        .element:hover { background: rgba(255,255,255,0.5); }
+.element:hover {
+  transform: translateY(-5px); /* Floating up effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for emphasis */
+}
 
         /* Labels */
-        .number { font-size: 0.65rem; text-align: left; font-weight: 600; }
+        .number { font-size: 0.65rem; text-align: left; font-weight: 300; }
         .symbol { font-size: 1.2rem; font-family: "Rubik One", sans-serif; line-height: 1; }
         .name { 
             font-size: 0.5rem; 
@@ -198,34 +225,30 @@
             margin: 1px 0;
             line-height: 1.1;
         }
-        .mass { font-size: 0.45rem; opacity: 0.9; }
+        .mass { font-size: 0.40rem; opacity: 0.9; }
 
         .f-block-gap { grid-column: 1 / span 18; height: 25px; }
 
-        /*Stable or Unstable Isotope*/
-        /* Base badge style */
-        .iso-status {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* Stable badge (Cyan) */
-        .iso-status.stable { 
-            background: rgba(112, 247, 255, 0.15); 
-            color: #70f7ff; 
-            border: 1px solid #70f7ff; 
-        }
-
-        /* Radioactive badge (Red) */
-        .iso-status.radioactive { 
-            background: rgba(255, 122, 122, 0.15); 
-            color: #ff7a7a; 
-            border: 1px solid #ff7a7a; 
-        }
+        //* For isotope status labels with colored outline */
+.iso-status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 8px;
+  border: 2px solid;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+.iso-status.stable {
+  border-color: #70f7ff;
+  color: #70f7ff;
+}
+.iso-status.radioactive {
+  border-color: #ff7a7a;
+  color: #ff7a7a;
+}
 
         /* Modal */
         .modal-overlay {
@@ -277,6 +300,11 @@
             transition: 0.2s;
             border-bottom: 4px solid transparent;
         }
+
+        #modalTabContent {
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
         .modal-tab.active {
             opacity: 1;
             border-bottom: 4px solid #70f7ff;
@@ -296,7 +324,7 @@
             background: rgba(255,255,255,0.1);
         }
         .modal-sym-box .symbol { font-size: 3rem; }
-        .modal-title h2 { font-family: "Rubik One", sans-serif; font-size: 2.2rem; margin: 0; line-height: 1; }
+        .modal-title h2 { font-family: "Rubik One", sans-serif; font-weight: normal; font-size: 3 rem; margin: 0; line-height: 1; }
         .modal-cat-tag { text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; opacity: 0.7; }
 
         .modal-desc {
