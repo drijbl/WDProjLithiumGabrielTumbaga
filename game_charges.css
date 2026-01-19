@@ -1,8 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #9b52ee, #279fce);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,6 +24,8 @@ button {
   padding: 16px 28px;
   font-size: 18px;
   font-weight: 600;
+  z-index: 5;
+  position: relative;
 }
 
 /* Back Button */
@@ -29,18 +35,32 @@ button {
   left: 26px;
   background: white;
   box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  z-index: 10;
 }
 
 /* Card */
 .card {
-  width: 600px;
+  width: 620px;
   background: white;
   border-radius: 40px;
   padding: 60px;
   box-shadow: 0 45px 90px rgba(0,0,0,0.35);
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
+/* ROUND CARD (menu) */
+.card.round-card {
+  border-radius: 50%;
+  width: 520px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Titles */
 .title {
   font-family: 'Rubik One', sans-serif;
   font-size: 38px;
@@ -59,65 +79,92 @@ button {
   width: 100%;
   background: #5e5cff;
   color: white;
+  pointer-events: auto;
 }
 
+/* HUD */
 .hud {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 30px;
+  font-weight: 600;
 }
 
 .hearts {
-  font-size: 26px;
+  font-size: 24px;
   color: #ff4d4d;
 }
 
 .round {
   font-size: 16px;
-  opacity: 0.6;
+  opacity: 0.65;
+}
+
+#timer {
+  font-size: 18px;
+  font-weight: 700;
 }
 
 /* Flashcard */
 .metal-name {
-  font-size: 40px;
+  font-size: 42px;
   font-weight: 700;
   margin: 40px 0 18px;
 }
 
-.hint {
-  font-size: 15px;
-  opacity: 0.55;
-}
-
 .answer {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 34px 0;
+  font-size: 18px;
+  min-height: 28px;
+  margin: 16px 0;
+  color: #333;
 }
 
-/* Buttons */
-.btn-row {
+#answerInput {
+  width: 80%;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+/* Instructions */
+#instructionsText {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+}
+
+#instructionsText ul {
+  padding-left: 20px;
+}
+
+/* Leaderboard */
+.leaderboard-box {
+  background: #144b63;
+  border-radius: 28px;
+  padding: 28px;
+  margin-top: 20px;
+}
+
+.personal-best {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: #ffd700;
+  text-align: center;
+}
+
+.leaderboard-score {
   display: flex;
-  gap: 22px;
-  margin-top: 30px;
-}
-
-.correct {
-  background: #28c76f;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.12);
+  padding: 16px 20px;
+  border-radius: 16px;
+  font-size: 18px;
   color: white;
-  flex: 1;
-}
-
-.wrong {
-  background: #ff5b5b;
-  color: white;
-  flex: 1;
-}
-
-/* Game over */
-.game-over {
-  font-size: 32px;
-  font-weight: 700;
 }
 
 .restart {
@@ -127,53 +174,13 @@ button {
   color: white;
 }
 
-/* Responsive Styles */
+/* Responsive */
 @media (max-width: 768px) {
-
-  body {
-    padding: 10px;
-  }
-
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .container,
-  .content,
-  .game,
-  .main {
+  .card,
+  .card.round-card {
     width: 100%;
-  }
-
-  button, a {
-    font-size: 1rem;
-    padding: 12px 16px;
-  }
-
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-
-  body {
-    padding: 12px;
-  }
-
-  .card {
-    width: 100%;
-    max-width: 600px;
-    padding: 24px;
-  }
-
-  .btn-row {
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  button {
-    font-size: 16px;
-    padding: 14px;
+    height: auto;
+    border-radius: 28px;
+    padding: 28px;
   }
 }
-

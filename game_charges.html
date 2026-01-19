@@ -1,182 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Chemivis | Charge It!</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="game_charges.css">
+<link rel="stylesheet" href="game_charges.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet" />
 </head>
 
 <body>
 
 <button class="back-btn" onclick="location.href='games.html'">← Games</button>
 
-<!-- Menu -->
+<!-- MENU -->
 <div class="card" id="menu">
   <div class="title">CHARGE IT!</div>
-  <div class="subtitle">Transition metals oxidation states flashcard game</div>
-  <button class="play-btn" onclick="startGame()">Play</button>
+  <div class="subtitle">Transition metals oxidation states</div>
+  <button class="play-btn" onclick="showInstructions()">Play</button>
 </div>
 
-<!-- Game -->
+<!-- INSTRUCTIONS -->
+<div class="card hidden" id="instructionsCard">
+  <div class="title">Instructions</div>
+  <div id="instructionsText">
+    <ul>
+      <li>Type oxidation states using + or − (ex: +2)</li>
+      <li>Multiple charges: separate with commas</li>
+      <li>Press Enter to submit</li>
+      <li>Faster answers give higher scores</li>
+      <li>Your personal best score is saved and shown on the leaderboard.</li>
+
+    </ul>
+  </div>
+  <br>
+  <button onclick="hideInstructions()">Back</button>
+  <button onclick="startGame()">Continue</button>
+</div>
+
+<!-- GAME -->
 <div class="card hidden" id="game">
   <div class="hud">
-    <div class="hearts" id="hearts">❤️❤️❤️</div>
-    <div class="round" id="round">Round 1 / ∞</div>
+    <div id="hearts" class="hearts">❤️❤️❤️</div>
+    <div id="round" class="round">Round 1</div>
+    <div id="timer">30</div>
+    <button id="nextBtn" class="play-btn hidden" onclick="nextRound()">Next</button>
   </div>
 
   <div class="metal-name" id="metal"></div>
-  <div class="hint" id="hint">Click to reveal</div>
-
-  <div class="answer hidden" id="answer"></div>
-
-  <div class="btn-row hidden" id="buttons">
-    <button class="correct" onclick="markCorrect()">Correct</button>
-    <button class="wrong" onclick="markWrong()">Wrong</button>
-  </div>
+  <div class="answer" id="answer"></div>
+  <input type="text" id="answerInput" placeholder="Type your answer and press Enter" />
 </div>
 
-<!-- Game Over -->
-<div class="card hidden" id="gameOver">
-  <div class="game-over">Game Over</div>
-  <div class="subtitle">You ran out of hearts.</div>
+<!-- LEADERBOARD -->
+<div class="card hidden" id="leaderboard">
+  <div class="title">Leaderboard</div>
+
+  <div class="leaderboard-box">
+    <div id="personalBest" class="personal-best"></div>
+    <div id="scoreList"></div>
+  </div>
+
   <button class="restart" onclick="restart()">Play Again</button>
 </div>
 
-
 <script>
-// ====================== DATA ======================
-const metals = [ 
-  { symbol: "Au", name: "Gold", charges: "+1, +3" },
-  { symbol: "Cu", name: "Copper", charges: "+1, +2" },
-  { symbol: "Hg", name: "Mercury", charges: "+1 (Hg₂²⁺), +2" },
-  { symbol: "Co", name: "Cobalt", charges: "+2, +3" },
-  { symbol: "Fe", name: "Iron", charges: "+2, +3" },
-  { symbol: "Mn", name: "Manganese", charges: "+2, +4" },
-  { symbol: "Ni", name: "Nickel", charges: "+2, +3" },
-  { symbol: "Pb", name: "Lead", charges: "+2, +4" },
-  { symbol: "Sn", name: "Tin", charges: "+2, +4" },
-  { symbol: "Sb", name: "Antimony", charges: "+3, +5" },
-  { symbol: "As", name: "Arsenic", charges: "+3, +5" },
-  { symbol: "Bi", name: "Bismuth", charges: "+3, +5" },
+// ================= DOM =================
+const menu = document.getElementById("menu");
+const instructionsCard = document.getElementById("instructionsCard");
+const game = document.getElementById("game");
+const leaderboard = document.getElementById("leaderboard");
+
+const metal = document.getElementById("metal");
+const answer = document.getElementById("answer");
+const answerInput = document.getElementById("answerInput");
+
+const heartsEl = document.getElementById("hearts");
+const roundEl = document.getElementById("round");
+const timerEl = document.getElementById("timer");
+
+const scoreList = document.getElementById("scoreList");
+
+
+// ================= DATA =================
+const metals = [
+  { symbol: "Au", name: "Gold", charges: ["+1","+3"] },
+  { symbol: "Cu", name: "Copper", charges: ["+1","+2"] },
+  { symbol: "Hg", name: "Mercury", charges: ["+1","+2"] },
+  { symbol: "Co", name: "Cobalt", charges: ["+2","+3"] },
+  { symbol: "Fe", name: "Iron", charges: ["+2","+3"] },
+  { symbol: "Mn", name: "Manganese", charges: ["+2","+4"] },
+  { symbol: "Ni", name: "Nickel", charges: ["+2","+3"] },
+  { symbol: "Pb", name: "Lead", charges: ["+2","+4"] }
 ];
 
-let metalQueue = [];
-let current = {};
-let showingAnswer = false;
+let queue = [];
+let current;
 let round = 1;
 let hearts = 3;
+let score = 0;
+let timeLeft = 30;
+let timer;
 
-// ====================== ELEMENTS ======================
-const metalDiv = document.getElementById("metal");
-const answerDiv = document.getElementById("answer");
-const roundDiv = document.getElementById("round");
-const heartsDiv = document.getElementById("hearts");
-const buttonsDiv = document.getElementById("buttons");
-const hint = document.getElementById("hint");
+let attempts = JSON.parse(localStorage.getItem("chargeItAttempts") || "[]");
 
-// ====================== GAME FUNCTIONS ======================
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
+// ================= HELPERS =================
+function shuffle(arr) {
+  return arr.sort(() => Math.random() - 0.5);
 }
 
+function showInstructions() {
+  menu.classList.add("hidden");
+  instructionsCard.classList.remove("hidden");
+}
+
+function hideInstructions() {
+  instructionsCard.classList.add("hidden");
+  menu.classList.remove("hidden");
+}
+
+// ================= GAME FLOW =================
 function startGame() {
-  document.getElementById("menu").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
+  instructionsCard.classList.add("hidden");
+  menu.classList.add("hidden");
+  leaderboard.classList.add("hidden");
+  game.classList.remove("hidden");
+
   hearts = 3;
+  score = 0;
   round = 1;
+  queue = shuffle([...metals]);
+
   updateHearts();
-  refillQueue();
-  nextMetal();
+  nextRound();
 }
 
-function refillQueue() {
-  metalQueue = shuffle([...metals]);
-  roundDiv.textContent = `Round ${round} / ∞`;
+function nextRound() {
+  hideNextButton();
+
+  if (queue.length === 0) queue = shuffle([...metals]);
+
+  current = queue.pop();
+  metal.textContent = `${current.symbol} (${current.name})`;
+  answer.textContent = "";
+  answerInput.value = "";
+
+  roundEl.textContent = `Round ${round}`;
+  startTimer();
 }
 
-function nextMetal() {
-  if (metalQueue.length === 0) {
-    round++;
-    refillQueue();
-  }
-  current = metalQueue.pop();
-  metalDiv.textContent = `${current.symbol} (${current.name})`;
-  answerDiv.textContent = `Oxidation States: ${current.charges}`;
-  answerDiv.classList.add("hidden");
-  buttonsDiv.classList.add("hidden");
-  hint.textContent = "Click to reveal";
-  showingAnswer = false;
-  roundDiv.textContent = `Round ${round} / ∞`;
+function roundDisplay() {
+  roundEl.textContent = `Round ${round}`;
 }
 
-function revealAnswer() {
-  answerDiv.classList.remove("hidden");
-  buttonsDiv.classList.remove("hidden");
-  hint.textContent = "Click to continue";
-  showingAnswer = true;
+// ================= TIMER =================
+function startTimer() {
+  clearInterval(timer);
+  timeLeft = 30;
+  timerEl.textContent = timeLeft;
+
+  timer = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+
+    if (timeLeft === 0) {
+      clearInterval(timer);
+      loseLife(`Time's up! Answer: ${current.charges.join(", ")}`);
+    }
+  }, 1000);
 }
 
-function markCorrect() {
-  nextMetal();
+function showNextButton() {
+  document.getElementById("nextBtn").classList.remove("hidden");
 }
 
-function markWrong() {
+function hideNextButton() {
+  document.getElementById("nextBtn").classList.add("hidden");
+}
+
+// ================= SCORING =================
+function addScoreFromTime() {
+  if (timeLeft >= 26) score += 50;
+  else if (timeLeft >= 21) score += 40;
+  else if (timeLeft >= 16) score += 35;
+  else if (timeLeft >= 11) score += 30;
+  else if (timeLeft >= 6) score += 15;
+  else if (timeLeft >= 1) score += 5;
+}
+
+// ================= ANSWERS =================
+answerInput.addEventListener("keydown", e => {
+  if (e.key !== "Enter") return;
+
+  clearInterval(timer);
+  const user = answerInput.value.split(",").map(v => v.trim());
+  const correct = current.charges;
+
+if (user.length === correct.length && user.every(v => correct.includes(v))) {
+  addScoreFromTime();
+  round++;
+  showNextButton();
+} else {
+  loseLife(`Wrong! Answer: ${correct.join(", ")}`);
+}
+});
+
+function loseLife(msg) {
   hearts--;
   updateHearts();
+  answer.textContent = msg;
+  clearInterval(timer);
+
   if (hearts === 0) endGame();
-  else nextMetal();
+  else {
+    round++;
+    showNextButton();
+  }
 }
 
 function updateHearts() {
-  heartsDiv.textContent = "❤️".repeat(hearts);
+  heartsEl.textContent = "❤️".repeat(hearts);
 }
 
+// ================= END / LEADERBOARD =================
 function endGame() {
-  document.getElementById("game").classList.add("hidden");
-  document.getElementById("gameOver").classList.remove("hidden");
+  game.classList.add("hidden");
+  leaderboard.classList.remove("hidden");
+
+attempts.push(score);
+localStorage.setItem("chargeItAttempts", JSON.stringify(attempts));
+
+const best = Math.max(...attempts);
+document.getElementById("personalBest").textContent =
+  `Your Personal Best: ${best} pts`;
+
+scoreList.innerHTML = "";
+
+[...attempts]
+  .sort((a,b)=>b-a)
+  .forEach((s,i)=>{
+    let medal = i===0?"gold":i===1?"silver":i===2?"bronze":"";
+    scoreList.innerHTML += `
+      <div class="leaderboard-score ${medal}">
+        <span class="rank">#${i+1}</span>
+        <span>${s} pts</span>
+      </div>`;
+  });
 }
 
 function restart() {
-  document.getElementById("gameOver").classList.add("hidden");
-  document.getElementById("game").classList.remove("hidden");
-  hearts = 3;
-  round = 1;
-  updateHearts();
-  refillQueue();
-  nextMetal();
+  leaderboard.classList.add("hidden");
+  startGame();
 }
-
-// ====================== CONTROLS ======================
-
-// SPACEBAR STILL WORKS
-document.addEventListener("keydown", e => {
-  if (e.code === "Space" && !document.getElementById("game").classList.contains("hidden")) {
-    e.preventDefault();
-    if (showingAnswer) nextMetal();
-    else revealAnswer();
-  }
-});
-
-// CLICK TO REVEAL / NEXT
-hint.addEventListener("click", (e) => {
-  e.stopPropagation();
-  if (showingAnswer) nextMetal();
-  else revealAnswer();
-});
-
-metalDiv.addEventListener("click", (e) => {
-  e.stopPropagation();
-  if (showingAnswer) nextMetal();
-  else revealAnswer();
-});
-
 </script>
 
 </body>
