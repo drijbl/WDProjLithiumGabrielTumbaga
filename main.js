@@ -115,7 +115,7 @@ bonds.forEach(bond => molecule.add(bond));
 
 // Scale and position molecule
 molecule.scale.set(1.3, 1.3, 1.3);
-molecule.position.set(0, -1.0, 0);
+molecule.position.set(0, 0, 0);
 scene.add(molecule);
 
 // Interaction
