@@ -22,6 +22,7 @@ body {
   color: #fff;
 }
 
+/* background */
 canvas {
   position: absolute;
   inset: 0;
@@ -29,6 +30,7 @@ canvas {
   pointer-events: none;
 }
 
+/* ===== scenes ===== */
 .scene {
   position: absolute;
   width: 100%;
@@ -46,6 +48,7 @@ canvas {
   z-index: 2;
 }
 
+/* ===== scene 1 ===== */
 .content {
   text-align: center;
   max-width: 900px;
@@ -94,6 +97,7 @@ canvas {
   pointer-events: auto;
 }
 
+/* ===== scene 2 ===== */
 .lesson-wrapper {
   width: 85%;
   height: 85%;
@@ -144,6 +148,7 @@ canvas {
   color: #008080;
 }
 
+/* ===== three.js container ===== */
 #three-container {
   width: 100%;
   height: 350px;
@@ -159,6 +164,7 @@ canvas {
   height: 100%;
 }
 
+/* tooltip */
 .tooltip {
   position: absolute;
   background: rgba(20,20,30,0.9);
@@ -170,47 +176,6 @@ canvas {
   display: none;
   z-index: 10;
 }
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(8px);
-  background: rgba(0,0,0,0.35);
-  z-index: 50;
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  width: 20vw;
-  min-width: 260px;
-  background: #fff;
-  color: #222;
-  padding: 24px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-}
-
-.modal-content h2 {
-  color: #008080;
-  margin-bottom: 10px;
-}
-
-.modal-content button {
-  margin-top: 20px;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 10px;
-  background: #008080;
-  color: white;
-  cursor: pointer;
-}
-
 </style>
 </head>
 
@@ -218,6 +183,7 @@ canvas {
 
 <canvas id="bg"></canvas>
 
+<!-- ===== Scene 1 ===== -->
 <div class="scene scene1 active">
   <div class="content">
     <div class="typing-text" id="text1"></div>
@@ -227,6 +193,7 @@ canvas {
   </div>
 </div>
 
+<!-- ===== Scene 2 ===== -->
 <div class="scene scene2">
   <div class="lesson-wrapper" id="lessonBox">
 
@@ -248,22 +215,18 @@ canvas {
         <li>Bonding and reactivity depend on valence electrons</li>
       </ul>
 
-  <div id="three-container">
-  <div id="atom-canvas"></div>
-</div>
+      <!-- ✅ THREE.JS AREA -->
+      <div id="three-container">
+        <div id="atom-canvas"></div>
+        <div class="tooltip"></div>
+      </div>
 
-<!-- PARTICLE INFO MODAL -->
-<div id="particle-modal" class="modal hidden">
-  <div class="modal-content">
-    <h2 id="modal-title"></h2>
-    <p id="modal-info"></p>
-    <button id="closeModal">Close</button>
+    </div>
   </div>
 </div>
 
-<script type="module" src="subatomic.js"></script>
-
 <script>
+// typing animation
 function typeText(el, text, speed, cb) {
   let i = 0;
   const int = setInterval(() => {
@@ -297,6 +260,7 @@ typeText(t1, "Matter", 250, () => {
   }, 500);
 });
 
+// scene transition
 btn.onclick = () => {
   document.querySelector('.scene1').classList.remove('active');
   document.querySelector('.scene2').classList.add('active');
@@ -307,6 +271,7 @@ btn.onclick = () => {
 };
 </script>
 
+<!-- ✅ LOAD THREE MODULE -->
 <script type="module" src="subatomic.js"></script>
 
 </body>
