@@ -1,202 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CS3 Website Project" />
-  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
-  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
-  <title>Chemivis | Practice Games</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="stylesheet" href="references.css">
-  <link rel="stylesheet" href="games.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chemivis | Practice Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="games.css">
 </head>
-
 <body>
 
-<canvas id="bg"></canvas>
+    <div id="hamburger">☰</div>
 
-<header>
-  <div id="hamburger">☰</div>
-</header>
+    <nav class="side-menu" id="sideMenu">
+        <div id="closeMenu">✖</div>
+        <a href="index.html">HOME</a>
+        <a href="periodic-table.html">PERIODIC TABLE</a>
+        <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+        <a href="vsepr.html">VSEPR</a>
+        <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+        <a href="games.html">PRACTICE GAMES</a>
+    </nav>
 
-<div class="side-menu" id="sideMenu">
-  <div id="closeMenu">✖</div>
-  <a href="index.html">HOME</a>
-  <a href="periodic-table.html">PERIODIC TABLE</a>
-  <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-  <a href="vsepr.html">VSEPR</a>
-  <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-  <a href="games.html">PRACTICE GAMES</a>
-</div>
+    <h1 class="header-title">Practice Games</h1>
 
-<div class="screen-dim" id="dim"></div>
+    <div class="games-container">
+        <!-- Master Alchemist -->
+        <a href="games_elements.html" class="game-card large">
+            <div class="game-label">Master Alchemist</div>
+            <div class="game-thumbnail" style="background-image: url('assets/alchemy_bg.jpg');"></div>
+            <div class="hover-overlay">
+                <div class="overlay-title">Master Alchemist</div>
+                <p class="overlay-desc">Step into the lab and craft powerful compounds to duel rivals in this tactical strategy battle.</p>
+                <button class="play-btn">Play Now</button>
+            </div>
+        </a>
 
-<section class="games-section">
+        <!-- Ion Know That One! -->
+        <a href="game_ion.html" class="game-card small">
+            <div class="game-label">Ion Know That One!</div>
+            <div class="game-thumbnail" style="background-image: url('assets/polyatomic.png');"></div>
+            <div class="hover-overlay">
+                <div class="overlay-title">Ion Know That One!</div>
+                <p class="overlay-desc">Identify complex ions in this rapid-fire memory challenge. Perfect for studying polyatomic groups.</p>
+                <button class="play-btn">Play Now</button>
+            </div>
+        </a>
 
-  <div class="games-title">
-    <div class="big">PRACTICE GAMES</div>
-  </div>
-
-  <div class="games-container">
-
-    <!-- Polyatomic Ions -->
-    <div class="game-wrapper">
-      <a href="game_ion.html" class="game-link">
-        <div class="game-card" style="background-image: url('./assets/polyatomic.png');">
-          <div class="hover-caption">Nitrate</div>
-        </div>
-      </a>
-
-      <div class="game-desc">
-        Try to identify common polyatomic ions and their charges in this matching game!
-      </div>
-      <div class="game-title">Ion Know That One!</div>
+        <!-- Charge It! -->
+        <a href="game_charges.html" class="game-card small">
+            <div class="game-label">Charge It!</div>
+            <div class="game-thumbnail" style="background-image: url('assets/charge.png');"></div>
+            <div class="hover-overlay">
+                <div class="overlay-title">Charge It!</div>
+                <p class="overlay-desc">Master oxidation states of transition metals. Balance charges to win high-stakes matches.</p>
+                <button class="play-btn">Play Now</button>
+            </div>
+        </a>
     </div>
 
-    <!-- Transition Metal Charges -->
-    <div class="game-wrapper">
-      <a href="game_charges.html" class="game-link">
-        <div class="game-card" style="background-image: url('./assets/charge.png');">
-          <div class="hover-caption">Transition metals (Groups 8–10)</div>
-        </div>
-      </a>
+    <canvas id="atomsBg"></canvas>
 
-      <div class="game-desc">
-        Practice assigning charges to ions in this interactive game!
-      </div>
-      <div class="game-title">Charge It!</div>
-    </div>
+    <script>
+        // Menu Logic
+        const menu = document.getElementById("sideMenu");
+        const hamburger = document.getElementById("hamburger");
+        const closeMenu = document.getElementById("closeMenu");
 
-    <!-- Elemental Battle -->
-<div class="game-wrapper">
-  <a href="games_elements.html" class="game-link">
-    <div class="game-card" style="background-image: url('assets/reactions.jpg');">
-      <div class="hover-caption">Different types of chemical reactions in a laboratory</div>
-    </div>
-  </a>
+        hamburger.onclick = (e) => {
+            e.stopPropagation();
+            menu.classList.add("open");
+        };
+        closeMenu.onclick = () => menu.classList.remove("open");
+        
+        document.addEventListener('click', (e) => {
+            if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamburger) {
+                menu.classList.remove('open');
+            }
+        });
 
-  <div class="game-desc">
-    Combine some of the common elements of the periodic table to defeat the enemy!
-  </div>
-  <div class="game-title">Master Alchemist</div>
-</div>
+        // Atoms Animation
+        const canvas = document.getElementById("atomsBg");
+        const ctx = canvas.getContext("2d");
+        let atoms = [];
+        let particles = [];
 
-  </div>
-</section>
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
 
-<footer>
-  <div class="footer-icons">
-    <img src="./assets/facebook.svg">
-    <img src="./assets/instagram.svg">
-    <img src="./assets/github.png">
-  </div>
-</footer>
+        class Particle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.r = 1.0 + Math.random() * 1.0;
+                this.vx = (Math.random() - 0.5) * 4;
+                this.vy = (Math.random() - 0.5) * 4;
+                this.life = 30 + Math.random() * 10;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy; this.life--;
+                ctx.beginPath();
+                ctx.fillStyle = `rgba(255,255,255,${this.life / 40})`;
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-<script>
-/* Sidebar */
-const menu = document.getElementById("sideMenu");
-document.getElementById("hamburger").onclick = () => menu.classList.add("open");
-document.getElementById("closeMenu").onclick = () => menu.classList.remove("open");
+        class Atom {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.r = 2 + Math.random() * 2;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.exploded = false;
+            }
+            draw() {
+                if (this.exploded) return;
+                ctx.beginPath();
+                ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            explode() {
+                this.exploded = true;
+                for (let i = 0; i < 8; i++) particles.push(new Particle(this.x, this.y));
+                setTimeout(() => this.init(), 2000);
+            }
+            update(atomsArr) {
+                if (this.exploded) return;
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-/* Darken */
-const dim = document.getElementById("dim");
-document.querySelectorAll(".game-wrapper").forEach(card => {
-  card.addEventListener("mouseenter", () => dim.classList.add("active"));
-  card.addEventListener("mouseleave", () => dim.classList.remove("active"));
-});
-</script>
+                for (let a of atomsArr) {
+                    if (a === this || a.exploded) continue;
+                    const d = Math.hypot(a.x - this.x, a.y - this.y);
+                    if (d < this.r + a.r) {
+                        this.explode(); a.explode();
+                    }
+                }
+                this.draw();
+            }
+        }
 
-<script>
-/* Exploding Atoms BG */
-const canvas = document.getElementById("bg");
-const c = canvas.getContext("2d");
+        for (let i = 0; i < 30; i++) atoms.push(new Atom());
 
-function resize() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-resize();
-addEventListener("resize", resize);
-
-class Atom {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.r = 3 + Math.random() * 3;
-    this.vx = (Math.random() - 0.5) * 0.7;
-    this.vy = (Math.random() - 0.5) * 0.7;
-    this.exploded = false;
-  }
-  draw() {
-    c.beginPath();
-    c.fillStyle = "white";
-    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    c.fill();
-  }
-  explode() {
-    this.exploded = true;
-    explosions.push(new Explosion(this.x, this.y));
-  }
-  update(atoms) {
-    this.x += this.vx;
-    this.y += this.vy;
-
-    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-    for (let a of atoms) {
-      if (a === this || a.exploded) continue;
-      const d = Math.hypot(a.x - this.x, a.y - this.y);
-      if (d < this.r + a.r) {
-        this.explode();
-        a.explode();
-      }
-    }
-    this.draw();
-  }
-}
-
-class Explosion {
-  constructor(x, y) {
-    this.particles = [];
-    for (let i = 0; i < 20; i++) {
-      this.particles.push({
-        x, y,
-        vx: (Math.random() - 0.5) * 3,
-        vy: (Math.random() - 0.5) * 3,
-        life: 40
-      });
-    }
-  }
-  update() {
-    this.particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life--;
-      c.fillStyle = `rgba(255,255,255,${p.life/40})`;
-      c.beginPath();
-      c.arc(p.x, p.y, 2, 0, Math.PI * 2);
-      c.fill();
-    });
-    this.particles = this.particles.filter(p => p.life > 0);
-  }
-}
-
-const atoms = [];
-const explosions = [];
-for (let i = 0; i < 40; i++) atoms.push(new Atom());
-
-function animate() {
-  requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
-  atoms.forEach(a => !a.exploded && a.update(atoms));
-  explosions.forEach(e => e.update());
-}
-animate();
-</script>
-
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            atoms.forEach(a => a.update(atoms));
+            particles = particles.filter(p => {
+                p.update();
+                return p.life > 0;
+            });
+        }
+        animate();
+    </script>
 </body>
 </html>
