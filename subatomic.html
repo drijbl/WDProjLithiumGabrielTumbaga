@@ -6,217 +6,29 @@
 <title>Chemivis | Subatomic Particles</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #9b52ee, #279fce);
-  overflow: hidden;
-  height: 100vh;
-  color: #fff;
-}
-
-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.scene {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: opacity 1s ease;
-  z-index: 1;
-}
-
-.scene.active {
-  opacity: 1;
-  z-index: 2;
-}
-
-.content {
-  text-align: center;
-  max-width: 900px;
-  padding: 0 20px;
-}
-
-.typing-text {
-  margin-bottom: 30px;
-  white-space: pre-wrap;
-}
-
-#text1 {
-  font-size: 60px;
-  font-weight: 700;
-  color: #4a0d8a;
-}
-
-#text2 {
-  font-size: 28px;
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-#text3 {
-  font-size: 32px;
-  font-weight: 500;
-}
-
-.next-btn {
-  margin-top: 40px;
-  padding: 16px 50px;
-  font-size: 22px;
-  font-weight: 600;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid #fff;
-  border-radius: 12px;
-  color: #fff;
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.4s ease;
-}
-
-.next-btn.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.lesson-wrapper {
-  width: 85%;
-  height: 85%;
-  background: rgba(254,255,252,0.92);
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
-  overflow-y: auto;
-  color: #222;
-  padding-bottom: 40px;
-
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 1s ease;
-}
-
-.lesson-wrapper.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.site-header {
-  background: #008080;
-  padding: 20px 30px;
-  border-radius: 16px 16px 0 0;
-  color: white;
-}
-
-.page-title {
-  font-family: 'Rubik One', sans-serif;
-  font-size: 28px;
-}
-
-.lesson-section {
-  padding: 30px;
-}
-
-.lesson-section h2 {
-  color: #008080;
-  margin-bottom: 10px;
-}
-
-.lesson-section ul {
-  margin-left: 20px;
-  margin-top: 10px;
-}
-
-.lesson-section li::marker {
-  color: #008080;
-}
-
-#three-container {
-  width: 100%;
-  height: 350px;
-  margin-top: 20px;
-  border-radius: 12px;
-  background: #e6e6e6;
-  position: relative;
-  overflow: hidden;
-}
-
-#atom-canvas {
-  width: 100%;
-  height: 100%;
-}
-
-.tooltip {
-  position: absolute;
-  background: rgba(20,20,30,0.9);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  pointer-events: none;
-  display: none;
-  z-index: 10;
-}
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(8px);
-  background: rgba(0,0,0,0.35);
-  z-index: 50;
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  width: 20vw;
-  min-width: 260px;
-  background: #fff;
-  color: #222;
-  padding: 24px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-}
-
-.modal-content h2 {
-  color: #008080;
-  margin-bottom: 10px;
-}
-
-.modal-content button {
-  margin-top: 20px;
-  padding: 10px 24px;
-  border: none;
-  border-radius: 10px;
-  background: #008080;
-  color: white;
-  cursor: pointer;
-}
-
-</style>
+<link rel="stylesheet" href="references.css">
+<link rel="stylesheet" href="subatomic.css">
 </head>
 
 <body>
 
 <canvas id="bg"></canvas>
+
+<header>
+  <div id="hamburger">☰</div>
+</header>
+
+<div class="side-menu" id="sideMenu">
+  <div id="closeMenu">✖</div>
+  <a href="index.html">HOME</a>
+  <a href="periodic-table.html">PERIODIC TABLE</a>
+  <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+  <a href="vsepr.html">VSEPR</a>
+  <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+  <a href="games.html">PRACTICE GAMES</a>
+</div>
+
+<div class="screen-dim" id="dim"></div>
 
 <div class="scene scene1 active">
   <div class="content">
@@ -248,8 +60,11 @@ canvas {
         <li>Bonding and reactivity depend on valence electrons</li>
       </ul>
 
-  <div id="three-container">
-  <div id="atom-canvas"></div>
+      <div id="three-container">
+        <div id="atom-canvas"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- PARTICLE INFO MODAL -->
@@ -261,9 +76,103 @@ canvas {
   </div>
 </div>
 
-<script type="module" src="subatomic.js"></script>
-
 <script>
+/* Sidebar Logic */
+const menu = document.getElementById("sideMenu");
+const dim = document.getElementById("dim");
+document.getElementById("hamburger").onclick = () => {
+  menu.classList.add("open");
+  dim.classList.add("active");
+};
+document.getElementById("closeMenu").onclick = () => {
+  menu.classList.remove("open");
+  dim.classList.remove("active");
+};
+dim.onclick = () => {
+  menu.classList.remove("open");
+  dim.classList.remove("active");
+};
+
+/* Exploding Atoms BG Logic */
+const canvas = document.getElementById("bg");
+const c = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
+
+class Particle {
+  constructor(x, y) {
+    this.x = x; this.y = y;
+    this.r = 2 + Math.random() * 2;
+    this.vx = (Math.random() - 0.5) * 6;
+    this.vy = (Math.random() - 0.5) * 6;
+    this.life = 30 + Math.random() * 20;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    c.beginPath();
+    c.fillStyle = `rgba(255,255,255,${this.life / 50})`;
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fill();
+  }
+}
+
+class Atom {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = 4 + Math.random() * 4;
+    this.vx = (Math.random() - 0.5) * 1.5;
+    this.vy = (Math.random() - 0.5) * 1.5;
+    this.exploded = false;
+  }
+  explode() {
+    this.exploded = true;
+    for (let i = 0; i < 15; i++) bgParticles.push(new Particle(this.x, this.y));
+    setTimeout(() => this.reset(), 1200);
+  }
+  update(atoms) {
+    if (this.exploded) return;
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    for (let a of atoms) {
+      if (a !== this && !a.exploded) {
+        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+          this.explode(); a.explode();
+        }
+      }
+    }
+    c.beginPath();
+    c.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fill();
+  }
+}
+
+const atoms = Array.from({ length: 40 }, () => new Atom());
+const bgParticles = [];
+
+function animateBG() {
+  requestAnimationFrame(animateBG);
+  c.clearRect(0, 0, canvas.width, canvas.height);
+  atoms.forEach(a => a.update(atoms));
+  bgParticles.forEach((p, i) => {
+    p.update();
+    if (p.life <= 0) bgParticles.splice(i, 1);
+  });
+}
+animateBG();
+
+/* Intro Sequence Typing Logic */
 function typeText(el, text, speed, cb) {
   let i = 0;
   const int = setInterval(() => {
@@ -278,7 +187,7 @@ function typeText(el, text, speed, cb) {
 const t1 = document.getElementById('text1');
 const t2 = document.getElementById('text2');
 const t3 = document.getElementById('text3');
-const btn = document.getElementById('nextBtn');
+const nextBtn = document.getElementById('nextBtn');
 
 typeText(t1, "Matter", 250, () => {
   setTimeout(() => {
@@ -289,7 +198,7 @@ typeText(t1, "Matter", 250, () => {
       () => {
         setTimeout(() => {
           typeText(t3, "But what is matter made of?", 60, () => {
-            btn.classList.add("show");
+            nextBtn.classList.add("show");
           });
         }, 500);
       }
@@ -297,10 +206,9 @@ typeText(t1, "Matter", 250, () => {
   }, 500);
 });
 
-btn.onclick = () => {
+nextBtn.onclick = () => {
   document.querySelector('.scene1').classList.remove('active');
   document.querySelector('.scene2').classList.add('active');
-
   setTimeout(() => {
     document.getElementById('lessonBox').classList.add('show');
   }, 100);

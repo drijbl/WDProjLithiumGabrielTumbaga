@@ -1,92 +1,88 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ===== BODY ==== */
-body {
-  font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #9b52ee, #279fce);
-  padding: 60px 100px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ===== Background canvas ===== */
-canvas#bg {
-  position: fixed;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  overflow: hidden;
+  height: 100vh;
+  color: #fff;
+  position: relative;
+}
+
+canvas {
+  position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
 
-/* ===== Page shell ===== */
-.page-shell {
-  position: relative;
-  z-index: 1;
-  background: rgba(254, 255, 252, 0.88);
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
-  overflow: hidden;
-  min-height: 400px;
-}
-
-/* ===== Headers ===== */
-.site-header {
+/* Sidebar Styles */
+header {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px 30px;
-  background: #008080;
-  border-radius: 12px 12px 0 0;
-  color: white;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
 }
 
-.page-title {
-  font-family: 'Rubik One', sans-serif;
-  font-size: 28px;
-  font-weight: 500;
-}
-
-/* ===== Navigation Bar ===== */
-#hamburger {
-  font-size: 30px;
+#hamburger { 
+  font-size: 32px;
   cursor: pointer;
-  padding: 5px 10px;
-  color: white;
-  background: none;
-  border: none;
-  z-index: 999;
+  padding: 5px;
+  color: #1c3d68;
+  background: transparent;
+  backdrop-filter: none; 
+  z-index: 1999;
   position: relative;
+  transition: transform 0.2s;
+}
+
+#hamburger:hover {
+  transform: scale(1.1);
 }
 
 .side-menu {
   position: fixed;
   top: 0;
-  left: -320px;
+  left: -320px; 
   width: 300px;
   height: 100%;
-  background: #144b63;
+  background: #144b63; 
   color: white;
   padding: 25px;
+  box-sizing: border-box;
   transition: left 0.3s ease;
-  z-index: 1000;
+  z-index: 3000;
   box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  overflow-y: auto; 
 }
 
-.side-menu.open { left: 0; }
+.side-menu.open {
+  left: 0; 
+}
 
-/*Side Menu Links*/
 .side-menu a {
   display: block;
-  margin: 18px 0;
-  padding: 10px 15px;
-  font-size: 20px;
-  font-weight: 600;
   color: white;
   text-decoration: none;
-  border-radius: 5px;
+  margin: 18px 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
   transition: background-color 0.2s, transform 0.2s;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .side-menu a:hover {
-  background: #216d91;
+  background-color: #216d91;
   transform: translateX(5px);
 }
 
@@ -94,55 +90,238 @@ canvas#bg {
   font-size: 30px;
   cursor: pointer;
   color: #ff7a7a;
-  font-weight: bold;
+  font-weight: normal;
   margin-bottom: 30px;
   text-align: right;
 }
 
-/* ===== Lesson Sections ===== */
-.lesson-section {
-  padding: 30px;
+.screen-dim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
   opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.6s ease;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2500;
 }
 
-.lesson-section.visible {
+.screen-dim.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Scene Styles */
+.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 1;
+}
+
+.scene.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.content {
+  text-align: center;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.typing-text {
+  margin-bottom: 30px;
+  white-space: pre-wrap;
+}
+
+#text1 {
+  font-size: 60px;
+  font-weight: 700;
+  color: #4a0d8a;
+}
+
+#text2 {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+#text3 {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.next-btn {
+  margin-top: 40px;
+  padding: 16px 50px;
+  font-size: 22px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid #fff;
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s ease;
+}
+
+.next-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Updated Lesson Wrapper*/
+.lesson-wrapper {
+  width: 95%;
+  max-width: 1200px;
+  height: 90%;
+  background: #f1f4f8; 
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  overflow-y: auto;
+  color: #333;
+  padding-bottom: 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+  position: relative;
+}
+
+.lesson-wrapper.show {
   opacity: 1;
   transform: translateY(0);
 }
 
+.site-header {
+  background: #008080;
+  padding: 24px 40px;
+  border-radius: 12px 12px 0 0;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.page-title {
+  font-family: 'Rubik One', sans-serif;
+  font-size: 34px;
+  letter-spacing: 1px;
+}
+
+.lesson-section {
+  padding: 40px;
+}
+
+.lesson-section h2 {
+  color: #008080;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.lesson-section p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
 .lesson-section ul {
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 30px;
+  margin-bottom: 40px;
+}
+
+.lesson-section li {
+  font-size: 18px;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .lesson-section li::marker {
   color: #008080;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
+/* Atom Canvas Container adjusted to image reference */
+#three-container {
+  width: 100%;
+  height: 450px;
+  margin-top: 20px;
+  border-radius: 12px;
+  background: #e1e4e8;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
 
-  body {
-    padding: 10px;
-  }
+#atom-canvas {
+  width: 100%;
+  height: 100%;
+}
 
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.35);
+  z-index: 5000;
+}
 
-  .container,
-  .content,
-  .game,
-  .main {
-    width: 100%;
-  }
+.modal.hidden {
+  display: none;
+}
 
-  button, a {
-    font-size: 1rem;
-    padding: 12px 16px;
-  }
+.modal-content {
+  width: 25vw;
+  min-width: 300px;
+  background: #fff;
+  color: #222;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
 
+.modal-content h2 {
+  color: #008080;
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.modal-content button {
+  margin-top: 25px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 10px;
+  background: #008080;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-content button:hover {
+  background: #006666;
+}
+
+.lesson-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+.lesson-wrapper::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+  border-radius: 0 12px 0 0;
+}
+.lesson-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
 }
