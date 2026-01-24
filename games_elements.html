@@ -102,10 +102,59 @@
     </div>
 </div>
 
+<!-- ===== BACKGROUND MUSIC ===== -->
+<audio id="bgMusic" preload="auto" loop>
+  <source src="./assets/Alchemy_sound.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicToggle">▶</button>
+
 <script>
-document.getElementById('btn-back-games').addEventListener('click', function() {
-    window.location.href = 'games.html';
+// ===== BACK BUTTON =====
+document.getElementById('btn-back-games')?.addEventListener('click', () => {
+  window.location.href = 'games.html';
 });
+
+// ===== MUSIC =====
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+bgMusic.volume = 0.5;
+bgMusic.muted = true;
+
+// 🔥 AUTOPLAY ON LOAD
+window.addEventListener("load", () => {
+  bgMusic.play().then(() => {
+    updateBtn();
+  }).catch(() => {
+  });
+});
+
+function unlockAudio() {
+  bgMusic.muted = false;
+  bgMusic.play();
+  updateBtn();
+
+  document.removeEventListener("pointerdown", unlockAudio);
+  document.removeEventListener("keydown", unlockAudio);
+}
+
+document.addEventListener("pointerdown", unlockAudio);
+document.addEventListener("keydown", unlockAudio);
+
+//toggle
+musicToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (bgMusic.paused) bgMusic.play();
+  else bgMusic.pause();
+
+  updateBtn();
+});
+
+function updateBtn() {
+  musicToggle.textContent = bgMusic.paused ? "▶" : "❚❚";
+}
 </script>
 
 <script src="game_elements.js"></script>

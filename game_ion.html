@@ -67,42 +67,59 @@
 </div>
 
 <!-- Audio -->
-<audio id="bgMusic" src="/assets/Game_music.mp3" loop autoplay muted></audio>
+<audio id="bgMusic" src="/assets/Game_music.mp3" loop></audio>
 
 <script>
 // ---------- MUSIC ----------
-const bgMusic = document.getElementById('bgMusic');
-bgMusic.volume = 0.5;
-let isMusicPlaying = true; // starts autoplay muted
-let isMuted = true;
+const bgMusic = document.getElementById("bgMusic");
+const musicToggle = document.getElementById("musicToggle");
+const playIcon = document.getElementById("playIcon");
+const pauseIcon = document.getElementById("pauseIcon");
 
-const musicToggle = document.getElementById('musicToggle');
-const playIcon = document.getElementById('playIcon');
-const pauseIcon = document.getElementById('pauseIcon');
+bgMusic.volume = 0.5;
+bgMusic.muted = true;
+
+let isPlaying = false;
+
+window.addEventListener("load", () => {
+  bgMusic.play().then(() => {
+    isPlaying = true;
+    updateMusicIcons();
+  }).catch(() => {});
+});
 
 function updateMusicIcons() {
-  playIcon.classList.toggle('hidden', isMusicPlaying && !isMuted);
-  pauseIcon.classList.toggle('hidden', !isMusicPlaying || isMuted);
+  playIcon.classList.toggle("hidden", isPlaying);
+  pauseIcon.classList.toggle("hidden", !isPlaying);
 }
 
-function toggleMusic() {
-  if (isMuted) {
-    bgMusic.muted = false;
+function unlockAudio() {
+  bgMusic.muted = false;
+  bgMusic.play();
+  isPlaying = true;
+  updateMusicIcons();
+
+  document.removeEventListener("click", unlockAudio);
+  document.removeEventListener("keydown", unlockAudio);
+  document.removeEventListener("touchstart", unlockAudio);
+}
+
+document.addEventListener("click", unlockAudio);
+document.addEventListener("keydown", unlockAudio);
+document.addEventListener("touchstart", unlockAudio);
+
+// pause / play button
+musicToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (bgMusic.paused) {
     bgMusic.play();
-    isMuted = false;
-    isMusicPlaying = true;
-  } else if (isMusicPlaying) {
-    bgMusic.pause();
-    isMusicPlaying = false;
+    isPlaying = true;
   } else {
-    bgMusic.play();
-    isMusicPlaying = true;
+    bgMusic.pause();
+    isPlaying = false;
   }
   updateMusicIcons();
-}
-
-musicToggle.addEventListener('click', toggleMusic);
-updateMusicIcons();
+});
 
 // ---------- EXPLODING ATOMS ----------
 const canvas = document.getElementById("bg");
