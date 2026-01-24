@@ -1,12 +1,10 @@
         /* Base Styles */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
-
         html {
             height: 100%;
             background: #0e769f;
         }
-
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -20,7 +18,6 @@
             overflow-y: auto;
         }
 
-
         #atomsBg {
             position: fixed;
             top: 0;
@@ -31,6 +28,128 @@
             pointer-events: none;
         }
 
+        /* Login Card Styles */
+        #loginOverlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+            padding: 20px;
+            background: transparent;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        #loginOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            text-align: center;
+            color: #333;
+        }
+
+.login-logo {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+        .login-card h2 {
+            font-family: 'Rubik One', sans-serif;
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: #000;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1.5px solid #e0e0e0;
+            background-color: #fafafa; /* Lighter background */
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+            color: #666; /* Lighter text color instead of dark gray/black */
+        }
+
+        .input-group input::placeholder {
+            color: #bbb; /* Lighter placeholder */
+        }
+
+        .input-group input:focus {
+            border-color: #5ba4bc;
+            background-color: #ffffff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: #5ba4bc;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(91, 164, 188, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: #4a8d9e;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Main Content wrapper */
+        #mainGamesContent {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        #mainGamesContent.visible {
+            opacity: 1;
+        }
 
         /* Side Menu */
         .side-menu {
@@ -48,9 +167,7 @@
             overflow-y: auto;
         }
 
-
         .side-menu.open { left: 0; }
-
 
         .side-menu a {
             display: block;
@@ -64,12 +181,10 @@
             border-radius: 5px;
         }
 
-
         .side-menu a:hover {
             background-color: #216d91;
             transform: translateX(5px);
         }
-
 
         #closeMenu {
             font-size: 28px;
@@ -79,7 +194,6 @@
             text-align: right;
             display: block;
         }
-
 
         #hamburger {
             font-size: 30px;
@@ -92,30 +206,33 @@
             left: 15px;
         }
 
-
         /* Header */
         .header-title {
-          text-align: center;
-          padding: 28px 20px 14px; /* 🔽 less vertical padding */
-          font-family: "Rubik One", sans-serif;
-          font-size: clamp(1.8rem, 5vw, 2.6rem);
-         letter-spacing: 2px;
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            font-family: "Rubik One", sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            color: #ffffff;
+            z-index: 10;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
 
         /* Games Grid System */
         .games-container {
-          flex: 1;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 26px;
-          max-width: 900px;  
-          width: 80%;        
-          margin: 0 auto 30px auto;
-          z-index: 10;
-          position: relative;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            max-width: 1100px;
+            width: 94%;
+            margin: 0 auto 40px auto;
+            z-index: 10;
+            position: relative;
         }
-
 
         .game-card {
             position: relative;
@@ -131,24 +248,20 @@
             display: block;
         }
 
-
         .game-card.large {
             grid-column: 1 / span 2;
-            height: clamp(220px, 30vh, 160px);
+            height: clamp(260px, 40vh, 360px);
         }
-
 
         .game-card.small {
-            height: clamp(250px, 28vh, 180px);
+            height: clamp(220px, 32vh, 300px);
         }
-
 
         .game-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 45px rgba(0,0,0,0.4);
             border-color: rgba(255,255,255,0.2);
         }
-
 
         .game-thumbnail {
             position: absolute;
@@ -164,12 +277,10 @@
             transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
         }
 
-
         .game-card:hover .game-thumbnail {
             opacity: 0.5;
             transform: scale(1.05);
         }
-
 
         .game-label {
             position: absolute;
@@ -184,13 +295,10 @@
             pointer-events: none;
         }
 
-
         .game-card:hover .game-label {
             opacity: 0;
         }
 
-
-        /* ULTRA COMPACT Hover Overlay */
         .hover-overlay {
             position: absolute;
             bottom: 10px;
@@ -199,7 +307,7 @@
             background: rgba(13, 51, 68, 0.96);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 10px 14px;
+            padding: 10px 14px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -210,26 +318,23 @@
             z-index: 10;
             border: 1px solid rgba(255,255,255,0.12);
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            max-height: 85%;
+            max-height: 85%; 
         }
-
 
         .game-card:hover .hover-overlay {
             transform: translateY(0);
         }
 
-
         .overlay-title {
             font-family: 'Rubik One', sans-serif;
-            font-size: clamp(12px, 2vw, 16px);
+            font-size: clamp(12px, 2vw, 16px); 
             margin-bottom: 2px;
             color: #ffcc00;
             text-transform: uppercase;
         }
 
-
         .overlay-desc {
-            font-size: clamp(10px, 1.3vw, 12px);
+            font-size: clamp(10px, 1.3vw, 12px); 
             line-height: 1.25;
             opacity: 0.9;
             margin-bottom: 8px;
@@ -240,7 +345,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
 
         .play-btn {
             background: #ffffff;
@@ -256,74 +360,23 @@
             transition: all 0.2s ease;
         }
 
-
         .play-btn:hover {
             background: #ffcc00;
             color: #000;
         }
 
-/* Responsive Adjustments */
-@media (max-width: 900px) {
-    .games-container {
-        width: 88%;         
-        max-width: 760px;
-        gap: 22px;
-    }
+        @media (max-width: 800px) {
+            .games-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .game-card.large { height: 220px; }
+            .game-card.small { height: 200px; }
+        }
 
-    .game-card.large {
-        height: 200px;
-    }
-
-    .game-card.small {
-        height: 180px;
-    }
-}
-
-@media (max-width: 800px) {
-    .games-container {
-        grid-template-columns: 1fr;
-        width: 90%;
-        max-width: 620px;
-        gap: 18px;
-        margin-bottom: 24px;
-    }
-
-    .game-card.large {
-        height: 190px;
-    }
-
-    .game-card.small {
-        height: 170px;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding-top: 10px; /* keeps header from sticking to top */
-    }
-
-    .header-title {
-        padding: 20px 12px 10px;
-        font-size: 1.8rem;
-    }
-
-    .games-container {
-        width: 92%;
-        gap: 14px;
-    }
-
-    .game-card.large {
-        height: 160px;
-    }
-
-    .game-card.small {
-        height: 145px;
-    }
-
-    .hover-overlay {
-        padding: 8px 10px;
-        bottom: 8px;
-        left: 8px;
-        right: 8px;
-    }
-}
+        @media (max-width: 480px) {
+            .header-title { padding-top: 50px; }
+            .game-card.large { height: 180px; }
+            .game-card.small { height: 160px; }
+            .hover-overlay { padding: 8px 10px; bottom: 8px; left: 8px; right: 8px; }
+        }

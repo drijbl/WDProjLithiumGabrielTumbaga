@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Chemivis | Practice Games</title>
+<title>Chemivis | Charge It!</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="game_charges.css" />
 <link rel="icon" type="image/png" href="./assets/logo.png">
@@ -16,7 +16,6 @@
   <a href="games.html" class="back-link"><span>←</span> Games</a>
 </nav>
 
-<!-- Music toggle -->
 <button id="musicToggle" title="Toggle Background Music">
   <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
   <svg id="pauseIcon" class="hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -39,8 +38,7 @@
       <ul>
         <li>Identify common oxidation states for the metal shown.</li>
         <li>Enter charges separated by commas (e.g., +2, +3).</li>
-        <li><strong>The faster you answer, the more points you earn!</strong></li>
-        <li>10 seconds per round. Watch your hearts!</li>
+        <li>Answer fast for more points! 10 seconds per round.</li>
       </ul>
     </div>
     <button class="btn submit-btn" id="startBtn">PLAY</button>
@@ -57,25 +55,23 @@
   </div>
 
   <div id="leaderboardView" class="hidden">
-    <div class="title">GAME OVER</div>
+    <div class="title" style="color: #ff4d4d;">GAME OVER</div>
     <div class="subtitle" id="finalScoreDisplay" style="margin-bottom: 5px; font-weight: 700; color: #5e5cff; font-size: 20px;">Score: 0</div>
     <div class="leaderboard-container">
-      <div class="leaderboard-label">Current Session Tries</div>
-      <div id="triesList"></div>
+      <div class="leaderboard-label">All-Time Scores</div>
+      <div id="allTimeScores" class="scrollable-scores"></div>
     </div>
-    <button class="btn restart-btn" id="restartBtn">RESTART</button>
+    <button class="btn submit-btn" style="margin-top: 20px;" id="restartBtn">RESTART</button>
   </div>
 </div>
 
-<!-- Audio element -->
 <audio id="bgMusic" src="/assets/Game_music.mp3" loop autoplay muted></audio>
 
 <script>
-// ---------- MUSIC LOGIC ----------
+// ---------- MUSIC ----------
 const bgMusic = document.getElementById('bgMusic');
 bgMusic.volume = 0.5;
-let isMusicPlaying = true; // autoplay muted
-let isMuted = true;
+let isMusicPlaying = true, isMuted = true;
 
 const musicToggle = document.getElementById('musicToggle');
 const playIcon = document.getElementById('playIcon');
@@ -85,112 +81,32 @@ function updateMusicIcons() {
   playIcon.classList.toggle('hidden', isMusicPlaying && !isMuted);
   pauseIcon.classList.toggle('hidden', !isMusicPlaying || isMuted);
 }
-
 function toggleMusic() {
-  if (isMuted) {
-    // unmute & play
-    bgMusic.muted = false;
-    bgMusic.play();
-    isMuted = false;
-    isMusicPlaying = true;
-  } else if (isMusicPlaying) {
-    bgMusic.pause();
-    isMusicPlaying = false;
-  } else {
-    bgMusic.play();
-    isMusicPlaying = true;
-  }
+  if (isMuted) { bgMusic.muted = false; bgMusic.play(); isMuted=false; isMusicPlaying=true; }
+  else if (isMusicPlaying) { bgMusic.pause(); isMusicPlaying=false; }
+  else { bgMusic.play(); isMusicPlaying=true; }
   updateMusicIcons();
 }
-
 musicToggle.addEventListener('click', toggleMusic);
 updateMusicIcons();
 
 // ---------- EXPLODING ATOMS ----------
 const canvas = document.getElementById("bg");
 const c = canvas.getContext("2d");
+function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+resize(); window.addEventListener("resize", resize);
 
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+class Atom { 
+  constructor(){ this.init(); } 
+  init(){ this.x=Math.random()*canvas.width; this.y=Math.random()*canvas.height; this.r=3+Math.random()*3; this.vx=(Math.random()-0.5)*0.8; this.vy=(Math.random()-0.5)*0.8; this.exploded=false; } 
+  draw(){ if(this.exploded) return; c.beginPath(); c.fillStyle="rgba(255,255,255,0.5)"; c.arc(this.x,this.y,this.r,0,Math.PI*2); c.fill(); } 
+  explode(){ this.exploded=true; explosions.push(new Explosion(this.x,this.y)); setTimeout(()=>this.init(),1200); } 
+  update(atoms){ if(this.exploded) return; this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; for(let a of atoms){ if(a===this||a.exploded)continue; if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){ this.explode(); a.explode(); } } this.draw(); }
 }
-resize();
-window.addEventListener("resize", resize);
+class Explosion{ constructor(x,y){ this.particles=[]; for(let i=0;i<15;i++){ this.particles.push({x,y,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,life:40}); } } update(){ this.particles.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.life--; c.fillStyle=`rgba(255,255,255,${p.life/40})`; c.beginPath(); c.arc(p.x,p.y,1.5,0,Math.PI*2); c.fill(); }); this.particles=this.particles.filter(p=>p.life>0); } }
 
-class Atom {
-  constructor() { this.init(); }
-  init() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.r = 3 + Math.random() * 3;
-    this.vx = (Math.random() - 0.5) * 0.8;
-    this.vy = (Math.random() - 0.5) * 0.8;
-    this.exploded = false;
-  }
-  draw() {
-    if (this.exploded) return;
-    c.beginPath();
-    c.fillStyle = "rgba(255, 255, 255, 0.5)";
-    c.arc(this.x, this.y, this.r, 0, Math.PI*2);
-    c.fill();
-  }
-  explode() {
-    this.exploded = true;
-    explosions.push(new Explosion(this.x,this.y));
-    setTimeout(()=>{this.init();},1200);
-  }
-  update(atoms) {
-    if (this.exploded) return;
-    this.x += this.vx;
-    this.y += this.vy;
-    if(this.x<0||this.x>canvas.width) this.vx*=-1;
-    if(this.y<0||this.y>canvas.height) this.vy*=-1;
-    for(let a of atoms){
-      if(a===this||a.exploded) continue;
-      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
-        this.explode();
-        a.explode();
-      }
-    }
-    this.draw();
-  }
-}
-
-class Explosion {
-  constructor(x,y){
-    this.particles=[];
-    for(let i=0;i<15;i++){
-      this.particles.push({
-        x,y,
-        vx:(Math.random()-0.5)*5,
-        vy:(Math.random()-0.5)*5,
-        life:40
-      });
-    }
-  }
-  update(){
-    this.particles.forEach(p=>{
-      p.x+=p.vx;
-      p.y+=p.vy;
-      p.life--;
-      c.fillStyle=`rgba(255,255,255,${p.life/40})`;
-      c.beginPath();
-      c.arc(p.x,p.y,1.5,0,Math.PI*2);
-      c.fill();
-    });
-    this.particles=this.particles.filter(p=>p.life>0);
-  }
-}
-
-const atoms=[]; const explosions=[];
-for(let i=0;i<40;i++) atoms.push(new Atom());
-
-function animate(){
-  requestAnimationFrame(animate);
-  c.clearRect(0,0,canvas.width,canvas.height);
-  atoms.forEach(a=>a.update(atoms));
-  explosions.forEach((e,i)=>{e.update(); if(e.particles.length===0) explosions.splice(i,1)});
-}
+const atoms=[]; const explosions=[]; for(let i=0;i<40;i++) atoms.push(new Atom());
+function animate(){ requestAnimationFrame(animate); c.clearRect(0,0,canvas.width,canvas.height); atoms.forEach(a=>a.update(atoms)); explosions.forEach((e,i)=>{ e.update(); if(e.particles.length===0) explosions.splice(i,1); }); }
 animate();
 
 // ---------- GAME LOGIC ----------
@@ -205,8 +121,7 @@ const metals=[
   { symbol:"Pb", name:"Lead", charges:["+2","+4"] }
 ];
 
-let currentMetal=null, hearts=3, timerValue=10, score=0, roundNumber=1, timerInterval=null;
-let currentSessionTries=[], isGameOver=false, scoreRecordedForThisGame=false;
+let currentMetal=null, hearts=3, timerValue=10, score=0, roundNumber=1, timerInterval=null, isGameOver=false;
 
 const menuView=document.getElementById('menuView');
 const playView=document.getElementById('playView');
@@ -220,96 +135,116 @@ const answerInput=document.getElementById('answerInput');
 const feedbackText=document.getElementById('feedbackText');
 const nextBtn=document.getElementById('nextBtn');
 const submitBtn=document.getElementById('submitBtn');
-const triesList=document.getElementById('triesList');
 
-function updateHUD(){
-  heartsDisplay.innerText="❤️".repeat(Math.max(0,hearts));
-  roundDisplay.innerText=`Round ${roundNumber}`;
-}
+function getCurrentUser(){ return localStorage.getItem("chemivis_current_user"); }
+function getAllScores(){ return JSON.parse(localStorage.getItem("chemivis_scores"))||{}; }
+function saveScore(gameName,score){ const user=getCurrentUser(); if(!user) return; const scores=getAllScores(); if(!scores[user]) scores[user]={}; if(!scores[user][gameName]) scores[user][gameName]=[]; scores[user][gameName].push({score,time:new Date().toLocaleString()}); localStorage.setItem("chemivis_scores",JSON.stringify(scores)); }
 
-function startTimer(){
-  clearInterval(timerInterval);
-  timerValue=10;
-  timerDisplay.innerText=`00:${timerValue.toString().padStart(2,'0')}`;
-  timerInterval=setInterval(()=>{
-    timerValue--;
-    timerDisplay.innerText=`00:${timerValue.toString().padStart(2,'0')}`;
-    if(timerValue<=0){clearInterval(timerInterval); handleWrong("Time's up!");}
-  },1000);
-}
+function renderAllTimeScores(gameName){
+  const container = document.getElementById("allTimeScores");
+  container.innerHTML = "";
 
-function loadQuestion(){
-  const filtered = metals.filter(m=>m!==currentMetal);
-  currentMetal=filtered[Math.floor(Math.random()*filtered.length)];
-  metalDisplay.innerText=`${currentMetal.symbol} (${currentMetal.name})`;
-  answerInput.value=''; answerInput.disabled=false; feedbackText.innerText='';
-  nextBtn.style.display='none';
-  submitBtn.style.display='block'; submitBtn.disabled=false; submitBtn.style.opacity='1';
-  updateHUD(); startTimer(); answerInput.focus();
-}
+  const user = getCurrentUser();
+  if(!user){
+    container.innerHTML = "<em>No user logged in</em>";
+    return;
+  }
 
-function handleWrong(msg){
-  clearInterval(timerInterval); hearts--; updateHUD();
-  feedbackText.innerText=`${msg} Ans: ${currentMetal.charges.join(', ')}`;
-  feedbackText.style.color='#ff4d4d'; answerInput.disabled=true;
-  submitBtn.style.display='none'; nextBtn.style.display='block';
-  if(hearts<=0) isGameOver=true;
-}
+  const allScores = getAllScores();
+  const userScores = (allScores[user] && allScores[user][gameName]) || [];
 
-function handleCorrect(){
-  clearInterval(timerInterval);
-  let pointsThisRound=0;
-  if(timerValue>=7) pointsThisRound=20;
-  else if(timerValue>=4) pointsThisRound=10;
-  else pointsThisRound=5;
-  score+=pointsThisRound;
-  feedbackText.innerText=`Correct! +${pointsThisRound} pts`;
-  feedbackText.style.color='#4CAF50'; answerInput.disabled=true;
-  submitBtn.style.display='none'; nextBtn.style.display='block';
-}
+  if(userScores.length === 0){
+    const row = document.createElement("div");
+    row.className = "leaderboard-row";
+    const now = new Date().toLocaleString();
+    row.innerHTML = `<span>#1 • ${now}</span><strong>0 pts</strong>`;
+    container.appendChild(row);
+    return;
+  }
 
-function checkAnswer(){
-  if(isGameOver||answerInput.disabled) return;
-  const val=answerInput.value.trim().toLowerCase();
-  if(!val) return;
-  const userCharges=val.split(',').map(s=>s.trim());
-  const correctCharges=currentMetal.charges.map(s=>s.toLowerCase());
-  const isCorrect=userCharges.length===correctCharges.length &&
-                  userCharges.every(c=>correctCharges.includes(c)) &&
-                  correctCharges.every(c=>userCharges.includes(c));
-  if(isCorrect) handleCorrect(); else handleWrong("Incorrect!");
-}
+  // Sort highest score first
+  userScores.sort((a,b)=>b.score - a.score);
 
-function endGame(){
-  if(scoreRecordedForThisGame) return;
-  scoreRecordedForThisGame=true;
-  clearInterval(timerInterval);
-  currentSessionTries.push(score);
-  document.getElementById('finalScoreDisplay').innerText=`Score: ${score}`;
-  triesList.innerHTML='';
-  [...currentSessionTries].reverse().forEach((s,i)=>{
-    const row=document.createElement('div'); row.className='leaderboard-row';
-    const tryNum=currentSessionTries.length-i;
-    row.innerHTML=`<span>Try #${tryNum}</span> <strong>${s} pts</strong>`;
-    triesList.appendChild(row);
+  userScores.forEach((s,i)=>{
+    const row = document.createElement("div");
+    row.className = "leaderboard-row";
+    const time = s.time || new Date().toLocaleString(); // fallback just in case
+    row.innerHTML = `<span>#${i+1} • ${time}</span><strong>${s.score} pts</strong>`;
+    container.appendChild(row);
   });
-  gameHud.classList.add('hidden'); playView.classList.add('hidden'); leaderboardView.classList.remove('hidden');
 }
 
-// START BUTTON
-document.getElementById('startBtn').onclick=()=>{
-  score=0; hearts=3; roundNumber=1; isGameOver=false; scoreRecordedForThisGame=false;
-  menuView.classList.add('hidden'); gameHud.classList.remove('hidden'); playView.classList.remove('hidden');
-  loadQuestion();
-};
+function updateHUD(){ 
+  heartsDisplay.innerText="❤️".repeat(Math.max(0,hearts)); 
+  roundDisplay.innerText=`Round ${roundNumber}`; 
+}
 
+function startTimer(){ 
+  clearInterval(timerInterval); 
+  timerValue=10; 
+  timerDisplay.innerText=`00:${timerValue.toString().padStart(2,'0')}`; 
+  timerInterval=setInterval(()=>{ timerValue--; 
+    timerDisplay.innerText=`00:${timerValue.toString().padStart(2,'0')}`; 
+    if(timerValue<=0) handleWrong("Time's up!"); },1000); 
+  }
+
+function loadQuestion(){ 
+  const filtered=metals.filter(m=>m!==currentMetal); 
+  currentMetal=filtered[Math.floor(Math.random()*filtered.length)]; 
+  metalDisplay.innerText=`${currentMetal.symbol} (${currentMetal.name})`; 
+  answerInput.value=''; answerInput.disabled=false; feedbackText.innerText=''; 
+  nextBtn.style.display='none'; 
+  submitBtn.style.display='block'; 
+  updateHUD(); 
+  startTimer(); 
+  answerInput.focus(); 
+}
+
+function handleWrong(msg){ 
+  clearInterval(timerInterval); 
+  hearts--; updateHUD(); 
+  feedbackText.innerText=`${msg} Ans: ${currentMetal.charges.join(', ')}`; 
+  feedbackText.style.color="#ff4d4d"; 
+  answerInput.disabled=true; 
+  submitBtn.style.display='none'; 
+  nextBtn.style.display='block'; 
+  if(hearts<=0) isGameOver=true; 
+}
+
+function handleCorrect(){ 
+  clearInterval(timerInterval); 
+  let pts=timerValue>=7?20:(timerValue>=4?10:5); 
+  score+=pts; 
+  feedbackText.innerText=`Correct! +${pts} pts`; 
+  feedbackText.style.color="#4CAF50"; 
+  answerInput.disabled=true; 
+  submitBtn.style.display='none'; 
+  nextBtn.style.display='block'; 
+}
+
+function checkAnswer(){ 
+  if(isGameOver||answerInput.disabled) return; 
+  const val=answerInput.value.trim().toLowerCase(); 
+  if(!val) return; 
+  const correct=currentMetal.charges.map(c=>c.toLowerCase()); 
+  const isCorrect=val.split(',').map(s=>s.trim()).every(s=>correct.includes(s))&&correct.every(c=>val.split(',').map(s=>s.trim()).includes(c)); 
+  if(isCorrect) handleCorrect(); else handleWrong("Incorrect!"); 
+}
+
+function endGame(){ 
+  saveScore("Charge It!",score); 
+  gameHud.classList.add("hidden"); 
+  playView.classList.add("hidden"); 
+  leaderboardView.classList.remove("hidden"); 
+  renderAllTimeScores("Charge It!"); 
+}
+
+document.getElementById('startBtn').onclick=()=>{ score=0; hearts=3; roundNumber=1; isGameOver=false; menuView.classList.add("hidden"); gameHud.classList.remove("hidden"); playView.classList.remove("hidden"); loadQuestion(); }
 submitBtn.onclick=checkAnswer;
-answerInput.onkeydown=(e)=>{if(e.key==='Enter') checkAnswer();};
-nextBtn.onclick=()=>{if(isGameOver){endGame(); return;} roundNumber++; loadQuestion();};
-document.getElementById('restartBtn').onclick=()=>{score=0; hearts=3; roundNumber=1; isGameOver=false; scoreRecordedForThisGame=false;
-  leaderboardView.classList.add('hidden'); gameHud.classList.remove('hidden'); playView.classList.remove('hidden'); loadQuestion();
-};
-</script>
+answerInput.onkeydown=e=>{if(e.key==="Enter") checkAnswer();}
+nextBtn.onclick=()=>isGameOver?endGame():(roundNumber++,loadQuestion());
+document.getElementById('restartBtn').onclick=()=>{ score=0; hearts=3; roundNumber=1; isGameOver=false; leaderboardView.classList.add("hidden"); gameHud.classList.remove("hidden"); playView.classList.remove("hidden"); loadQuestion(); }
 
+</script>
 </body>
 </html>

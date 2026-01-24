@@ -263,14 +263,24 @@
       padding-bottom: 6px;
     }
 
-    #triesList {
-      overflow-y: auto; 
-      padding-right: 5px;
-    }
+.scrollable-scores {
+  overflow-y: auto;
+  max-height: 180px;
+  padding-right: 6px;
+}
 
-    #triesList::-webkit-scrollbar { width: 5px; }
-    #triesList::-webkit-scrollbar-track { background: transparent; }
-    #triesList::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+.scrollable-scores::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollable-scores::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.leaderboard-row span {
+  font-size: 12px;
+  color: #777;
+}
 
     .leaderboard-row {
       display: flex;

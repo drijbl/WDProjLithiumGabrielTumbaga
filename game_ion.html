@@ -59,14 +59,14 @@
     <div class="title" style="color: #ff4d4d;">GAME OVER</div>
     <div class="subtitle" id="finalScoreDisplay" style="margin-bottom: 5px; font-weight: 700; color: #5e5cff; font-size: 20px;">Score: 0</div>
     <div class="leaderboard-container">
-      <div class="leaderboard-label">Current Session Tries</div>
-      <div id="triesList"></div>
+      <div class="leaderboard-label">All-Time Scores</div>
+      <div id="allTimeScores" class="scrollable-scores"></div>
     </div>
     <button class="btn submit-btn" style="margin-top: 20px;" id="restartBtn">RESTART</button>
   </div>
 </div>
 
-<!-- Correct Audio Element -->
+<!-- Audio -->
 <audio id="bgMusic" src="/assets/Game_music.mp3" loop autoplay muted></audio>
 
 <script>
@@ -199,8 +199,36 @@ let timerValue = 10;
 let score = 0;
 let roundNumber = 1;
 let timerInterval = null;
-let currentSessionTries = [];
 let isGameOver = false;
+
+/* ===== SCORE STORAGE (DO NOT TOUCH GAME LOGIC) ===== */
+function getCurrentUser() {
+  return localStorage.getItem("chemivis_current_user");
+}
+
+function getAllScores() {
+  return JSON.parse(localStorage.getItem("chemivis_scores")) || {};
+}
+
+function saveAllScores(scores) {
+  localStorage.setItem("chemivis_scores", JSON.stringify(scores));
+}
+
+function saveScore(gameName, score) {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  const scores = getAllScores();
+  if (!scores[user]) scores[user] = [];
+
+  scores[user].push({
+    game: gameName,
+    score: score,
+    time: new Date().toLocaleString()
+  });
+
+  saveAllScores(scores);
+}
 
 const menuView = document.getElementById('menuView');
 const playView = document.getElementById('playView');
@@ -215,6 +243,40 @@ const feedbackText = document.getElementById('feedbackText');
 const nextBtn = document.getElementById('nextBtn');
 const submitBtn = document.getElementById('submitBtn');
 const triesList = document.getElementById('triesList');
+
+function renderAllTimeScores(gameName) {
+  const container = document.getElementById("allTimeScores");
+  container.innerHTML = "";
+
+  const user = getCurrentUser();
+  if (!user) {
+    container.innerHTML = "<em>No user logged in</em>";
+    return;
+  }
+
+  const scores = getAllScores();
+  const userScores = (scores[user] || []).filter(s => s.game === gameName);
+
+  if (userScores.length === 0) {
+    container.innerHTML = "<em>No scores yet</em>";
+    return;
+  }
+
+  // Sort highest score first
+  userScores.sort((a, b) => b.score - a.score);
+
+  userScores.forEach((s, i) => {
+    const row = document.createElement("div");
+    row.className = "leaderboard-row";
+    row.innerHTML = `
+      <span>
+        #${i + 1} • ${s.time}
+      </span>
+      <strong>${s.score} pts</strong>
+    `;
+    container.appendChild(row);
+  });
+}
 
 function updateHUD() {
   heartsDisplay.innerText = "❤️".repeat(Math.max(0, hearts));
@@ -280,19 +342,12 @@ function checkAnswer() {
 }
 
 function endGame() {
+  saveScore("Ion Know That One", score);
   clearInterval(timerInterval);
-  currentSessionTries.push(score);
-  document.getElementById('finalScoreDisplay').innerText = `Score: ${score}`;
-  triesList.innerHTML = '';
-  [...currentSessionTries].reverse().forEach((s, i) => {
-    const row = document.createElement('div');
-    row.className = 'leaderboard-row';
-    row.innerHTML = `<span>Try #${currentSessionTries.length - i}</span> <strong>${s} pts</strong>`;
-    triesList.appendChild(row);
-  });
   gameHud.classList.add('hidden');
   playView.classList.add('hidden');
   leaderboardView.classList.remove('hidden');
+  renderAllTimeScores("Ion Know That One");
 }
 
 document.getElementById('startBtn').onclick = () => {

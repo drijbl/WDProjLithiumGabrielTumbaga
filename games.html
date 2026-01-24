@@ -5,76 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chemivis | Practice Games</title>
     <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
     <link rel="stylesheet" href="games.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
 </head>
 <body>
 
-    <div id="hamburger">☰</div>
-
-    <nav class="side-menu" id="sideMenu">
-        <div id="closeMenu">✖</div>
-        <a href="index.html">HOME</a>
-        <a href="periodic-table.html">PERIODIC TABLE</a>
-        <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-        <a href="vsepr.html">VSEPR</a>
-        <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-        <a href="games.html">PRACTICE GAMES</a>
-    </nav>
-
-    <h1 class="header-title">Practice Games</h1>
-
-    <div class="games-container">
-        <!-- Master Alchemist -->
-        <a href="games_elements.html" class="game-card large">
-            <div class="game-label">Master Alchemist</div>
-            <div class="game-thumbnail" style="background-image: url('assets/alchemy_bg.jpg');"></div>
-            <div class="hover-overlay">
-                <div class="overlay-title">Master Alchemist</div>
-                <p class="overlay-desc">Step into the lab and craft powerful compounds to duel rivals in this tactical strategy battle.</p>
-                <button class="play-btn">Play Now</button>
-            </div>
-        </a>
-
-        <!-- Ion Know That One! -->
-        <a href="game_ion.html" class="game-card small">
-            <div class="game-label">Ion Know That One!</div>
-            <div class="game-thumbnail" style="background-image: url('assets/polyatomic.png');"></div>
-            <div class="hover-overlay">
-                <div class="overlay-title">Ion Know That One!</div>
-                <p class="overlay-desc">Identify complex ions in this rapid-fire memory challenge. Perfect for studying polyatomic groups.</p>
-                <button class="play-btn">Play Now</button>
-            </div>
-        </a>
-
-        <!-- Charge It! -->
-        <a href="game_charges.html" class="game-card small">
-            <div class="game-label">Charge It!</div>
-            <div class="game-thumbnail" style="background-image: url('assets/charge.png');"></div>
-            <div class="hover-overlay">
-                <div class="overlay-title">Charge It!</div>
-                <p class="overlay-desc">Master oxidation states of transition metals. Balance charges to win high-stakes matches.</p>
-                <button class="play-btn">Play Now</button>
-            </div>
-        </a>
-    </div>
-
     <canvas id="atomsBg"></canvas>
 
-    <script>
+    <!-- Login Prompt -->
+    <div id="loginOverlay">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="assets/logo.png" alt="Chemivis Logo">
+            </div>
+            <h2>WELCOME TO<br>CHEMIVIS</h2>
+            <div class="input-group">
+                <label for="usernameInput">Username</label>
+                <input type="text" id="usernameInput" placeholder="Enter your name..." autocomplete="off">
+            </div>
+            <button class="submit-btn" id="loginSubmit">Submit</button>
+        </div>
+    </div>
+
+    <!-- Main Games List -->
+    <div id="mainGamesContent">
+        <div id="hamburger">☰</div>
+
+        <nav class="side-menu" id="sideMenu">
+            <div id="closeMenu">✖</div>
+            <a href="index.html">HOME</a>
+            <a href="periodic-table.html">PERIODIC TABLE</a>
+            <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+            <a href="vsepr.html">VSEPR</a>
+            <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+            <a href="games.html">PRACTICE GAMES</a>
+        </nav>
+
+        <h1 class="header-title">Practice Games</h1>
+
+        <div class="games-container">
+            <a href="games_elements.html" class="game-card large">
+                <div class="game-label">Master Alchemist</div>
+                <div class="game-thumbnail" style="background-image: url('assets/reactions.jpg');"></div>
+                <div class="hover-overlay">
+                    <div class="overlay-title">Master Alchemist</div>
+                    <p class="overlay-desc">Step into the lab and craft powerful compounds to duel rivals in this tactical strategy battle.</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </a>
+
+            <a href="game_ion.html" class="game-card small">
+                <div class="game-label">Ion Know That One!</div>
+                <div class="game-thumbnail" style="background-image: url('assets/polyatomic.png');"></div>
+                <div class="hover-overlay">
+                    <div class="overlay-title">Ion Know That One!</div>
+                    <p class="overlay-desc">Identify complex ions in this rapid-fire memory challenge. Perfect for studying polyatomic groups.</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </a>
+
+            <a href="game_ion.html" class="game-card small">
+                <div class="game-label">Charge It!</div>
+                <div class="game-thumbnail" style="background-image: url('assets/charge.png');"></div>
+                <div class="hover-overlay">
+                    <div class="overlay-title">Charge It!</div>
+                    <p class="overlay-desc">Master oxidation states of transition metals. Balance charges to win high-stakes matches.</p>
+                    <button class="play-btn">Play Now</button>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<script>
+// Username Logic
+const loginOverlay = document.getElementById('loginOverlay');
+const loginSubmit = document.getElementById('loginSubmit');
+const usernameInput = document.getElementById('usernameInput');
+const mainContent = document.getElementById('mainGamesContent');
+
+function getUsers() {
+    return JSON.parse(localStorage.getItem('chemivis_users')) || [];
+}
+
+function saveUser(name) {
+    const users = getUsers();
+    users.push(name);
+    localStorage.setItem('chemivis_users', JSON.stringify(users));
+}
+
+function checkUser() {
+    const current = localStorage.getItem('chemivis_current_user');
+    if (current) {
+        loginOverlay.classList.add('hidden');
+        mainContent.classList.add('visible');
+    }
+}
+
+loginSubmit.onclick = () => {
+    const raw = usernameInput.value.trim();
+    if (!raw) return shakeInput();
+
+    const username = raw.toLowerCase();
+    const users = getUsers().map(u => u.toLowerCase());
+
+    if (users.includes(username)) {
+        showError("Username already taken");
+        return;
+    }
+
+    saveUser(raw);
+    localStorage.setItem('chemivis_current_user', raw);
+
+    loginOverlay.classList.add('hidden');
+    mainContent.classList.add('visible');
+};
+
+usernameInput.onkeydown = e => {
+    if (e.key === 'Enter') loginSubmit.click();
+};
+
+function shakeInput() {
+    usernameInput.style.borderColor = '#ff4d4d';
+    setTimeout(() => usernameInput.style.borderColor = '#e0e0e0', 900);
+}
+
+function showError(msg) {
+    usernameInput.value = "";
+    usernameInput.placeholder = msg;
+    shakeInput();
+}
+
+window.onload = checkUser;
+
         // Menu Logic
         const menu = document.getElementById("sideMenu");
         const hamburger = document.getElementById("hamburger");
         const closeMenu = document.getElementById("closeMenu");
 
-        hamburger.onclick = (e) => {
-            e.stopPropagation();
-            menu.classList.add("open");
-        };
-        closeMenu.onclick = () => menu.classList.remove("open");
+        if (hamburger) {
+            hamburger.onclick = (e) => {
+                e.stopPropagation();
+                menu.classList.add("open");
+            };
+        }
+        if (closeMenu) {
+            closeMenu.onclick = () => menu.classList.remove("open");
+        }
         
         document.addEventListener('click', (e) => {
-            if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamburger) {
+            if (menu && menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamburger) {
                 menu.classList.remove('open');
             }
         });
