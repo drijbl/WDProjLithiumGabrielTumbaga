@@ -27,6 +27,9 @@
                 <label for="passwordInput">Password</label>
                 <input type="password" id="passwordInput" placeholder="Enter a password..." autocomplete="off">
             </div>
+            <p id="loginError" style="display:none; color:#d9534f; font-size:14px; margin-bottom:14px; font-weight:600;">
+                You must enter a username and password.
+            </p>
             <button class="submit-btn" id="loginSubmit">Submit</button>
         </div>
     </div>
@@ -103,7 +106,14 @@ function saveUser(username, password) {
 loginSubmit.onclick = () => {
     const rawUser = usernameInput.value.trim();
     const rawPass = document.getElementById('passwordInput').value.trim();
-    if (!rawUser || !rawPass) return shakeInput();
+    const errorText = document.getElementById('loginError');
+
+    if (!rawUser || !rawPass) {
+        errorText.style.display = 'block';
+        shakeInput(usernameInput);
+        shakeInput(document.getElementById('passwordInput'));
+        return;
+    }
 
     const users = getUsers();
     const normalizedUser = rawUser.toLowerCase();
@@ -124,7 +134,6 @@ loginSubmit.onclick = () => {
         }
     return;
     } 
-
 
     saveUser(rawUser, rawPass);
     localStorage.setItem('chemivis_current_user', rawUser);
@@ -147,6 +156,15 @@ function showError(input, msg) {
     input.placeholder = msg;
     shakeInput(input);
 }
+
+usernameInput.addEventListener('input', () => {
+    document.getElementById('loginError').style.display = 'none';
+});
+
+document.getElementById('passwordInput').addEventListener('input', () => {
+    document.getElementById('loginError').style.display = 'none';
+});
+
 
         // Menu Logic
         const menu = document.getElementById("sideMenu");

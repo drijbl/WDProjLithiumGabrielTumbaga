@@ -10,7 +10,7 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #6f2fb8, #0e769f) fixed;
             color: #ffffff;
-            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -221,7 +221,6 @@
 
         /* Games Grid System */
         .games-container {
-          flex: 1;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 26px;
