@@ -9,17 +9,18 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(6, 6, 10);
+camera.position.set(0, 18, 0);
 camera.lookAt(0, 0, 0);
+camera.up.set(0, 0, -1);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(renderer.domElement);
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+scene.add(new THREE.AmbientLight(0xffffff, 0.9));
 const light = new THREE.PointLight(0xffffff, 1);
-light.position.set(10, 10, 10);
+light.position.set(10, 10, 20);
 scene.add(light);
 
 const raycaster = new THREE.Raycaster();
@@ -30,89 +31,116 @@ const modalTitle = document.getElementById('modal-title');
 const modalInfo = document.getElementById('modal-info');
 const closeModal = document.getElementById('closeModal');
 
-const nucleus = new THREE.Group();
-
 function createParticle(color, radius, data) {
   const geo = new THREE.SphereGeometry(radius, 32, 32);
   const mat = new THREE.MeshStandardMaterial({ color });
   const mesh = new THREE.Mesh(geo, mat);
-  mesh.userData = data;
+  mesh.userData = {
+    ...data,
+    baseColor: color
+  };
   return mesh;
 }
 
-// helper: tightly pack particles
-function randomOffset(maxRadius) {
-  const u = Math.random();
-  const v = Math.random();
-  const theta = 2 * Math.PI * u;
-  const phi = Math.acos(2 * v - 1);
-  const r = Math.random() * maxRadius;
-  const x = r * Math.sin(phi) * Math.cos(theta);
-  const y = r * Math.sin(phi) * Math.sin(theta);
-  const z = r * Math.cos(phi);
-  return [x, y, z];
-}
+const nucleus = new THREE.Group();
 
-// Protons
+const nucleusLayout = [
+  [0, 0, 0],
+
+  [0.65, 0, 0],
+  [-0.65, 0, 0],
+  [0, 0.65, 0],
+  [0, -0.65, 0],
+
+  [0.35, 0.35, 0.55],
+  [-0.35, -0.35, 0.55],
+
+  [0.35, -0.35, -0.55],
+  [-0.35, 0.35, -0.55]
+];
+
 for (let i = 0; i < 3; i++) {
-  const proton = createParticle(0xff4d4d, 0.5, {
+  const p = createParticle(0xff4d4d, 0.65, {
     name: 'Proton',
     charge: '+1',
     location: 'Nucleus'
   });
-  const [x, y, z] = randomOffset(0.7);
-  proton.position.set(x, y, z);
-  nucleus.add(proton);
+
+  p.position.set(...nucleusLayout[i]);
+  nucleus.add(p);
 }
 
-// Neutrons
-for (let i = 0; i < 3; i++) {
-  const neutron = createParticle(0xaaaaaa, 0.5, {
+for (let i = 3; i < 6; i++) {
+  const n = createParticle(0xaaaaaa, 0.65, {
     name: 'Neutron',
     charge: '0',
     location: 'Nucleus'
   });
-  const [x, y, z] = randomOffset(0.7);
-  neutron.position.set(x, y, z);
-  nucleus.add(neutron);
+
+  n.position.set(...nucleusLayout[i]);
+  nucleus.add(n);
 }
 
 scene.add(nucleus);
 
-const electrons = new THREE.Group();
-const orbits = [];
-
-function createOrbit(radius, tiltX = 0, tiltY = 0, tiltZ = 0) {
+function createOrbit(radius) {
   const curve = new THREE.EllipseCurve(0, 0, radius, radius, 0, Math.PI * 2);
-  const points = curve.getPoints(120);
+  const points = curve.getPoints(200);
   const geo = new THREE.BufferGeometry().setFromPoints(points);
-  const mat = new THREE.LineBasicMaterial({ color: 0x66ccff });
-  const line = new THREE.Line(geo, mat);
-
-  const orbit = new THREE.Object3D();
-  orbit.add(line);
-
-  orbit.rotation.set(tiltX, tiltY, tiltZ);
-  scene.add(orbit);
-
+  const mat = new THREE.LineBasicMaterial({ color: 0x444444 });
+  const orbit = new THREE.Line(geo, mat);
+  orbit.rotation.x = Math.PI / 2;
   return orbit;
 }
 
-orbits.push(createOrbit(4, Math.PI / 6, Math.PI / 4, 0));
+scene.add(createOrbit(4));
+scene.add(createOrbit(7));
 
-for (let i = 0; i < 2; i++) {
-  const electron = createParticle(0x4da6ff, 0.3, {
+const electrons = [];
+
+function addElectron(radius, startAngle) {
+  const e = createParticle(0x4da6ff, 0.4, {
     name: 'Electron',
     charge: '-1',
     location: 'Electron cloud'
   });
-
-  electron.userData.angle = Math.random() * Math.PI * 2;
-  electron.userData.orbit = orbits[0];
-  electrons.add(electron);
+  e.userData.angle = startAngle;
+  e.userData.radius = radius;
+  scene.add(e);
+  electrons.push(e);
 }
 
-scene.add(electrons);
+addElectron(4, 0);
+addElectron(4, Math.PI);
+addElectron(7, 0);
+addElectron(7, Math.PI / 2);
+addElectron(7, Math.PI);
+addElectron(7, (3 * Math.PI) / 2);
+
+let hovered = null;
+
+container.addEventListener('mousemove', e => {
+  const rect = container.getBoundingClientRect();
+  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  const intersects = raycaster.intersectObjects([
+    ...nucleus.children,
+    ...electrons
+  ]);
+
+  if (hovered) {
+    hovered.material.color.setHex(hovered.userData.baseColor);
+    hovered = null;
+  }
+
+  if (intersects.length) {
+    hovered = intersects[0].object;
+    hovered.material.color.offsetHSL(0, 0, 0.25);
+  }
+});
 
 container.addEventListener('click', e => {
   const rect = container.getBoundingClientRect();
@@ -123,7 +151,7 @@ container.addEventListener('click', e => {
 
   const intersects = raycaster.intersectObjects([
     ...nucleus.children,
-    ...electrons.children
+    ...electrons
   ]);
 
   if (!intersects.length) return;
@@ -141,41 +169,29 @@ container.addEventListener('click', e => {
 });
 
 function getDescription(type) {
-  if (type === 'Proton')
-    return 'Protons determine the identity of an element. Changing the number of protons changes the element itself.';
-  if (type === 'Neutron')
-    return 'Neutrons help stabilize the nucleus by reducing repulsion between positively charged protons.';
-  if (type === 'Electron')
-    return 'Electrons are responsible for chemical bonding and reactions. They move around the nucleus in energy levels.';
+  if (type === 'Proton') return 'Protons determine the identity of an element.';
+  if (type === 'Neutron') return 'Neutrons stabilize the nucleus.';
+  if (type === 'Electron') return 'Electrons control bonding and chemical reactions.';
   return '';
 }
 
 closeModal.addEventListener('click', () => modal.classList.add('hidden'));
-modal.addEventListener('click', e => {
-  if (e.target === modal) modal.classList.add('hidden');
-});
 
 function animate() {
   requestAnimationFrame(animate);
 
-  electrons.children.forEach(e => {
-    e.userData.angle += 0.02;
-
-    // move electron along its orbit
-    const r = 4;
-    const x = Math.cos(e.userData.angle) * r;
-    const y = Math.sin(e.userData.angle) * r * 0.9;
-    const z = Math.sin(e.userData.angle) * 0.5;
-
-    // apply orbit orientation
-    e.position.copy(new THREE.Vector3(x, y, z).applyEuler(e.userData.orbit.rotation));
+  electrons.forEach(e => {
+    e.userData.angle += 0.015;
+    e.position.x = Math.cos(e.userData.angle) * e.userData.radius;
+    e.position.z = Math.sin(e.userData.angle) * e.userData.radius;
+    e.position.y = 0;
   });
 
-  nucleus.rotation.y += 0.004;
   renderer.render(scene, camera);
 }
 
 animate();
+scene.scale.set(1.25, 1.25, 1.25);
 
 window.addEventListener('resize', () => {
   camera.aspect = container.clientWidth / container.clientHeight;
