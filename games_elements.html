@@ -90,7 +90,7 @@
     <div class="end-title victory">VICTORY</div>
     <div class="end-btns">
         <button class="e-btn btn-w" id="btn-retry-v">RETRY TRANSMUTATION</button>
-        <button class="e-btn btn-o">BACK</button>
+        <button class="e-btn btn-o back-game">BACK</button>
     </div>
 </div>
 
@@ -98,7 +98,7 @@
     <div class="end-title defeat">DEFEAT</div>
     <div class="end-btns">
         <button class="e-btn btn-w" id="btn-retry-d">PLAY AGAIN</button>
-        <button class="e-btn btn-o" id="btn-back-games">BACK TO GAMES</button>
+        <button class="e-btn btn-o back-game">BACK</button>
     </div>
 </div>
 
@@ -115,6 +115,12 @@ document.getElementById('btn-back-games')?.addEventListener('click', () => {
   window.location.href = 'games.html';
 });
 
+document.querySelectorAll('.back-game').forEach(btn => {
+  btn.addEventListener('click', () => {
+    window.location.href = 'games.html';
+  });
+});
+
 // ===== MUSIC =====
 const bgMusic = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
@@ -122,7 +128,7 @@ const musicToggle = document.getElementById("musicToggle");
 bgMusic.volume = 0.5;
 bgMusic.muted = true;
 
-// 🔥 AUTOPLAY ON LOAD
+// AUTOPLAY ON LOAD
 window.addEventListener("load", () => {
   bgMusic.play().then(() => {
     updateBtn();

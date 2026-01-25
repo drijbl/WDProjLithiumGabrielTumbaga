@@ -10,7 +10,7 @@
 
     html {
       background: var(--background);
-      background-attachment: scroll; /* mobile-safe instead of fixed */
+      background-attachment: scroll; 
       min-height: 100%;
     }
 
@@ -288,33 +288,47 @@
 
     #synth-text { margin-top: 25px; font-size: 1.6rem; font-weight: 900; letter-spacing: 5px; color: #fff; text-shadow: 0 0 10px #fff; }
 
-    #records-sidebar {
-        background: var(--panel-bg);
-        border: 2px solid var(--gold);
-        border-radius: 12px;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        flex: 0 0 350px;  
-        min-height: 0;   
-    }
+#records-sidebar {
+  background: linear-gradient(
+    180deg,
+    #14142b 0%,
+    #0b0b1a 100%
+  );
 
+  border: 1.5px solid var(--gold);
+  border-radius: 12px;
+
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,0.6),
+    0 10px 30px rgba(0,0,0,0.6);
+
+  height: 100svh;
+  max-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
     .rec-head { padding: 15px; border-bottom: 2px solid var(--gold); font-weight: 900; font-size: 0.9rem; letter-spacing: 2px; color: var(--gold); background: rgba(0,0,0,0.3); flex-shrink: 0; }
     
-    #rec-list { 
-        flex: 1; 
-        overflow-y: auto; 
-        min-height: 0;
-        padding: 12px; 
-        display: flex; 
-        flex-direction: column; 
-        gap: 15px; 
-        font-family: 'VT323', monospace; 
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-    }
-    
+    #rec-list {
+  flex: 1;
+  min-height: 0;             
+  overflow-y: auto;           
+  overflow-x: hidden;
+
+  padding: 12px 10px 12px 12px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  font-family: 'VT323', monospace;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
     /* SPECIFIC SCROLLBAR FOR LOGS */
     #rec-list::-webkit-scrollbar { width: 8px; }
     #rec-list::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; border: 2px solid var(--panel-bg); }
@@ -361,7 +375,14 @@
         align-items: center;
         z-index: 1000;
         backdrop-filter: blur(10px);
+        pointer-events: auto;
+        z-index: 9999;
     }
+
+    .end-btns button {
+        pointer-events: auto;
+    }
+
     .end-title { 
         font-size: clamp(3.5rem, 12vw, 6rem); 
         font-weight: 900; 
