@@ -20,12 +20,14 @@
        
         #mainGamesContent {
             padding-bottom: 80px;
-            display: none;
+            visibility: hidden;
+            pointer-events: none;
         }
 
         #mainGamesContent.visible {
-            display: block;
-        }
+            visibility: visible;
+            pointer-events: auto;
+        }   
 
         #atomsBg {
             position: fixed;
@@ -404,7 +406,7 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
-    
+
     .games-container {
         grid-template-columns: 1fr;
         width: 90%;
@@ -413,12 +415,17 @@
         margin-bottom: 24px;
     }
 
+    .game-card {
+        height: auto;
+        min-height: 150px;
+    }
+
     .game-card.large {
-        height: 190px;
+        height: clamp(160px, 30vh, 220px);
     }
 
     .game-card.small {
-        height: 170px;
+        height: clamp(180px, 28vh, 250px);
     }
 }
 
