@@ -153,6 +153,18 @@
             transform: scale(0.98);
         }
 
+        /* Main Content wrapper */
+        #mainGamesContent {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        #mainGamesContent.visible {
+            opacity: 1;
+        }
+
         /* Side Menu */
         .side-menu {
             position: fixed;
@@ -183,12 +195,10 @@
             border-radius: 5px;
         }
 
-
         .side-menu a:hover {
             background-color: #216d91;
             transform: translateX(5px);
         }
-
 
         #closeMenu {
             font-size: 28px;
@@ -199,40 +209,41 @@
             display: block;
         }
 
-
         #hamburger {
             font-size: 30px;
             cursor: pointer;
-            padding: 5px;
+            padding: 10px;
             color: #ffffff;
             z-index: 1999;
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 10px;
+            left: 10px;
         }
-
 
         /* Header */
         .header-title {
-          text-align: center;
-          padding: 28px 20px 14px; /* 🔽 less vertical padding */
-          font-family: "Rubik One", sans-serif;
-          font-size: clamp(1.8rem, 5vw, 2.6rem);
-         letter-spacing: 2px;
+            text-align: center;
+            padding: 60px 20px 20px 20px;
+            font-family: "Rubik One", sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            color: #ffffff;
+            z-index: 10;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-
 
         /* Games Grid System */
         .games-container {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 26px;
-          max-width: 900px;  
-          width: 80%;        
-          margin: 0 auto 30px auto;
-          z-index: 10;
-          position: relative;
-          padding-bottom: 60px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto 60px auto;
+            z-index: 10;
+            position: relative;
         }
 
         .game-card {
@@ -247,26 +258,23 @@
             color: inherit;
             border: 1px solid rgba(255,255,255,0.1);
             display: block;
+            min-height: 200px;
         }
-
 
         .game-card.large {
             grid-column: 1 / span 2;
             height: clamp(220px, 30vh, 160px);
         }
 
-
         .game-card.small {
             height: clamp(250px, 28vh, 180px);
         }
-
 
         .game-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 45px rgba(0,0,0,0.4);
             border-color: rgba(255,255,255,0.2);
         }
-
 
         .game-thumbnail {
             position: absolute;
@@ -282,75 +290,67 @@
             transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.4s ease;
         }
 
-
         .game-card:hover .game-thumbnail {
             opacity: 0.5;
             transform: scale(1.05);
         }
 
-
         .game-label {
             position: absolute;
-            top: 18px;
+            top: 20px;
             left: 20px;
             font-family: 'Rubik One', sans-serif;
-            font-size: clamp(14px, 2.5vw, 22px);
+            font-size: clamp(16px, 2.5vw, 24px);
             z-index: 5;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
             color: #fff;
             transition: opacity 0.3s ease;
             pointer-events: none;
         }
 
-
         .game-card:hover .game-label {
             opacity: 0;
         }
 
-
-        /* ULTRA COMPACT Hover Overlay */
         .hover-overlay {
             position: absolute;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
+            bottom: 12px;
+            left: 12px;
+            right: 12px;
             background: rgba(13, 51, 68, 0.96);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 10px 14px;
+            padding: 16px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            border-radius: 12px;
+            border-radius: 14px;
             transform: translateY(115%);
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             z-index: 10;
             border: 1px solid rgba(255,255,255,0.12);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            max-height: 85%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            max-height: 85%; 
         }
-
 
         .game-card:hover .hover-overlay {
             transform: translateY(0);
         }
 
-
         .overlay-title {
             font-family: 'Rubik One', sans-serif;
-            font-size: clamp(12px, 2vw, 16px);
-            margin-bottom: 2px;
+            font-size: clamp(14px, 2vw, 18px); 
+            margin-bottom: 4px;
             color: #ffcc00;
             text-transform: uppercase;
         }
 
-
         .overlay-desc {
-            font-size: clamp(10px, 1.3vw, 12px);
-            line-height: 1.25;
+            font-size: clamp(11px, 1.4vw, 13px); 
+            line-height: 1.4;
             opacity: 0.9;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 400;
             max-width: 100%;
             display: -webkit-box;
@@ -359,14 +359,13 @@
             overflow: hidden;
         }
 
-
         .play-btn {
             background: #ffffff;
             color: #144b63;
-            padding: 6px 18px;
-            border-radius: 6px;
+            padding: 8px 20px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: none;
@@ -374,101 +373,28 @@
             transition: all 0.2s ease;
         }
 
-
         .play-btn:hover {
             background: #ffcc00;
             color: #000;
         }
 
-/* Responsive Adjustments */
-@media (max-width: 900px) {
-    .games-container {
-        width: 88%;         
-        max-width: 760px;
-        gap: 22px;
-        position: relative;
-        grid-auto-rows: min-content;
-    }
+        /* Responsive Fixes */
+        @media (max-width: 850px) {
+            .games-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                width: 90%;
+            }
+            .game-card.large, .game-card.small {
+                grid-column: auto;
+                height: 220px;
+            }
+        }
 
-    .game-card.large {
-        height: 200px;
-    }
-
-    .game-card.small {
-        height: 180px;
-    }
-}
-
-@media (max-width: 800px) {
-    body {
-        overflow-y: auto;
-    }
-
-    #mainGamesContent {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    .games-container {
-        grid-template-columns: 1fr;
-        width: 90%;
-        max-width: 620px;
-        gap: 18px;
-        margin-bottom: 24px;
-        position: relative;
-        grid-auto-rows: min-content;
-    }
-
-    .game-card {
-        height: auto;
-        min-height: 150px; 
-    }
-    
-    .game-card.large {
-        height: clamp(160px, 30vh, 220px);
-    }
-
-    .game-card.small {
-        min-height: 145px;   
-        height: auto;        
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding-top: 10px; 
-    }
-
-    .header-title {
-        padding: 20px 12px 10px;
-        font-size: 1.8rem;
-    }
-
-    .games-container {
-        width: 92%;
-        gap: 14px;
-        position: relative;
-        grid-auto-rows: min-content;
-    }
-
-    .game-card.large {
-        height: 160px;
-    }
-
-    .game-card.small {
-        height: auto;
-        min-height: 180px;
-    }
-
-    .game-card.small:last-child {
-        min-height: 145px !important;
-        height: auto !important;
-    }
-
-    .hover-overlay {
-        padding: 8px 10px;
-        bottom: 8px;
-        left: 8px;
-        right: 8px;
-    }
-}
+        @media (max-width: 480px) {
+            .header-title { padding-top: 70px; font-size: 1.6rem; }
+            .games-container { gap: 16px; }
+            .game-card.large, .game-card.small { height: 200px; }
+            .game-label { top: 15px; left: 15px; }
+            .hover-overlay { padding: 12px; bottom: 8px; left: 8px; right: 8px; }
+        }
