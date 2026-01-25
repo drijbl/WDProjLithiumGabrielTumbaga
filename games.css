@@ -417,15 +417,16 @@
 
     .game-card {
         height: auto;
-        min-height: 150px;
+        min-height: 150px; 
     }
-
+    
     .game-card.large {
         height: clamp(160px, 30vh, 220px);
     }
 
     .game-card.small {
-        height: clamp(180px, 28vh, 250px);
+        min-height: 145px;   
+        height: auto;        
     }
 }
 
@@ -450,6 +451,11 @@
 
     .game-card.small {
         height: 145px;
+    }
+
+    .game-card.small:last-child {
+        min-height: 145px !important;
+        height: auto !important;
     }
 
     .hover-overlay {
