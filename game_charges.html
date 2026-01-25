@@ -80,11 +80,11 @@ bgMusic.muted = true;
 
 let isPlaying = false;
 
-window.addEventListener("load", () => {
-  bgMusic.play().then(() => {
-    isPlaying = true;
-    updateMusicIcons();
-  }).catch(() => {});
+document.getElementById("startBtn").addEventListener("click", () => {
+  bgMusic.muted = false;
+  bgMusic.play();
+  isPlaying = true;
+  updateMusicIcons();
 });
 
 function updateMusicIcons() {
