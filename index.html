@@ -7,9 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Rubik+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="index.css">
 <link rel="icon" type="image/png" href="./assets/logo.png">
-
 </head>
 <body>
+
+<button id="skipBtn" class="skip-btn">Skip Intro &rarr;</button>
+
 <div class="scene scene1 active">
   <canvas id="bg"></canvas>
   <div class="content">
@@ -78,7 +80,6 @@
 </div>
 
 <script>
-
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 canvas.width = innerWidth;
@@ -89,8 +90,12 @@ window.addEventListener('resize', () => {
   canvas.height = innerHeight;
 });
 
+const skipBtn = document.getElementById('skipBtn');
 const nextBtn1 = document.getElementById('toScene2');
 const nextBtn2 = document.getElementById('toScene3');
+const scene1 = document.querySelector('.scene1');
+const scene2 = document.querySelector('.scene2');
+const scene3 = document.querySelector('.scene3');
 
 nextBtn1.addEventListener('animationend', () => {
   nextBtn1.style.pointerEvents = 'auto'; 
@@ -167,19 +172,21 @@ function animateScene1() {
 }
 animateScene1();
 
-const scene1 = document.querySelector('.scene1');
-const scene2 = document.querySelector('.scene2');
-const scene3 = document.querySelector('.scene3');
+// Skip Intro Logic
+skipBtn.onclick = () => {
+  skipBtn.classList.add('hidden');
+  scene1.classList.remove('active');
+  scene2.classList.remove('active');
+  scene3.classList.add('active');
+  import('./main.js');
+};
 
 document.getElementById('toScene2').onclick = () => {
   nextBtn1.disabled = true;
   nextBtn1.style.pointerEvents = 'none';
-  
   atoms.forEach(a => a.explode());
-
   const content = scene1.querySelector('.content');
   content.classList.add('fade-out');
-
   setTimeout(() => {
     scene1.classList.remove('active');
     scene2.classList.add('active');
@@ -190,18 +197,15 @@ document.getElementById('toScene2').onclick = () => {
 document.getElementById('toScene3').onclick = () => {
   nextBtn2.disabled = true;
   nextBtn2.style.pointerEvents = 'none';
-
+  skipBtn.classList.add('hidden'); 
   const content = scene2.querySelector('.scene2-text');
   content.classList.add('fade-out');
-
   setTimeout(() => {
     scene2.classList.remove('active');
     scene3.classList.add('active');
     import('./main.js');
   }, 1200);
 }
-
 </script>
-
 </body>
 </html>
