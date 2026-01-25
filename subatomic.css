@@ -325,3 +325,14 @@ header {
   background: rgba(0,0,0,0.2);
   border-radius: 10px;
 }
+
+.help-box {
+  margin: 18px 0 12px 0;
+  padding-left: 10px;
+  border-left: 3px solid rgba(255, 255, 255, 0.25);
+  color: rgba(46, 42, 42, 0.75);
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+}

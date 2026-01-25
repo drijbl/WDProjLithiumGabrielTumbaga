@@ -48,27 +48,42 @@
     </header>
 
     <div class="lesson-section">
-      <h2>Introduction</h2>
+      <h2>What are Subatomic Particles?</h2>
+
       <p>
-        All matter is made of atoms, and atoms themselves are composed of even smaller
-        particles called <strong>subatomic particles</strong>.
+        All matter in the universe is made of atoms. However, atoms themselves are not
+        indivisible. They are composed of even smaller components known as
+        <strong>subatomic particles</strong>.
       </p>
 
-      <ul>
-        <li>Chemical reactions involve the rearrangement of electrons</li>
-        <li>Ions form when atoms gain or lose electrons</li>
-        <li>Isotopes affect atomic mass and nuclear stability</li>
-        <li>Bonding and reactivity depend on valence electrons</li>
-      </ul>
+      <p>
+        These particles determine the properties of matter. The way atoms behave,
+        bond, and react depends on the interaction and arrangement of their
+        subatomic components.
+      </p>
+
+      <p>
+        There are three main subatomic particles found in atoms:
+        <strong>protons</strong>, <strong>neutrons</strong>, and
+        <strong>electrons</strong>. Each plays a unique role in atomic structure
+        and chemical behavior.
+      </p>
+
+      <div class="help-box">
+        The three main components of an atom can be explored using the interactive
+        3D model below. 
+        Click on different parts of the atom to learn more about
+        each subatomic particle.
+      </div>
 
       <div id="three-container">
         <div id="atom-canvas"></div>
       </div>
     </div>
+
   </div>
 </div>
 
-<!-- PARTICLE INFO MODAL -->
 <div id="particle-modal" class="modal hidden">
   <div class="modal-content">
     <h2 id="modal-title"></h2>
@@ -78,23 +93,24 @@
 </div>
 
 <script>
-/* Sidebar Logic */
 const menu = document.getElementById("sideMenu");
 const dim = document.getElementById("dim");
+
 document.getElementById("hamburger").onclick = () => {
   menu.classList.add("open");
   dim.classList.add("active");
 };
+
 document.getElementById("closeMenu").onclick = () => {
   menu.classList.remove("open");
   dim.classList.remove("active");
 };
+
 dim.onclick = () => {
   menu.classList.remove("open");
   dim.classList.remove("active");
 };
 
-/* Exploding Atoms BG Logic */
 const canvas = document.getElementById("bg");
 const c = canvas.getContext("2d");
 
@@ -107,7 +123,8 @@ window.addEventListener("resize", resize);
 
 class Particle {
   constructor(x, y) {
-    this.x = x; this.y = y;
+    this.x = x;
+    this.y = y;
     this.r = 2 + Math.random() * 2;
     this.vx = (Math.random() - 0.5) * 6;
     this.vy = (Math.random() - 0.5) * 6;
@@ -125,7 +142,9 @@ class Particle {
 }
 
 class Atom {
-  constructor() { this.reset(); }
+  constructor() {
+    this.reset();
+  }
   reset() {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
@@ -136,24 +155,31 @@ class Atom {
   }
   explode() {
     this.exploded = true;
-    for (let i = 0; i < 15; i++) bgParticles.push(new Particle(this.x, this.y));
+    for (let i = 0; i < 15; i++) {
+      bgParticles.push(new Particle(this.x, this.y));
+    }
     setTimeout(() => this.reset(), 1200);
   }
   update(atoms) {
     if (this.exploded) return;
+
     this.x += this.vx;
     this.y += this.vy;
+
     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
     for (let a of atoms) {
       if (a !== this && !a.exploded) {
         if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
-          this.explode(); a.explode();
+          this.explode();
+          a.explode();
         }
       }
     }
+
     c.beginPath();
-    c.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    c.fillStyle = "rgba(255,255,255,0.4)";
     c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     c.fill();
   }
@@ -173,7 +199,6 @@ function animateBG() {
 }
 animateBG();
 
-/* Intro Sequence Typing Logic */
 function typeText(el, text, speed, cb) {
   let i = 0;
   const int = setInterval(() => {
@@ -185,10 +210,10 @@ function typeText(el, text, speed, cb) {
   }, speed);
 }
 
-const t1 = document.getElementById('text1');
-const t2 = document.getElementById('text2');
-const t3 = document.getElementById('text3');
-const nextBtn = document.getElementById('nextBtn');
+const t1 = document.getElementById("text1");
+const t2 = document.getElementById("text2");
+const t3 = document.getElementById("text3");
+const nextBtn = document.getElementById("nextBtn");
 
 typeText(t1, "Matter", 250, () => {
   setTimeout(() => {
@@ -208,10 +233,10 @@ typeText(t1, "Matter", 250, () => {
 });
 
 nextBtn.onclick = () => {
-  document.querySelector('.scene1').classList.remove('active');
-  document.querySelector('.scene2').classList.add('active');
+  document.querySelector(".scene1").classList.remove("active");
+  document.querySelector(".scene2").classList.add("active");
   setTimeout(() => {
-    document.getElementById('lessonBox').classList.add('show');
+    document.getElementById("lessonBox").classList.add("show");
   }, 100);
 };
 </script>
