@@ -19,6 +19,7 @@
         }
        
         #mainGamesContent {
+            padding-bottom: 80px;
             display: none;
         }
 
@@ -229,8 +230,8 @@
           margin: 0 auto 30px auto;
           z-index: 10;
           position: relative;
+          padding-bottom: 60px;
         }
-
 
         .game-card {
             position: relative;
@@ -395,6 +396,15 @@
 }
 
 @media (max-width: 800px) {
+    body {
+        overflow-y: auto;
+    }
+
+    #mainGamesContent {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
     .games-container {
         grid-template-columns: 1fr;
         width: 90%;
@@ -414,7 +424,7 @@
 
 @media (max-width: 480px) {
     body {
-        padding-top: 10px; /* keeps header from sticking to top */
+        padding-top: 10px; 
     }
 
     .header-title {
