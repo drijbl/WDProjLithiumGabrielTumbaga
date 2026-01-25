@@ -386,6 +386,8 @@
         width: 88%;         
         max-width: 760px;
         gap: 22px;
+        position: relative;
+        grid-auto-rows: min-content;
     }
 
     .game-card.large {
@@ -413,6 +415,8 @@
         max-width: 620px;
         gap: 18px;
         margin-bottom: 24px;
+        position: relative;
+        grid-auto-rows: min-content;
     }
 
     .game-card {
@@ -443,6 +447,8 @@
     .games-container {
         width: 92%;
         gap: 14px;
+        position: relative;
+        grid-auto-rows: min-content;
     }
 
     .game-card.large {
@@ -450,7 +456,8 @@
     }
 
     .game-card.small {
-        height: 145px;
+        height: auto;
+        min-height: 180px;
     }
 
     .game-card.small:last-child {
