@@ -102,6 +102,18 @@
     </div>
 </div>
 
+<button id="pokedexBtn">📖</button>
+
+<div id="pokedexOverlay">
+  <div id="pokedexContent">
+    <div id="pokedexHeader">
+      <h2>ELEMENT INDEX</h2>
+      <button id="pokedexClose">✕</button>
+    </div>
+    <div id="pokedexGrid"></div>
+  </div>
+</div>
+
 <!-- ===== BACKGROUND MUSIC ===== -->
 <audio id="bgMusic" preload="auto" loop>
   <source src="./assets/Alchemy_sound.mp3" type="audio/mpeg">
@@ -161,6 +173,7 @@ musicToggle.addEventListener("click", (e) => {
 function updateBtn() {
   musicToggle.textContent = bgMusic.paused ? "▶" : "❚❚";
 }
+
 </script>
 
 <script src="game_elements.js"></script>
