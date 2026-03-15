@@ -66,3 +66,12 @@ JavaScript will power most of the interactive features of Chemivis, making stati
 - **Practice Games:** JS will handle game logic, including questions, answers, scoring, and feedback to create an interactive learning experience.
 
 Overall, JS will make Chemivis' visualizations less static and more interactive for users.
+
+## FINAL MODIFICATION PROPOSAL
+
+### Design and Narrative
+
+### Wireframes
+> SIGN UP/LOG IN PAGE
+
+> UPDATES GAMES PAGE
