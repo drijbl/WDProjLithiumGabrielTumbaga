@@ -1,4 +1,15 @@
 # Chemivis 
+
+## FINAL MODIFICATION PROPOSAL
+
+### Design and Narrative
+
+### Wireframes
+> SIGN UP/LOG IN PAGE
+
+> UPDATES GAMES PAGE
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Visualizing the unseen fundamentals of chemistry
 Chemistry is the study of matter, which is made up of atoms and molecules that form everything around us. Yet these particles are invisible to the naked eye, making them difficult to imagine and understand. **Chemivis** bridges this gap by bringing the unseen world of chemistry to life through interactive visualizations and simulations. It helps learners visualize abstract chemistry concepts easier, while also teaching them all about the fundamental topics of the subject!
 
@@ -66,12 +77,3 @@ JavaScript will power most of the interactive features of Chemivis, making stati
 - **Practice Games:** JS will handle game logic, including questions, answers, scoring, and feedback to create an interactive learning experience.
 
 Overall, JS will make Chemivis' visualizations less static and more interactive for users.
-
-## FINAL MODIFICATION PROPOSAL
-
-### Design and Narrative
-
-### Wireframes
-> SIGN UP/LOG IN PAGE
-
-> UPDATES GAMES PAGE
