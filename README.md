@@ -20,6 +20,16 @@ For the personal records section, it will display the user’s best performance 
 
 This feature primarily applies the **Read** and **Update** operations of CRUD. The **Read** operation is used to retrieve the user’s stored records from localStorage and display them in the interface. The **Update** operation is used when a new score surpasses the previous record, prompting the system to replace the old value with the new one. Additionally, a **Create** operation may occur when initializing a new user’s record data if none exists yet.
 
+### WIREFRAMES
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b5536794-cfc4-49c2-b5af-76176420b922" />
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/e4743286-0b32-4bdc-9aae-489836b23dd3" />
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/0c024aac-5350-4471-95f4-89374bb0060c" />
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ae0d2723-8433-4125-b3be-6ce03d30bfcd" />
+
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/0d297839-fbab-4c5a-8716-10deb4c3827a" />
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Visualizing the unseen fundamentals of chemistry
