@@ -8,28 +8,25 @@ In the Practice Games page, users will be greeted by a login pop-up upon entry. 
 - For users signing in, they will input their login details into an HTML form. In this process, CRUD is applied through the **Read** operation, as data stored in localStorage is retrieved and cross-referenced with the username and password entered by the user. If the credentials match, the user will be allowed to proceed to the games. Otherwise, the system will display a message indicating that the details they entered are incorrect.
 - On the other hand, users who wish to sign up can click on the sign-up option, which will redirect them to another pop-up. Here, they will be prompted to input a username and password. CRUD is applied in multiple ways in this segment. The **Create** operation is used to store a new username-password pair in localStorage based on the user’s input. Furthermore, the **Read** operation is used to verify whether the chosen username already exists in the stored data. Once the user successfully signs up with a valid and unique username, they will then proceed to the games.
 
+<img width="480" height="768" alt="image" src="https://github.com/user-attachments/assets/b5536794-cfc4-49c2-b5af-76176420b922" /> <img width="480" height="768" alt="image" src="https://github.com/user-attachments/assets/e4743286-0b32-4bdc-9aae-489836b23dd3" />
+
 In the actual games webpage, the games will be displayed in a revised layout, with the addition of a _personal records section_ and a _profile redirect icon_ at the top right corner. 
 
-### Profile Button
-For the profile button, when users click it, a pop-up will appear displaying their username, display name (which is set to their username by default), and password, along with a button that allows them to change their display name or password. When this button is clicked, the user will be prompted with an HTML form where they can input a new display name or password, depending on their selection. At the bottom of the pop-up, there will also be a red “Delete Account” button, which users can click to permanently remove their account.
+<img width="750" height="768" alt="image" src="https://github.com/user-attachments/assets/0c024aac-5350-4471-95f4-89374bb0060c" />
 
-In this feature, CRUD is applied through multiple operations. The **Read** operation is used to retrieve and display the user’s current information. The **Update** operation is applied when the user edits their display name or password, as the system modifies the existing data stored in localStorage and saves the updated values. Additionally, the **Delete** operation is used when the user clicks the “Delete Account” button, which removes the user’s data from localStorage.
+### Profile Button
+For the profile button, when users click it, a pop-up will appear displaying their username, display name (which is set to their username by default), and user bio, along with two buttons that allows them to edit  or delete their account. When this "Edit Account" button is clicked, the user will be prompted with an HTML form where they can input a new display name or bio, depending on their selection. At the bottom of the pop-up, there will also be a red “Delete Account” button, which users can click to permanently remove their account.
+
+In this feature, CRUD is applied through multiple operations. The **Read** operation is used to retrieve and display the user’s current information. The **Update** operation is applied when the user edits their display name or bio, as the system modifies the existing data stored in localStorage and saves the updated values. Additionally, the **Delete** operation is used when the user clicks the “Delete Account” button, which removes the user’s data from localStorage.
+
+<img width="750" height="768" alt="image" src="https://github.com/user-attachments/assets/ae0d2723-8433-4125-b3be-6ce03d30bfcd" />
+
+<img width="750" height="768" alt="image" src="https://github.com/user-attachments/assets/0d297839-fbab-4c5a-8716-10deb4c3827a" />
 
 ### Personal Records
 For the personal records section, it will display the user’s best performance in each game. Each time a user completes a game, their score will be saved and compared with their existing record for that specific game. If the new score exceeds the previous best, the stored value will be updated accordingly.
 
 This feature primarily applies the **Read** and **Update** operations of CRUD. The **Read** operation is used to retrieve the user’s stored records from localStorage and display them in the interface. The **Update** operation is used when a new score surpasses the previous record, prompting the system to replace the old value with the new one. Additionally, a **Create** operation may occur when initializing a new user’s record data if none exists yet.
-
-### WIREFRAMES
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b5536794-cfc4-49c2-b5af-76176420b922" />
-
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/e4743286-0b32-4bdc-9aae-489836b23dd3" />
-
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/0c024aac-5350-4471-95f4-89374bb0060c" />
-
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ae0d2723-8433-4125-b3be-6ce03d30bfcd" />
-
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/0d297839-fbab-4c5a-8716-10deb4c3827a" />
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Visualizing the unseen fundamentals of chemistry
