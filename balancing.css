@@ -1,11 +1,15 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-body{
-  font-family:'Poppins',sans-serif;
-  min-height:100vh;
-  background:linear-gradient(135deg,#9b52ee,#279fce);
-  padding:60px clamp(16px, 5vw, 100px);
-  overflow-x:hidden;
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #9b52ee, #279fce);
+  padding: 60px clamp(16px, 5vw, 100px);
+  overflow-x: hidden;
 }
 
 /* ===== Background canvas ===== */
@@ -22,7 +26,7 @@ canvas#bg {
   z-index: 1;
   background: rgba(254, 255, 252, 0.88);
   border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
@@ -47,7 +51,7 @@ canvas#bg {
 }
 
 .page-title {
-  font-family: 'Rubik One', sans-serif;
+  font-family: "Rubik One", sans-serif;
   font-size: 28px;
   font-weight: 500;
 }
@@ -64,10 +68,12 @@ canvas#bg {
   padding: 25px;
   transition: left 0.3s ease;
   z-index: 2000;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.side-menu.open { left: 0; }
+.side-menu.open {
+  left: 0;
+}
 
 .side-menu a {
   display: block;
@@ -79,7 +85,7 @@ canvas#bg {
   text-decoration: none;
   border-radius: 5px;
 
-  transition: 
+  transition:
     transform 0.25s ease,
     background-color 0.25s ease;
   will-change: transform;
@@ -138,7 +144,10 @@ canvas#bg {
   margin-bottom: 30px;
 }
 
-.coeff { color: #008080; font-weight: 700; }
+.coeff {
+  color: #008080;
+  font-weight: 700;
+}
 
 .equation-box sub {
   font-size: 18px;
@@ -175,16 +184,38 @@ canvas#bg {
   margin-bottom: 12px;
 }
 
-.atom { width: 22px; height: 22px; border-radius: 50%; }
-.atom.H { background: #4fc3f7; }
-.atom.O { background: #ef5350; }
-.atom.N { background: #8d6e63; }
-.atom.C { background: #616161; }
-.atom.Na { background: #ffb74d; }
-.atom.Cl { background: #81c784; }
-.atom.Fe { background: #b71c1c; }
-.atom.K { background: #ba68c8; }
-.atom.Ca { background: #90caf9; }
+.atom {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+.atom.H {
+  background: #4fc3f7;
+}
+.atom.O {
+  background: #ef5350;
+}
+.atom.N {
+  background: #8d6e63;
+}
+.atom.C {
+  background: #616161;
+}
+.atom.Na {
+  background: #ffb74d;
+}
+.atom.Cl {
+  background: #81c784;
+}
+.atom.Fe {
+  background: #b71c1c;
+}
+.atom.K {
+  background: #ba68c8;
+}
+.atom.Ca {
+  background: #90caf9;
+}
 
 /* ===== BUTTON ===== */
 .next-btn {
@@ -202,7 +233,6 @@ canvas#bg {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-
   body {
     padding: 12px;
   }

@@ -1,434 +1,539 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CS3 Website Project" />
-  <meta name="keywords" content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization" />
-  <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
-  <title>Chemivis | Balancing Chemical Equations</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CS3 Website Project" />
+    <meta
+      name="keywords"
+      content="Chemivis, Chemistry, Chemistry Visualized, Chem, Visualization"
+    />
+    <meta name="author" content="Djibril Gabriel, Rea Tumbaga" />
+    <title>Chemivis | Balancing Chemical Equations</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="stylesheet" href="references.css">
-  <link rel="stylesheet" href="balancing.css">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Rubik+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
+    <link rel="stylesheet" href="references.css" />
+    <link rel="stylesheet" href="balancing.css" />
+  </head>
 
-<body>
+  <body>
+    <canvas id="bg"></canvas>
 
-<canvas id="bg"></canvas>
+    <div class="page-shell">
+      <header class="site-header">
+        <button id="hamburger">☰</button>
+        <h1 class="page-title">Balancing Chemical Equations</h1>
+      </header>
 
-<div class="page-shell">
-  <header class="site-header">
-    <button id="hamburger">☰</button>
-    <h1 class="page-title">Balancing Chemical Equations</h1>
-  </header>
+      <div class="lesson-section">
+        <h2 style="color: #008080">Introduction</h2>
+        <p>
+          Balancing chemical equations demonstrates the
+          <strong>Law of Conservation of Mass</strong>: atoms are neither
+          created nor destroyed during chemical reactions. The general process
+          involves counting atoms, starting with complex substances or elements
+          that appear once, balancing atoms using whole number coefficients
+          (often H and O last), and verifying the final count.
+        </p>
+      </div>
 
-  <div class="lesson-section">
-    <h2 style="color:#008080;">Introduction</h2>
-    <p>
-      Balancing chemical equations demonstrates the <strong>Law of Conservation of Mass</strong>:
-      atoms are neither created nor destroyed during chemical reactions. The general process involves counting atoms, starting with complex substances or elements that appear once, balancing atoms using whole number coefficients (often H and O last), and verifying the final count. 
-    </p>
-  </div>
+      <div class="lesson-section">
+        <h2 style="color: #008080">Law of Conservation of Mass</h2>
+        <p>
+          In a balanced chemical equation, each element has the same number of
+          atoms on both the reactant and product sides. The Law of Conservation
+          of Mass dates back to
+          <strong> Antoine Lavoisier's 1789 discovery </strong> that mass is
+          neither created nor destroyed in chemical reactions. If we consider
+          all reactants and products in a chemical reaction, the total mass will
+          be the same at any point in time in any closed system. This doesn't
+          hold true for nuclear reactions, since mass can be converted to energy
+          through nuclear fission and fusion.
+        </p>
+      </div>
 
-  <div class="lesson-section">
-    <h2 style="color:#008080;">Law of Conservation of Mass</h2>
-    <p>
-      In a balanced chemical equation, each element has the same number of atoms
-      on both the reactant and product sides. The Law of Conservation of Mass dates back to <strong> Antoine Lavoisier's 1789 discovery </strong> that mass is neither created nor destroyed in chemical reactions. If we consider all reactants and products in a chemical reaction, the total mass will be the same at any point in time in any closed system. This doesn't hold true for nuclear reactions, since mass can be converted to energy through nuclear fission and fusion.
-    </p>
-  </div>
+      <div class="lesson-section">
+        <div class="visualizer">
+          <div class="visualizer-title">Balanced Equation Example</div>
 
-  <div class="lesson-section">
-    <div class="visualizer">
-      <div class="visualizer-title">Balanced Equation Example</div>
+          <div class="equation-box" id="equationDisplay"></div>
 
-      <div class="equation-box" id="equationDisplay"></div>
+          <div class="atom-visualizer">
+            <div class="side">
+              <h3>Reactants</h3>
+              <div id="leftAtoms"></div>
+            </div>
+            <div class="side">
+              <h3>Products</h3>
+              <div id="rightAtoms"></div>
+            </div>
+          </div>
 
-      <div class="atom-visualizer">
-        <div class="side">
-          <h3>Reactants</h3>
-          <div id="leftAtoms"></div>
-        </div>
-        <div class="side">
-          <h3>Products</h3>
-          <div id="rightAtoms"></div>
+          <button class="next-btn" id="nextEquation">Next Equation</button>
         </div>
       </div>
 
-      <button class="next-btn" id="nextEquation">Next Equation</button>
+      <nav class="side-menu" id="sideMenu">
+        <div id="closeMenu">✖</div>
+        <a href="index.html">HOME</a>
+        <a href="periodic-table.html">PERIODIC TABLE</a>
+        <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+        <a href="vsepr.html">VSEPR</a>
+        <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+        <a href="games.html">PRACTICE GAMES</a>
+      </nav>
     </div>
-  </div>
+    <script>
+      const equations = [
+        {
+          text: '<span class="coeff">2</span>H<sub>2</sub> + O<sub>2</sub> → <span class="coeff">2</span>H<sub>2</sub>O',
+          left: [
+            { count: 2, atoms: ["H", "H"] },
+            { count: 1, atoms: ["O", "O"] },
+          ],
+          right: [{ count: 2, atoms: ["H", "H", "O"] }],
+        },
+        {
+          text: 'N<sub>2</sub> + <span class="coeff">3</span>H<sub>2</sub> → <span class="coeff">2</span>NH<sub>3</sub>',
+          left: [
+            { count: 1, atoms: ["N", "N"] },
+            { count: 3, atoms: ["H", "H"] },
+          ],
+          right: [{ count: 2, atoms: ["N", "H", "H", "H"] }],
+        },
+        {
+          text: '<span class="coeff">2</span>Na + Cl<sub>2</sub> → <span class="coeff">2</span>NaCl',
+          left: [
+            { count: 2, atoms: ["Na"] },
+            { count: 1, atoms: ["Cl", "Cl"] },
+          ],
+          right: [{ count: 2, atoms: ["Na", "Cl"] }],
+        },
+        {
+          text: 'C<sub>3</sub>H<sub>8</sub> + <span class="coeff">5</span>O<sub>2</sub> → <span class="coeff">3</span>CO<sub>2</sub> + <span class="coeff">4</span>H<sub>2</sub>O',
+          left: [
+            {
+              count: 1,
+              atoms: ["C", "C", "C", "H", "H", "H", "H", "H", "H", "H", "H"],
+            },
+            { count: 5, atoms: ["O", "O"] },
+          ],
+          right: [
+            { count: 3, atoms: ["C", "O", "O"] },
+            { count: 4, atoms: ["H", "H", "O"] },
+          ],
+        },
+        {
+          text: '<span class="coeff">4</span>Fe + <span class="coeff">3</span>O<sub>2</sub> → <span class="coeff">2</span>Fe<sub>2</sub>O<sub>3</sub>',
+          left: [
+            { count: 4, atoms: ["Fe"] },
+            { count: 3, atoms: ["O", "O"] },
+          ],
+          right: [{ count: 2, atoms: ["Fe", "Fe", "O", "O", "O"] }],
+        },
+        {
+          text: "CaCO<sub>3</sub> → CaO + CO<sub>2</sub>",
+          left: [{ count: 1, atoms: ["Ca", "C", "O", "O", "O"] }],
+          right: [
+            { count: 1, atoms: ["Ca", "O"] },
+            { count: 1, atoms: ["C", "O", "O"] },
+          ],
+        },
+        {
+          text: '<span class="coeff">2</span>KClO<sub>3</sub> → <span class="coeff">2</span>KCl + <span class="coeff">3</span>O<sub>2</sub>',
+          left: [{ count: 2, atoms: ["K", "Cl", "O", "O", "O"] }],
+          right: [
+            { count: 2, atoms: ["K", "Cl"] },
+            { count: 3, atoms: ["O", "O"] },
+          ],
+        },
+      ];
 
-  <nav class="side-menu" id="sideMenu">
-    <div id="closeMenu">✖</div>
-    <a href="index.html">HOME</a>
-    <a href="periodic-table.html">PERIODIC TABLE</a>
-    <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-    <a href="vsepr.html">VSEPR</a>
-    <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-    <a href="games.html">PRACTICE GAMES</a>
-  </nav>
-</div>
-<script>
-const equations = [
-  {
-    text: '<span class="coeff">2</span>H<sub>2</sub> + O<sub>2</sub> → <span class="coeff">2</span>H<sub>2</sub>O',
-    left: [{ count: 2, atoms: ['H','H'] }, { count: 1, atoms: ['O','O'] }],
-    right: [{ count: 2, atoms: ['H','H','O'] }]
-  },
-  {
-    text: 'N<sub>2</sub> + <span class="coeff">3</span>H<sub>2</sub> → <span class="coeff">2</span>NH<sub>3</sub>',
-    left: [{ count: 1, atoms: ['N','N'] }, { count: 3, atoms: ['H','H'] }],
-    right: [{ count: 2, atoms: ['N','H','H','H'] }]
-  },
-  {
-    text: '<span class="coeff">2</span>Na + Cl<sub>2</sub> → <span class="coeff">2</span>NaCl',
-    left: [{ count: 2, atoms: ['Na'] }, { count: 1, atoms: ['Cl','Cl'] }],
-    right: [{ count: 2, atoms: ['Na','Cl'] }]
-  },
-  {
-    text: 'C<sub>3</sub>H<sub>8</sub> + <span class="coeff">5</span>O<sub>2</sub> → <span class="coeff">3</span>CO<sub>2</sub> + <span class="coeff">4</span>H<sub>2</sub>O',
-    left: [{ count: 1, atoms: ['C','C','C','H','H','H','H','H','H','H','H'] }, { count: 5, atoms: ['O','O'] }],
-    right: [{ count: 3, atoms: ['C','O','O'] }, { count: 4, atoms: ['H','H','O'] }]
-  },
-  {
-    text: '<span class="coeff">4</span>Fe + <span class="coeff">3</span>O<sub>2</sub> → <span class="coeff">2</span>Fe<sub>2</sub>O<sub>3</sub>',
-    left: [{ count: 4, atoms: ['Fe'] }, { count: 3, atoms: ['O','O'] }],
-    right: [{ count: 2, atoms: ['Fe','Fe','O','O','O'] }]
-  },
-  {
-    text: 'CaCO<sub>3</sub> → CaO + CO<sub>2</sub>',
-    left: [{ count: 1, atoms: ['Ca','C','O','O','O'] }],
-    right: [{ count: 1, atoms: ['Ca','O'] }, { count: 1, atoms: ['C','O','O'] }]
-  },
-  {
-    text: '<span class="coeff">2</span>KClO<sub>3</sub> → <span class="coeff">2</span>KCl + <span class="coeff">3</span>O<sub>2</sub>',
-    left: [{ count: 2, atoms: ['K','Cl','O','O','O'] }],
-    right: [{ count: 2, atoms: ['K','Cl'] }, { count: 3, atoms: ['O','O'] }]
-  }
-];
+      const eqDisplay = document.getElementById("equationDisplay");
+      const leftBox = document.getElementById("leftAtoms");
+      const rightBox = document.getElementById("rightAtoms");
+      const nextBtn = document.getElementById("nextEquation");
 
-const eqDisplay = document.getElementById("equationDisplay");
-const leftBox = document.getElementById("leftAtoms");
-const rightBox = document.getElementById("rightAtoms");
-const nextBtn = document.getElementById("nextEquation");
+      function renderSide(container, sideData) {
+        container.innerHTML = "";
+        sideData.forEach((mol) => {
+          for (let i = 0; i < mol.count; i++) {
+            const molDiv = document.createElement("div");
+            molDiv.className = "molecule";
+            mol.atoms.forEach((a) => {
+              const atom = document.createElement("div");
+              atom.className = `atom ${a}`;
+              molDiv.appendChild(atom);
+            });
+            container.appendChild(molDiv);
+          }
+        });
+      }
 
-function renderSide(container, sideData) {
-  container.innerHTML = "";
-  sideData.forEach(mol => {
-    for (let i = 0; i < mol.count; i++) {
-      const molDiv = document.createElement("div");
-      molDiv.className = "molecule";
-      mol.atoms.forEach(a => {
-        const atom = document.createElement("div");
-        atom.className = `atom ${a}`;
-        molDiv.appendChild(atom);
+      function showRandomEquation() {
+        const eq = equations[Math.floor(Math.random() * equations.length)];
+        eqDisplay.innerHTML = eq.text;
+        renderSide(leftBox, eq.left);
+        renderSide(rightBox, eq.right);
+      }
+
+      nextBtn.onclick = showRandomEquation;
+      showRandomEquation();
+    </script>
+
+    <script>
+      const sections = document.querySelectorAll(".lesson-section");
+      const revealOnScroll = () => {
+        const trigger = window.innerHeight * 0.8;
+        sections.forEach((s) => {
+          if (s.getBoundingClientRect().top < trigger)
+            s.classList.add("visible");
+        });
+      };
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll();
+    </script>
+
+    <script>
+      // ===== Balancing equation visualizer =====
+      const equations = [
+        {
+          eq: "H2 + O2 → H2O",
+          molecules: [{ H: 2 }, { O: 2 }, { H: 2, O: 1 }],
+        },
+        {
+          eq: "CH4 + O2 → CO2 + H2O",
+          molecules: [{ C: 1, H: 4 }, { O: 2 }, { C: 1, O: 2 }, { H: 2, O: 1 }],
+        },
+        {
+          eq: "N2 + H2 → NH3",
+          molecules: [{ N: 2 }, { H: 2 }, { N: 1, H: 3 }],
+        },
+      ];
+
+      const equationDisplay = document.getElementById("equationDisplay");
+      const moleculeContainer = document.getElementById("moleculeContainer");
+      const nextEquationBtn = document.getElementById("nextEquation");
+
+      function pickEquation() {
+        const eq = equations[Math.floor(Math.random() * equations.length)];
+        equationDisplay.textContent = eq.eq;
+        moleculeContainer.innerHTML = "";
+        eq.molecules.forEach((mol, i) => {
+          const molDiv = document.createElement("div");
+          molDiv.style.position = "absolute";
+          molDiv.style.left = `${20 + i * 80}px`;
+          molDiv.style.top = "50px";
+          molDiv.style.width = "60px";
+          molDiv.style.height = "60px";
+          molDiv.style.borderRadius = "50%";
+          molDiv.style.background = "#3399ff";
+          molDiv.style.display = "flex";
+          molDiv.style.alignItems = "center";
+          molDiv.style.justifyContent = "center";
+          molDiv.style.color = "white";
+          molDiv.style.fontWeight = "700";
+          molDiv.textContent = Object.keys(mol)
+            .map((k) => `${k}${mol[k]}`)
+            .join("");
+          moleculeContainer.appendChild(molDiv);
+        });
+      }
+
+      nextEquationBtn.onclick = pickEquation;
+      pickEquation();
+    </script>
+
+    <!-- ===== Scripts ===== -->
+    <script>
+      const menu = document.getElementById("sideMenu");
+      hamburger.onclick = () => menu.classList.add("open");
+      closeMenu.onclick = () => menu.classList.remove("open");
+    </script>
+
+    <script>
+      // ===== Exploding atoms background =====
+      const canvas = document.getElementById("bg"),
+        c = canvas.getContext("2d");
+      function resize() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+      }
+      resize();
+      addEventListener("resize", resize);
+
+      class Atom {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.r = 3 + Math.random() * 3;
+          this.vx = (Math.random() - 0.5) * 0.7;
+          this.vy = (Math.random() - 0.5) * 0.7;
+          this.dead = false;
+        }
+        draw() {
+          c.beginPath();
+          c.fillStyle = "white";
+          c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          c.fill();
+        }
+        explode() {
+          this.dead = true;
+          explosions.push({ x: this.x, y: this.y, life: 40 });
+        }
+        update(atoms) {
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+          for (let a of atoms) {
+            if (a === this || a.dead) continue;
+            if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+              this.explode();
+              a.explode();
+            }
+          }
+          this.draw();
+        }
+      }
+
+      const atoms = [],
+        explosions = [];
+      for (let i = 0; i < 40; i++) atoms.push(new Atom());
+
+      (function animate() {
+        requestAnimationFrame(animate);
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        atoms.forEach((a) => !a.dead && a.update(atoms));
+        explosions.forEach((e) => {
+          c.fillStyle = `rgba(255,255,255,${e.life / 40})`;
+          c.beginPath();
+          c.arc(e.x, e.y, 4, 0, Math.PI * 2);
+          c.fill();
+          e.life--;
+        });
+      })();
+    </script>
+
+    <script>
+      // ===== Section reveal =====
+      const sections = document.querySelectorAll(".lesson-section");
+      function reveal() {
+        const t = innerHeight * 0.8;
+        sections.forEach(
+          (s) =>
+            s.getBoundingClientRect().top < t && s.classList.add("visible"),
+        );
+      }
+      addEventListener("scroll", reveal);
+      reveal();
+    </script>
+
+    <!-- ===== REFERENCES DIM ===== -->
+    <div class="ref-dim" id="refDim"></div>
+
+    <!-- ===== REFERENCES MENU ===== -->
+    <div class="references" id="refMenu">
+      <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+
+      <div class="ref-sub one">
+        Khan
+        <div class="apa-popup">
+          Khan Academy. (n.d.). <i>Subatomic Particles</i>. Retrieved from
+          <a
+            href="https://www.khanacademy.org/science/ap-chemistry"
+            target="_blank"
+          >
+            khanacademy.org
+          </a>
+        </div>
+      </div>
+
+      <div class="ref-sub two">
+        Libre
+        <div class="apa-popup">
+          LibreTexts. (n.d.). <i>Sub-Atomic Particles</i>. Retrieved from
+          <a href="https://chem.libretexts.org" target="_blank">
+            chem.libretexts.org
+          </a>
+        </div>
+      </div>
+
+      <div class="ref-sub three">
+        Britannica
+        <div class="apa-popup">
+          Encyclopædia Britannica. (n.d.). <i>Chemistry</i>. Retrieved from
+          <a
+            href="https://www.britannica.com/science/chemistry"
+            target="_blank"
+          >
+            britannica.com
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- References Toggle -->
+    <script>
+      function toggleRefs() {
+        document.getElementById("refMenu").classList.toggle("active");
+        document.getElementById("refDim").classList.toggle("active");
+      }
+
+      document.getElementById("refDim").onclick = () => {
+        document.getElementById("refMenu").classList.remove("active");
+        document.getElementById("refDim").classList.remove("active");
+      };
+
+      document.querySelectorAll(".ref-sub").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          btn.classList.toggle("active");
+        });
       });
-      container.appendChild(molDiv);
-    }
-  });
-}
+    </script>
 
-function showRandomEquation() {
-  const eq = equations[Math.floor(Math.random() * equations.length)];
-  eqDisplay.innerHTML = eq.text;
-  renderSide(leftBox, eq.left);
-  renderSide(rightBox, eq.right);
-}
-
-nextBtn.onclick = showRandomEquation;
-showRandomEquation();
-</script>
-
-<script>
-const sections = document.querySelectorAll('.lesson-section');
-const revealOnScroll = () => {
-  const trigger = window.innerHeight * 0.8;
-  sections.forEach(s => {
-    if (s.getBoundingClientRect().top < trigger) s.classList.add('visible');
-  });
-};
-window.addEventListener('scroll', revealOnScroll);
-revealOnScroll();
-</script>
-
-<script>
-// ===== Balancing equation visualizer =====
-const equations = [
-  { eq: "H2 + O2 → H2O", molecules: [{H:2}, {O:2}, {H:2,O:1}] },
-  { eq: "CH4 + O2 → CO2 + H2O", molecules: [{C:1,H:4}, {O:2}, {C:1,O:2}, {H:2,O:1}] },
-  { eq: "N2 + H2 → NH3", molecules: [{N:2}, {H:2}, {N:1,H:3}] }
-];
-
-const equationDisplay = document.getElementById('equationDisplay');
-const moleculeContainer = document.getElementById('moleculeContainer');
-const nextEquationBtn = document.getElementById('nextEquation');
-
-function pickEquation() {
-  const eq = equations[Math.floor(Math.random()*equations.length)];
-  equationDisplay.textContent = eq.eq;
-  moleculeContainer.innerHTML = "";
-  eq.molecules.forEach((mol,i)=>{
-    const molDiv=document.createElement('div');
-    molDiv.style.position='absolute';
-    molDiv.style.left=`${20+i*80}px`;
-    molDiv.style.top='50px';
-    molDiv.style.width='60px';
-    molDiv.style.height='60px';
-    molDiv.style.borderRadius='50%';
-    molDiv.style.background='#3399ff';
-    molDiv.style.display='flex';
-    molDiv.style.alignItems='center';
-    molDiv.style.justifyContent='center';
-    molDiv.style.color='white';
-    molDiv.style.fontWeight='700';
-    molDiv.textContent=Object.keys(mol).map(k=>`${k}${mol[k]}`).join('');
-    moleculeContainer.appendChild(molDiv);
-  });
-}
-
-nextEquationBtn.onclick = pickEquation;
-pickEquation();
-</script>
-
-<!-- ===== Scripts ===== -->
-<script>
-const menu = document.getElementById("sideMenu");
-hamburger.onclick = () => menu.classList.add("open");
-closeMenu.onclick = () => menu.classList.remove("open");
-</script>
-
-<script>
-// ===== Exploding atoms background =====
-const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-resize(); addEventListener("resize",resize);
-
-class Atom{
-  constructor(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.r=3+Math.random()*3;
-    this.vx=(Math.random()-.5)*.7;
-    this.vy=(Math.random()-.5)*.7;
-    this.dead=false;
-  }
-  draw(){c.beginPath();c.fillStyle="white";c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fill()}
-  explode(){this.dead=true; explosions.push({x:this.x,y:this.y,life:40})}
-  update(atoms){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<0||this.x>canvas.width)this.vx*=-1;
-    if(this.y<0||this.y>canvas.height)this.vy*=-1;
-    for(let a of atoms){
-      if(a===this||a.dead)continue;
-      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
-        this.explode(); a.explode();
+    <script>
+      // ===== Exploding atoms background =====
+      const canvas = document.getElementById("bg"),
+        c = canvas.getContext("2d");
+      function resize() {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
       }
-    }
-    this.draw();
-  }
-}
+      resize();
+      addEventListener("resize", resize);
 
-const atoms=[], explosions=[];
-for(let i=0;i<40;i++) atoms.push(new Atom());
-
-(function animate(){
-  requestAnimationFrame(animate);
-  c.clearRect(0,0,canvas.width,canvas.height);
-  atoms.forEach(a=>!a.dead&&a.update(atoms));
-  explosions.forEach(e=>{
-    c.fillStyle=`rgba(255,255,255,${e.life/40})`;
-    c.beginPath(); c.arc(e.x,e.y,4,0,Math.PI*2); c.fill();
-    e.life--;
-  });
-})();
-</script>
-
-<script>
-// ===== Section reveal =====
-const sections=document.querySelectorAll('.lesson-section');
-function reveal(){
-  const t=innerHeight*.8;
-  sections.forEach(s=>s.getBoundingClientRect().top<t&&s.classList.add('visible'));
-}
-addEventListener('scroll',reveal); reveal();
-</script>
-
-<!-- ===== REFERENCES DIM ===== -->
-<div class="ref-dim" id="refDim"></div>
-
-<!-- ===== REFERENCES MENU ===== -->
-<div class="references" id="refMenu">
-
-  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
-
-  <div class="ref-sub one">
-    Khan
-    <div class="apa-popup">
-      Khan Academy. (n.d.). <i>Subatomic Particles</i>.
-      Retrieved from
-      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
-        khanacademy.org
-      </a>
-    </div>
-  </div>
-
-  <div class="ref-sub two">
-    Libre
-    <div class="apa-popup">
-      LibreTexts. (n.d.). <i>Sub-Atomic Particles</i>.
-      Retrieved from
-      <a href="https://chem.libretexts.org" target="_blank">
-        chem.libretexts.org
-      </a>
-    </div>
-  </div>
-
-  <div class="ref-sub three">
-    Britannica
-    <div class="apa-popup">
-      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
-      Retrieved from
-      <a href="https://www.britannica.com/science/chemistry" target="_blank">
-        britannica.com
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<!-- References Toggle -->
-<script>
-function toggleRefs() {
-  document.getElementById("refMenu").classList.toggle("active");
-  document.getElementById("refDim").classList.toggle("active");
-}
-
-document.getElementById("refDim").onclick = () => {
-  document.getElementById("refMenu").classList.remove("active");
-  document.getElementById("refDim").classList.remove("active");
-};
-
-document.querySelectorAll('.ref-sub').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    btn.classList.toggle('active');
-  });
-});
-</script>
-
-<script>
-// ===== Exploding atoms background =====
-const canvas = document.getElementById("bg"), c = canvas.getContext("2d");
-function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
-resize(); addEventListener("resize",resize);
-
-class Atom{
-  constructor(){
-    this.x=Math.random()*canvas.width;
-    this.y=Math.random()*canvas.height;
-    this.r=3+Math.random()*3;
-    this.vx=(Math.random()-.5)*.7;
-    this.vy=(Math.random()-.5)*.7;
-    this.dead=false;
-  }
-  draw(){c.beginPath();c.fillStyle="white";c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fill()}
-  explode(){this.dead=true; explosions.push({x:this.x,y:this.y,life:40})}
-  update(atoms){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<0||this.x>canvas.width)this.vx*=-1;
-    if(this.y<0||this.y>canvas.height)this.vy*=-1;
-    for(let a of atoms){
-      if(a===this||a.dead)continue;
-      if(Math.hypot(a.x-this.x,a.y-this.y)<this.r+a.r){
-        this.explode(); a.explode();
+      class Atom {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.r = 3 + Math.random() * 3;
+          this.vx = (Math.random() - 0.5) * 0.7;
+          this.vy = (Math.random() - 0.5) * 0.7;
+          this.dead = false;
+        }
+        draw() {
+          c.beginPath();
+          c.fillStyle = "white";
+          c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          c.fill();
+        }
+        explode() {
+          this.dead = true;
+          explosions.push({ x: this.x, y: this.y, life: 40 });
+        }
+        update(atoms) {
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+          for (let a of atoms) {
+            if (a === this || a.dead) continue;
+            if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+              this.explode();
+              a.explode();
+            }
+          }
+          this.draw();
+        }
       }
-    }
-    this.draw();
-  }
-}
 
-const atoms=[], explosions=[];
-for(let i=0;i<40;i++) atoms.push(new Atom());
+      const atoms = [],
+        explosions = [];
+      for (let i = 0; i < 40; i++) atoms.push(new Atom());
 
-(function animate(){
-  requestAnimationFrame(animate);
-  c.clearRect(0,0,canvas.width,canvas.height);
-  atoms.forEach(a=>!a.dead&&a.update(atoms));
-  explosions.forEach(e=>{
-    c.fillStyle=`rgba(255,255,255,${e.life/40})`;
-    c.beginPath(); c.arc(e.x,e.y,4,0,Math.PI*2); c.fill();
-    e.life--;
-  });
-})();
-</script>
+      (function animate() {
+        requestAnimationFrame(animate);
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        atoms.forEach((a) => !a.dead && a.update(atoms));
+        explosions.forEach((e) => {
+          c.fillStyle = `rgba(255,255,255,${e.life / 40})`;
+          c.beginPath();
+          c.arc(e.x, e.y, 4, 0, Math.PI * 2);
+          c.fill();
+          e.life--;
+        });
+      })();
+    </script>
 
-<script>
-// ===== Section reveal =====
-const sections=document.querySelectorAll('.lesson-section');
-function reveal(){
-  const t=innerHeight*.8;
-  sections.forEach(s=>s.getBoundingClientRect().top<t&&s.classList.add('visible'));
-}
-addEventListener('scroll',reveal); reveal();
-</script>
-<!-- ===== REFERENCES DIM ===== -->
-<div class="ref-dim" id="refDim"></div>
+    <script>
+      // ===== Section reveal =====
+      const sections = document.querySelectorAll(".lesson-section");
+      function reveal() {
+        const t = innerHeight * 0.8;
+        sections.forEach(
+          (s) =>
+            s.getBoundingClientRect().top < t && s.classList.add("visible"),
+        );
+      }
+      addEventListener("scroll", reveal);
+      reveal();
+    </script>
+    <!-- ===== REFERENCES DIM ===== -->
+    <div class="ref-dim" id="refDim"></div>
 
-<!-- ===== REFERENCES MENU ===== -->
-<div class="references" id="refMenu">
+    <!-- ===== REFERENCES MENU ===== -->
+    <div class="references" id="refMenu">
+      <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
 
-  <div class="ref-main" onclick="toggleRefs()">REFERENCES</div>
+      <div class="ref-sub one">
+        Khan
+        <a
+          href="https://www.khanacademy.org/science/ap-chemistry"
+          target="_blank"
+        ></a>
+        <div class="apa-popup">
+          Khan Academy. (n.d.). <i>Balancing chemical equations</i>. Retrieved
+          from
+          <a
+            href="https://www.khanacademy.org/science/ap-chemistry"
+            target="_blank"
+          >
+            khanacademy.org
+          </a>
+        </div>
+      </div>
 
-  <div class="ref-sub one">
-    Khan
-    <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank"></a>
-    <div class="apa-popup">
-      Khan Academy. (n.d.). <i>Balancing chemical equations</i>.
-      Retrieved from
-      <a href="https://www.khanacademy.org/science/ap-chemistry" target="_blank">
-        khanacademy.org
-      </a>
+      <div class="ref-sub two">
+        Libre
+        <div class="apa-popup">
+          LibreTexts. (n.d.). <i>Chemical equations and reactions</i>. Retrieved
+          from
+          <a href="https://chem.libretexts.org" target="_blank">
+            chem.libretexts.org
+          </a>
+        </div>
+      </div>
+
+      <div class="ref-sub three">
+        Britannica
+        <div class="apa-popup">
+          Encyclopædia Britannica. (n.d.). <i>Chemistry</i>. Retrieved from
+          <a
+            href="https://www.britannica.com/science/chemistry"
+            target="_blank"
+          >
+            britannica.com
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="ref-sub two">
-    Libre
-    <div class="apa-popup">
-      LibreTexts. (n.d.). <i>Chemical equations and reactions</i>.
-      Retrieved from
-      <a href="https://chem.libretexts.org" target="_blank">
-        chem.libretexts.org
-      </a>
-    </div>
-  </div>
+    <script>
+      function toggleRefs() {
+        document.getElementById("refMenu").classList.toggle("active");
+        document.getElementById("refDim").classList.toggle("active");
+      }
 
-  <div class="ref-sub three">
-    Britannica
-    <div class="apa-popup">
-      Encyclopædia Britannica. (n.d.). <i>Chemistry</i>.
-      Retrieved from
-      <a href="https://www.britannica.com/science/chemistry" target="_blank">
-        britannica.com
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<script>
-function toggleRefs() {
-  document.getElementById("refMenu").classList.toggle("active");
-  document.getElementById("refDim").classList.toggle("active");
-}
-
-document.getElementById("refDim").onclick = () => {
-  document.getElementById("refMenu").classList.remove("active");
-  document.getElementById("refDim").classList.remove("active");
-};
-</script>
-
-</body>
+      document.getElementById("refDim").onclick = () => {
+        document.getElementById("refMenu").classList.remove("active");
+        document.getElementById("refDim").classList.remove("active");
+      };
+    </script>
+  </body>
 </html>
