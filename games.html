@@ -1,272 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chemivis | Practice Games</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" type="image/png" href="./assets/logo.png" />
-    <link rel="stylesheet" href="games.css">
-</head>
-<body>
+    <link rel="stylesheet" href="games.css" />
+  </head>
 
+  <body>
     <canvas id="atomsBg"></canvas>
+
+    <!-- Top Profile Bar -->
+    <div id="topProfileBar">
+        <div id="hamburger">
+          <img src="assets/hamburger_icon.png" alt="Menu" />
+        </div>
+        <span id="pageTitle">Practice Games</span>
+        <div id="profileSection">
+          <span id="profileUsername">Guest</span>
+          <img src="assets/user_icon.png" alt="User Icon" id="profileImage" />
+        </div>
+      </div>
+
+    <!-- Profile Popup -->
+    <div id="profilePopup">
+        <div class="popup-content">
+          <h2>Profile</h2>
+          <div class="input-group">
+            <label for="profileName"><strong>Name:</strong></label>
+            <input type="text" id="profileName" value="John Doe" />
+          </div>
+          <div class="input-group">
+            <label for="profileUsername"><strong>Username:</strong></label>
+            <p id="profileUsernameDisplay">${username}</p>
+          </div>
+          <div class="input-group">
+            <label for="profileBio"><strong>Bio:</strong></label>
+            <textarea id="profileBio">This is a sample bio. You can edit this in your profile settings.</textarea>
+          </div>
+          <button id="saveProfile">Save</button>
+          <button id="closePopup">Close</button>
+        </div>
+    </div>
 
     <!-- Login Prompt -->
     <div id="loginOverlay">
-        <div class="login-card">
-            <div class="login-logo">
-                <img src="assets/logo.png" alt="Chemivis Logo">
-            </div>
-            <h2>WELCOME TO<br>CHEMIVIS</h2>
-            <div class="input-group">
-                <label for="usernameInput">Username</label>
-                <input type="text" id="usernameInput" placeholder="Enter your name..." autocomplete="off">
-            </div>
-            <div class="input-group">
-                <label for="passwordInput">Password</label>
-                <input type="password" id="passwordInput" placeholder="Enter a password..." autocomplete="off">
-            </div>
-            <p id="loginError" style="display:none; color:#d9534f; font-size:14px; margin-bottom:14px; font-weight:600;">
-                You must enter a username and password.
-            </p>
-            <button class="submit-btn" id="loginSubmit">Submit</button>
+      <div class="login-card">
+        <div class="login-logo">
+          <img src="assets/logo.png" alt="Chemivis Logo" />
         </div>
+        <h2>WELCOME TO<br />CHEMIVIS</h2>
+        <div class="input-group">
+          <label for="usernameInput">Username</label>
+          <input
+            type="text"
+            id="usernameInput"
+            placeholder="Enter your name..."
+            autocomplete="off"
+          />
+        </div>
+        <div class="input-group">
+          <label for="passwordInput">Password</label>
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="Enter a password..."
+            autocomplete="off"
+          />
+        </div>
+        <p
+          id="loginError"
+          style="
+            display: none;
+            color: #d9534f;
+            font-size: 14px;
+            margin-bottom: 14px;
+            font-weight: 600;
+          "
+        >
+          You must enter a username and password.
+        </p>
+        <button class="submit-btn" id="loginSubmit">Submit</button>
+      </div>
     </div>
- <!-- Main Games List -->
+
+    <!-- Main Games List -->
     <div id="mainGamesContent">
-        <div id="hamburger">☰</div>
+      <div id="hamburger">☰</div>
 
-        <nav class="side-menu" id="sideMenu">
-            <div id="closeMenu">✖</div>
-            <a href="index.html">HOME</a>
-            <a href="periodic-table.html">PERIODIC TABLE</a>
-            <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-            <a href="vsepr.html">VSEPR</a>
-            <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-            <a href="games.html">PRACTICE GAMES</a>
-        </nav>
+      <nav class="side-menu" id="sideMenu">
+        <div id="closeMenu">✖</div>
+        <a href="index.html">HOME</a>
+        <a href="periodic-table.html">PERIODIC TABLE</a>
+        <a href="subatomic.html">SUBATOMIC PARTICLES</a>
+        <a href="vsepr.html">VSEPR</a>
+        <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+        <a href="games.html">PRACTICE GAMES</a>
+      </nav>
 
-        <h1 class="header-title">Practice Games</h1>
+      <h1 class="header-title">Practice Games</h1>
 
-        <div class="games-container">
-            <a href="games_elements.html" class="game-card large">
-                <div class="game-label">Master Alchemist</div>
-                <div class="game-thumbnail" style="background-image: url('assets/alchemy_bg.jpg');"></div>
-                <div class="hover-overlay">
-                    <div class="overlay-title">Master Alchemist</div>
-                    <p class="overlay-desc">Step into the lab and craft powerful compounds to duel rivals in this tactical strategy battle.</p>
-                    <button class="play-btn">Play Now</button>
-                </div>
-            </a>
+      <div class="games-container">
+        <a href="games_elements.html" class="game-card large">
+          <div class="game-label">Master Alchemist</div>
+          <div
+            class="game-thumbnail"
+            style="background-image: url('assets/alchemy_bg.jpg')"
+          ></div>
+          <div class="hover-overlay">
+            <div class="overlay-title">Master Alchemist</div>
+            <p class="overlay-desc">
+              Step into the lab and craft powerful compounds to duel rivals in
+              this tactical strategy battle.
+            </p>
+            <button class="play-btn">Play Now</button>
+          </div>
+        </a>
 
-            <a href="game_ion.html" class="game-card small">
-                <div class="game-label">Ion Know That One!</div>
-                <div class="game-thumbnail" style="background-image: url('assets/polyatomic.png');"></div>
-                <div class="hover-overlay">
-                    <div class="overlay-title">Ion Know That One!</div>
-                    <p class="overlay-desc">Identify complex ions in this rapid-fire memory challenge. Perfect for studying polyatomic groups.</p>
-                    <button class="play-btn">Play Now</button>
-                </div>
-            </a>
+        <a href="game_ion.html" class="game-card small">
+          <div class="game-label">Ion Know That One!</div>
+          <div
+            class="game-thumbnail"
+            style="background-image: url('assets/polyatomic.png')"
+          ></div>
+          <div class="hover-overlay">
+            <div class="overlay-title">Ion Know That One!</div>
+            <p class="overlay-desc">
+              Identify complex ions in this rapid-fire memory challenge. Perfect
+              for studying polyatomic groups.
+            </p>
+            <button class="play-btn">Play Now</button>
+          </div>
+        </a>
 
-            <a href="game_charges.html" class="game-card small">
-                <div class="game-label">Charge It!</div>
-                <div class="game-thumbnail" style="background-image: url('assets/charge.png');"></div>
-                <div class="hover-overlay">
-                    <div class="overlay-title">Charge It!</div>
-                    <p class="overlay-desc">Master oxidation states of transition metals. Balance charges to win high-stakes matches.</p>
-                    <button class="play-btn">Play Now</button>
-                </div>
-            </a>
-        </div>
+        <a href="game_charges.html" class="game-card small">
+          <div class="game-label">Charge It!</div>
+          <div
+            class="game-thumbnail"
+            style="background-image: url('assets/charge.png')"
+          ></div>
+          <div class="hover-overlay">
+            <div class="overlay-title">Charge It!</div>
+            <p class="overlay-desc">
+              Master oxidation states of transition metals. Balance charges to
+              win high-stakes matches.
+            </p>
+            <button class="play-btn">Play Now</button>
+          </div>
+        </a>
+      </div>
     </div>
 
-<script>
-// Username Logic
-const loginOverlay = document.getElementById('loginOverlay');
-const loginSubmit = document.getElementById('loginSubmit');
-const usernameInput = document.getElementById('usernameInput');
-const mainContent = document.getElementById('mainGamesContent');
+    <script>
+      // Username Logic
+      const loginOverlay = document.getElementById("loginOverlay");
+      const loginSubmit = document.getElementById("loginSubmit");
+      const usernameInput = document.getElementById("usernameInput");
+      const mainContent = document.getElementById("mainGamesContent");
 
-loginOverlay.classList.remove('hidden');
-mainContent.classList.remove('visible');
+      loginOverlay.classList.remove("hidden");
+      mainContent.classList.remove("visible");
 
-function getUsers() {
-    return JSON.parse(localStorage.getItem('chemivis_users')) || [];
-}
+      function getUsers() {
+        return JSON.parse(localStorage.getItem("chemivis_users")) || [];
+      }
 
-function saveUser(username, password) {
-    const users = getUsers();
-    users.push({ username: username.toLowerCase(), password });
-    localStorage.setItem('chemivis_users', JSON.stringify(users));
-}
+      function saveUser(username, password) {
+        const users = getUsers();
+        users.push({ username: username.toLowerCase(), password });
+        localStorage.setItem("chemivis_users", JSON.stringify(users));
+      }
 
-loginSubmit.onclick = () => {
-    const rawUser = usernameInput.value.trim();
-    const rawPass = document.getElementById('passwordInput').value.trim();
-    const errorText = document.getElementById('loginError');
+      loginSubmit.onclick = () => {
+        const rawUser = usernameInput.value.trim();
+        const rawPass = document.getElementById("passwordInput").value.trim();
+        const errorText = document.getElementById("loginError");
 
-    if (!rawUser || !rawPass) {
-        errorText.style.display = 'block';
-        shakeInput(usernameInput);
-        shakeInput(document.getElementById('passwordInput'));
-        return;
-    }
+        if (!rawUser || !rawPass) {
+          errorText.style.display = "block";
+          shakeInput(usernameInput);
+          shakeInput(document.getElementById("passwordInput"));
+          return;
+        }
 
-    const users = getUsers();
-    const normalizedUser = rawUser.toLowerCase();
+        const users = getUsers();
+        const normalizedUser = rawUser.toLowerCase();
 
-    // Check if username exists
-    const existing = users.find(u => u.username === normalizedUser);
+        // Check if username exists
+        const existing = users.find((u) => u.username === normalizedUser);
 
-    if (existing) {
-    // Check password
-        if (existing.password === rawPass) {
-            localStorage.setItem('chemivis_current_user', rawUser);
-            loginOverlay.classList.add('hidden');
-            mainContent.classList.add('visible');
-        } 
-        else {
-            const passwordInput = document.getElementById('passwordInput');
+        if (existing) {
+          // Check password
+          if (existing.password === rawPass) {
+            localStorage.setItem("chemivis_current_user", rawUser);
+            loginOverlay.classList.add("hidden");
+            mainContent.classList.add("visible");
+          } else {
+            const passwordInput = document.getElementById("passwordInput");
             showError(passwordInput, "Wrong password");
+          }
+          return;
         }
+
+        saveUser(rawUser, rawPass);
+        localStorage.setItem("chemivis_current_user", rawUser);
+
+        loginOverlay.classList.add("hidden");
+        mainContent.classList.add("visible");
+      };
+
+      usernameInput.onkeydown = (e) => {
+        if (e.key === "Enter") loginSubmit.click();
+      };
+
+      function shakeInput(input) {
+        input.style.borderColor = "#ff4d4d";
+        setTimeout(() => (input.style.borderColor = "#e0e0e0"), 900);
+      }
+
+      function showError(input, msg) {
+        input.value = "";
+        input.placeholder = msg;
+        shakeInput(input);
+      }
+
+      usernameInput.addEventListener("input", () => {
+        document.getElementById("loginError").style.display = "none";
+      });
+
+      document.getElementById("passwordInput").addEventListener("input", () => {
+        document.getElementById("loginError").style.display = "none";
+      });
+      // Profile Popup Logic
+      // Handle login functionality
+document.getElementById("loginSubmit").addEventListener("click", function () {
+  // Get the username and password input values
+  const username = document.getElementById("usernameInput").value.trim();
+  const password = document.getElementById("passwordInput").value.trim();
+
+  // Validate input
+  if (!username || !password) {
+    // Show error message if username or password is empty
+    document.getElementById("loginError").style.display = "block";
     return;
-    } 
+  }
 
-    saveUser(rawUser, rawPass);
-    localStorage.setItem('chemivis_current_user', rawUser);
+  // Hide the login overlay
+  document.getElementById("loginOverlay").style.display = "none";
 
-    loginOverlay.classList.add('hidden');
-    mainContent.classList.add('visible');
-};
+  // Update the profile bar with the username
+  document.getElementById("profileUsername").innerText = username;
 
-usernameInput.onkeydown = e => {
-    if (e.key === 'Enter') loginSubmit.click();
-};
-
-function shakeInput(input) {
-    input.style.borderColor = '#ff4d4d';
-    setTimeout(() => input.style.borderColor = '#e0e0e0', 900);
-}
-
-function showError(input, msg) {
-    input.value = "";
-    input.placeholder = msg;
-    shakeInput(input);
-}
-
-usernameInput.addEventListener('input', () => {
-    document.getElementById('loginError').style.display = 'none';
+  // Update the profile popup with the username
+  document.getElementById("profileUsernameDisplay").innerText = username;
 });
 
-document.getElementById('passwordInput').addEventListener('input', () => {
-    document.getElementById('loginError').style.display = 'none';
+// Handle profile popup functionality
+document.getElementById("profileImage").addEventListener("click", function () {
+  // Show the profile popup
+  document.getElementById("profilePopup").style.display = "flex";
+
+  // Add blur effect to the rest of the page
+  document.body.classList.add("blurred");
 });
 
+document.getElementById("closePopup").addEventListener("click", function () {
+  // Hide the profile popup
+  document.getElementById("profilePopup").style.display = "none";
 
-        // Menu Logic
-        const menu = document.getElementById("sideMenu");
-        const hamburger = document.getElementById("hamburger");
-        const closeMenu = document.getElementById("closeMenu");
+  // Remove blur effect from the rest of the page
+  document.body.classList.remove("blurred");
+});
 
-        if (hamburger) {
-            hamburger.onclick = (e) => {
-                e.stopPropagation();
-                menu.classList.add("open");
-            };
+// Handle saving profile changes
+document.getElementById("saveProfile").addEventListener("click", function () {
+  // Get the updated name and bio values
+  const name = document.getElementById("profileName").value.trim();
+  const bio = document.getElementById("profileBio").value.trim();
+
+  // Validate input
+  if (!name || !bio) {
+    alert("Name and Bio cannot be empty.");
+    return;
+  }
+
+  // Update the profile popup with the new name and bio
+  alert("Profile updated successfully!");
+
+  // Hide the profile popup
+  document.getElementById("profilePopup").style.display = "none";
+
+  // Remove blur effect from the rest of the page
+  document.body.classList.remove("blurred");
+});
+
+      // Menu Logic
+      const menu = document.getElementById("sideMenu");
+      const hamburger = document.getElementById("hamburger");
+      const closeMenu = document.getElementById("closeMenu");
+
+      if (hamburger) {
+        hamburger.onclick = (e) => {
+          e.stopPropagation();
+          menu.classList.add("open");
+        };
+      }
+      if (closeMenu) {
+        closeMenu.onclick = () => menu.classList.remove("open");
+      }
+
+      document.addEventListener("click", (e) => {
+        if (
+          menu &&
+          menu.classList.contains("open") &&
+          !menu.contains(e.target) &&
+          e.target !== hamburger
+        ) {
+          menu.classList.remove("open");
         }
-        if (closeMenu) {
-            closeMenu.onclick = () => menu.classList.remove("open");
+      });
+
+      // Atoms Animation
+      const canvas = document.getElementById("atomsBg");
+      const ctx = canvas.getContext("2d");
+      let atoms = [];
+      let particles = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      class Particle {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.r = 1.0 + Math.random() * 1.0;
+          this.vx = (Math.random() - 0.5) * 4;
+          this.vy = (Math.random() - 0.5) * 4;
+          this.life = 30 + Math.random() * 10;
         }
-        
-        document.addEventListener('click', (e) => {
-            if (menu && menu.classList.contains('open') && !menu.contains(e.target) && e.target !== hamburger) {
-                menu.classList.remove('open');
-            }
-        });
-
-        // Atoms Animation
-        const canvas = document.getElementById("atomsBg");
-        const ctx = canvas.getContext("2d");
-        let atoms = [];
-        let particles = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          this.life--;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255,255,255,${this.life / 40})`;
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          ctx.fill();
         }
-        window.addEventListener('resize', resize);
-        resize();
+      }
 
-        class Particle {
-            constructor(x, y) {
-                this.x = x; this.y = y;
-                this.r = 1.0 + Math.random() * 1.0;
-                this.vx = (Math.random() - 0.5) * 4;
-                this.vy = (Math.random() - 0.5) * 4;
-                this.life = 30 + Math.random() * 10;
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy; this.life--;
-                ctx.beginPath();
-                ctx.fillStyle = `rgba(255,255,255,${this.life / 40})`;
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                ctx.fill();
-            }
+      class Atom {
+        constructor() {
+          this.init();
         }
-
-        class Atom {
-            constructor() { this.init(); }
-            init() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.r = 2 + Math.random() * 2;
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
-                this.exploded = false;
-            }
-            draw() {
-                if (this.exploded) return;
-                ctx.beginPath();
-                ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            explode() {
-                this.exploded = true;
-                for (let i = 0; i < 8; i++) particles.push(new Particle(this.x, this.y));
-                setTimeout(() => this.init(), 2000);
-            }
-            update(atomsArr) {
-                if (this.exploded) return;
-                this.x += this.vx; this.y += this.vy;
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-                for (let a of atomsArr) {
-                    if (a === this || a.exploded) continue;
-                    const d = Math.hypot(a.x - this.x, a.y - this.y);
-                    if (d < this.r + a.r) {
-                        this.explode(); a.explode();
-                    }
-                }
-                this.draw();
-            }
+        init() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.r = 2 + Math.random() * 2;
+          this.vx = (Math.random() - 0.5) * 0.8;
+          this.vy = (Math.random() - 0.5) * 0.8;
+          this.exploded = false;
         }
-
-        for (let i = 0; i < 30; i++) atoms.push(new Atom());
-
-        function animate() {
-            requestAnimationFrame(animate);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let atom of atoms) atom.update(atoms);
-            particles = particles.filter(p => p.life > 0);
-            for (let p of particles) p.update();
+        draw() {
+          if (this.exploded) return;
+          ctx.beginPath();
+          ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+          ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+          ctx.fill();
         }
+        explode() {
+          this.exploded = true;
+          for (let i = 0; i < 8; i++)
+            particles.push(new Particle(this.x, this.y));
+          setTimeout(() => this.init(), 2000);
+        }
+        update(atomsArr) {
+          if (this.exploded) return;
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-        animate();
-</script>
-</body>
+          for (let a of atomsArr) {
+            if (a === this || a.exploded) continue;
+            const d = Math.hypot(a.x - this.x, a.y - this.y);
+            if (d < this.r + a.r) {
+              this.explode();
+              a.explode();
+            }
+          }
+          this.draw();
+        }
+      }
+
+      for (let i = 0; i < 30; i++) atoms.push(new Atom());
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let atom of atoms) atom.update(atoms);
+        particles = particles.filter((p) => p.life > 0);
+        for (let p of particles) p.update();
+      }
+
+      animate();
+    </script>
+  </body>
 </html>
