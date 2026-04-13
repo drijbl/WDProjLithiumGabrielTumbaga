@@ -1,247 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemivis | Subatomic Particles</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Chemivis | Subatomic Particles</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik+One&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="references.css">
-<link rel="stylesheet" href="subatomic.css">
-<link rel="icon" type="image/png" href="./assets/logo.png">
-</head>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik+One&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="references.css" />
+		<link rel="stylesheet" href="subatomic.css" />
+		<link rel="icon" type="image/png" href="./assets/logo.png" />
+	</head>
 
-<body>
+	<body>
+		<canvas id="bg"></canvas>
 
-<canvas id="bg"></canvas>
+		<header>
+			<div id="hamburger">☰</div>
+		</header>
 
-<header>
-  <div id="hamburger">☰</div>
-</header>
+		<div class="side-menu" id="sideMenu">
+			<div id="closeMenu">✖</div>
+			<a href="index.html">HOME</a>
+			<a href="periodic-table.html">PERIODIC TABLE</a>
+			<a href="subatomic.html">SUBATOMIC PARTICLES</a>
+			<a href="vsepr.html">VSEPR</a>
+			<a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
+			<a href="games.html">PRACTICE GAMES</a>
+		</div>
 
-<div class="side-menu" id="sideMenu">
-  <div id="closeMenu">✖</div>
-  <a href="index.html">HOME</a>
-  <a href="periodic-table.html">PERIODIC TABLE</a>
-  <a href="subatomic.html">SUBATOMIC PARTICLES</a>
-  <a href="vsepr.html">VSEPR</a>
-  <a href="balancing.html">BALANCING CHEMICAL EQUATIONS</a>
-  <a href="games.html">PRACTICE GAMES</a>
-</div>
+		<div class="screen-dim" id="dim"></div>
 
-<div class="screen-dim" id="dim"></div>
+		<div class="scene scene1 active">
+			<div class="content">
+				<div class="typing-text" id="text1"></div>
+				<div class="typing-text" id="text2"></div>
+				<div class="typing-text" id="text3"></div>
+				<button class="next-btn" id="nextBtn">Next</button>
+			</div>
+		</div>
 
-<div class="scene scene1 active">
-  <div class="content">
-    <div class="typing-text" id="text1"></div>
-    <div class="typing-text" id="text2"></div>
-    <div class="typing-text" id="text3"></div>
-    <button class="next-btn" id="nextBtn">Next</button>
-  </div>
-</div>
+		<div class="scene scene2">
+			<div class="lesson-wrapper" id="lessonBox">
+				<header class="site-header">
+					<h1 class="page-title">Subatomic Particles</h1>
+				</header>
 
-<div class="scene scene2">
-  <div class="lesson-wrapper" id="lessonBox">
+				<div class="lesson-section">
+					<h2>What are Subatomic Particles?</h2>
 
-    <header class="site-header">
-      <h1 class="page-title">Subatomic Particles</h1>
-    </header>
+					<p>
+						All matter in the universe is made of atoms. However, atoms
+						themselves are not indivisible. They are composed of even smaller
+						components known as
+						<strong>subatomic particles</strong>.
+					</p>
 
-    <div class="lesson-section">
-      <h2>What are Subatomic Particles?</h2>
+					<p>
+						These particles determine the properties of matter. The way atoms
+						behave, bond, and react depends on the interaction and arrangement
+						of their subatomic components.
+					</p>
 
-      <p>
-        All matter in the universe is made of atoms. However, atoms themselves are not
-        indivisible. They are composed of even smaller components known as
-        <strong>subatomic particles</strong>.
-      </p>
+					<p>
+						There are three main subatomic particles found in atoms:
+						<strong>protons</strong>, <strong>neutrons</strong>, and
+						<strong>electrons</strong>. Each plays a unique role in atomic
+						structure and chemical behavior.
+					</p>
 
-      <p>
-        These particles determine the properties of matter. The way atoms behave,
-        bond, and react depends on the interaction and arrangement of their
-        subatomic components.
-      </p>
+					<div class="help-box">
+						The three main components of an atom can be explored using the
+						interactive 3D model below. Click on different parts of the atom to
+						learn more about each subatomic particle.
+					</div>
 
-      <p>
-        There are three main subatomic particles found in atoms:
-        <strong>protons</strong>, <strong>neutrons</strong>, and
-        <strong>electrons</strong>. Each plays a unique role in atomic structure
-        and chemical behavior.
-      </p>
+					<div id="three-container">
+						<div id="atom-canvas"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-      <div class="help-box">
-        The three main components of an atom can be explored using the interactive
-        3D model below. 
-        Click on different parts of the atom to learn more about
-        each subatomic particle.
-      </div>
+		<div id="particle-modal" class="modal hidden">
+			<div class="modal-content">
+				<h2 id="modal-title"></h2>
+				<p id="modal-info"></p>
+				<button id="closeModal">Close</button>
+			</div>
+		</div>
 
-      <div id="three-container">
-        <div id="atom-canvas"></div>
-      </div>
-    </div>
+		<script>
+			const menu = document.getElementById("sideMenu");
+			const dim = document.getElementById("dim");
 
-  </div>
-</div>
+			document.getElementById("hamburger").onclick = () => {
+				menu.classList.add("open");
+				dim.classList.add("active");
+			};
 
-<div id="particle-modal" class="modal hidden">
-  <div class="modal-content">
-    <h2 id="modal-title"></h2>
-    <p id="modal-info"></p>
-    <button id="closeModal">Close</button>
-  </div>
-</div>
+			document.getElementById("closeMenu").onclick = () => {
+				menu.classList.remove("open");
+				dim.classList.remove("active");
+			};
 
-<script>
-const menu = document.getElementById("sideMenu");
-const dim = document.getElementById("dim");
+			dim.onclick = () => {
+				menu.classList.remove("open");
+				dim.classList.remove("active");
+			};
 
-document.getElementById("hamburger").onclick = () => {
-  menu.classList.add("open");
-  dim.classList.add("active");
-};
+			const canvas = document.getElementById("bg");
+			const c = canvas.getContext("2d");
 
-document.getElementById("closeMenu").onclick = () => {
-  menu.classList.remove("open");
-  dim.classList.remove("active");
-};
+			function resize() {
+				canvas.width = innerWidth;
+				canvas.height = innerHeight;
+			}
+			resize();
+			window.addEventListener("resize", resize);
 
-dim.onclick = () => {
-  menu.classList.remove("open");
-  dim.classList.remove("active");
-};
+			class Particle {
+				constructor(x, y) {
+					this.x = x;
+					this.y = y;
+					this.r = 2 + Math.random() * 2;
+					this.vx = (Math.random() - 0.5) * 6;
+					this.vy = (Math.random() - 0.5) * 6;
+					this.life = 30 + Math.random() * 20;
+				}
+				update() {
+					this.x += this.vx;
+					this.y += this.vy;
+					this.life--;
+					c.beginPath();
+					c.fillStyle = `rgba(255,255,255,${this.life / 50})`;
+					c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+					c.fill();
+				}
+			}
 
-const canvas = document.getElementById("bg");
-const c = canvas.getContext("2d");
+			class Atom {
+				constructor() {
+					this.reset();
+				}
+				reset() {
+					this.x = Math.random() * canvas.width;
+					this.y = Math.random() * canvas.height;
+					this.r = 4 + Math.random() * 4;
+					this.vx = (Math.random() - 0.5) * 1.5;
+					this.vy = (Math.random() - 0.5) * 1.5;
+					this.exploded = false;
+				}
+				explode() {
+					this.exploded = true;
+					for (let i = 0; i < 15; i++) {
+						bgParticles.push(new Particle(this.x, this.y));
+					}
+					setTimeout(() => this.reset(), 1200);
+				}
+				update(atoms) {
+					if (this.exploded) return;
 
-function resize() {
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-}
-resize();
-window.addEventListener("resize", resize);
+					this.x += this.vx;
+					this.y += this.vy;
 
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.r = 2 + Math.random() * 2;
-    this.vx = (Math.random() - 0.5) * 6;
-    this.vy = (Math.random() - 0.5) * 6;
-    this.life = 30 + Math.random() * 20;
-  }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.life--;
-    c.beginPath();
-    c.fillStyle = `rgba(255,255,255,${this.life / 50})`;
-    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    c.fill();
-  }
-}
+					if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+					if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-class Atom {
-  constructor() {
-    this.reset();
-  }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.r = 4 + Math.random() * 4;
-    this.vx = (Math.random() - 0.5) * 1.5;
-    this.vy = (Math.random() - 0.5) * 1.5;
-    this.exploded = false;
-  }
-  explode() {
-    this.exploded = true;
-    for (let i = 0; i < 15; i++) {
-      bgParticles.push(new Particle(this.x, this.y));
-    }
-    setTimeout(() => this.reset(), 1200);
-  }
-  update(atoms) {
-    if (this.exploded) return;
+					for (let a of atoms) {
+						if (a !== this && !a.exploded) {
+							if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
+								this.explode();
+								a.explode();
+							}
+						}
+					}
 
-    this.x += this.vx;
-    this.y += this.vy;
+					c.beginPath();
+					c.fillStyle = "rgba(255,255,255,0.4)";
+					c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+					c.fill();
+				}
+			}
 
-    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+			const atoms = Array.from({ length: 40 }, () => new Atom());
+			const bgParticles = [];
 
-    for (let a of atoms) {
-      if (a !== this && !a.exploded) {
-        if (Math.hypot(a.x - this.x, a.y - this.y) < this.r + a.r) {
-          this.explode();
-          a.explode();
-        }
-      }
-    }
+			function animateBG() {
+				requestAnimationFrame(animateBG);
+				c.clearRect(0, 0, canvas.width, canvas.height);
+				atoms.forEach((a) => a.update(atoms));
+				bgParticles.forEach((p, i) => {
+					p.update();
+					if (p.life <= 0) bgParticles.splice(i, 1);
+				});
+			}
+			animateBG();
 
-    c.beginPath();
-    c.fillStyle = "rgba(255,255,255,0.4)";
-    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    c.fill();
-  }
-}
+			function typeText(el, text, speed, cb) {
+				let i = 0;
+				const int = setInterval(() => {
+					el.textContent += text[i++];
+					if (i >= text.length) {
+						clearInterval(int);
+						if (cb) cb();
+					}
+				}, speed);
+			}
 
-const atoms = Array.from({ length: 40 }, () => new Atom());
-const bgParticles = [];
+			const t1 = document.getElementById("text1");
+			const t2 = document.getElementById("text2");
+			const t3 = document.getElementById("text3");
+			const nextBtn = document.getElementById("nextBtn");
 
-function animateBG() {
-  requestAnimationFrame(animateBG);
-  c.clearRect(0, 0, canvas.width, canvas.height);
-  atoms.forEach(a => a.update(atoms));
-  bgParticles.forEach((p, i) => {
-    p.update();
-    if (p.life <= 0) bgParticles.splice(i, 1);
-  });
-}
-animateBG();
+			typeText(t1, "Matter", 250, () => {
+				setTimeout(() => {
+					typeText(
+						t2,
+						"Everything in chemistry, from the air we breathe to the compounds we use daily, is made of matter.",
+						40,
+						() => {
+							setTimeout(() => {
+								typeText(t3, "But what is matter made of?", 60, () => {
+									nextBtn.classList.add("show");
+								});
+							}, 500);
+						}
+					);
+				}, 500);
+			});
 
-function typeText(el, text, speed, cb) {
-  let i = 0;
-  const int = setInterval(() => {
-    el.textContent += text[i++];
-    if (i >= text.length) {
-      clearInterval(int);
-      if (cb) cb();
-    }
-  }, speed);
-}
+			nextBtn.onclick = () => {
+				document.querySelector(".scene1").classList.remove("active");
+				document.querySelector(".scene2").classList.add("active");
+				setTimeout(() => {
+					document.getElementById("lessonBox").classList.add("show");
+				}, 100);
+			};
+		</script>
 
-const t1 = document.getElementById("text1");
-const t2 = document.getElementById("text2");
-const t3 = document.getElementById("text3");
-const nextBtn = document.getElementById("nextBtn");
-
-typeText(t1, "Matter", 250, () => {
-  setTimeout(() => {
-    typeText(
-      t2,
-      "Everything in chemistry, from the air we breathe to the compounds we use daily, is made of matter.",
-      40,
-      () => {
-        setTimeout(() => {
-          typeText(t3, "But what is matter made of?", 60, () => {
-            nextBtn.classList.add("show");
-          });
-        }, 500);
-      }
-    );
-  }, 500);
-});
-
-nextBtn.onclick = () => {
-  document.querySelector(".scene1").classList.remove("active");
-  document.querySelector(".scene2").classList.add("active");
-  setTimeout(() => {
-    document.getElementById("lessonBox").classList.add("show");
-  }, 100);
-};
-</script>
-
-<script type="module" src="subatomic.js"></script>
-
-</body>
+		<script type="module" src="subatomic.js"></script>
+	</body>
 </html>
