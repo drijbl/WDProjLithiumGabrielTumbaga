@@ -1,181 +1,242 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Master Alchemist | Transmutation War</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="games_elements.css">
-<link rel="icon" type="image/png" href="./assets/logo.png">
-</head>
-<body>
-<a href="games.html" class="back-btn">← BACK</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Master Alchemist | Transmutation War</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="games_elements.css" />
+    <link rel="icon" type="image/png" href="./assets/logo.png" />
+  </head>
+  <body>
+    <a href="games.html" class="back-btn">← BACK</a>
 
-<header><h1>MASTER ALCHEMIST</h1></header>
+    <header><h1>MASTER ALCHEMIST</h1></header>
 
-<div id="game-layout">
-    <div id="main-column">
+    <div id="game-layout">
+      <div id="main-column">
         <div id="stage">
-            <div id="p1-hud-wrap" class="hp-hud">
-                <div class="hp-meta"><span>YOU</span><span id="p1-hp-txt">100/100</span></div>
-                <div class="hp-track"><div id="p1-bar" class="hp-fill"></div></div>
+          <div id="p1-hud-wrap" class="hp-hud">
+            <div class="hp-meta">
+              <span>YOU</span><span id="p1-hp-txt">100/100</span>
             </div>
+            <div class="hp-track"><div id="p1-bar" class="hp-fill"></div></div>
+          </div>
 
-           <div class="fighter-cont" id="p1-cont">
-                <div class="shake-wrapper" id="p1-wrap">
-                    <img id="p1-img" src="assets/alchemist.png" class="sprite" alt="P1">
-                </div>
+          <div class="fighter-cont" id="p1-cont">
+            <div class="shake-wrapper" id="p1-wrap">
+              <img
+                id="p1-img"
+                src="assets/alchemist.png"
+                class="sprite"
+                alt="P1"
+              />
             </div>
+          </div>
 
-            <div class="fighter-cont" id="p2-cont">
-                <div class="shake-wrapper" id="p2-wrap">
-                    <img id="p2-img" src="assets/enemy.png" class="sprite" alt="P2">
-                </div>
+          <div class="fighter-cont" id="p2-cont">
+            <div class="shake-wrapper" id="p2-wrap">
+              <img id="p2-img" src="assets/enemy.png" class="sprite" alt="P2" />
             </div>
+          </div>
 
-            <div id="p2-hud-wrap" class="hp-hud">
-                <div class="hp-meta"><span>ENEMY</span><span id="p2-hp-txt">100/100</span></div>
-                <div class="hp-track"><div id="p2-bar" class="hp-fill"></div></div>
+          <div id="p2-hud-wrap" class="hp-hud">
+            <div class="hp-meta">
+              <span>ENEMY</span><span id="p2-hp-txt">100/100</span>
             </div>
+            <div class="hp-track"><div id="p2-bar" class="hp-fill"></div></div>
+          </div>
         </div>
 
         <div id="dashboard">
-            <div id="synth-box">
-                <div class="beaker-cont">
-                    <div class="beaker"></div>
-                      <div class="beaker"><div id="beaker-fill" class="beaker-fill"></div></div>
-                    </div>
-                  <div id="synth-text">SYNTHESIZING...</div>
-                </div>
+          <div id="synth-box">
+            <div class="beaker-cont">
+              <div class="beaker"></div>
+              <div class="beaker">
+                <div id="beaker-fill" class="beaker-fill"></div>
+              </div>
+            </div>
+            <div id="synth-text">SYNTHESIZING...</div>
+          </div>
 
-            <div class="monitor-row">
-                <div class="monitor-box">
-                    <label>TRANSMUTATION LOG</label>
-                    <span id="turn-txt" class="val">YOUR TURN, ALCHEMIST</span>
-                    <div id="stab-tag" class="sub-val" style="display: none;">STABILIZED!</div>
-                </div>
-                <div class="monitor-box">
-                    <label>FORMULA DETECTED</label>
-                    <span id="formula-name" class="val">- SCANNING -</span>
-                    <div id="formula-txt" style="font-size: 0.7rem; color: #777; font-weight: bold; margin-top: 5px;"></div>
-                </div>
+          <div class="monitor-row">
+            <div class="monitor-box">
+              <label>TRANSMUTATION LOG</label>
+              <span id="turn-txt" class="val">YOUR TURN, ALCHEMIST</span>
+              <div id="stab-tag" class="sub-val" style="display: none">
+                STABILIZED!
+              </div>
+            </div>
+            <div class="monitor-box">
+              <label>FORMULA DETECTED</label>
+              <span id="formula-name" class="val">- SCANNING -</span>
+              <div
+                id="formula-txt"
+                style="
+                  font-size: 0.7rem;
+                  color: #777;
+                  font-weight: bold;
+                  margin-top: 5px;
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div id="action-zone">
+            <div id="step-1">
+              <div class="step-heading heading-s1">
+                Step I: Element Selection
+              </div>
+              <div id="element-grid"></div>
+              <button id="btn-lock" class="btn-main btn-inactive" disabled>
+                Lock In Elements
+              </button>
             </div>
 
-            <div id="action-zone">
-                <div id="step-1">
-                    <div class="step-heading heading-s1">Step I: Element Selection</div>
-                    <div id="element-grid"></div>
-                    <button id="btn-lock" class="btn-main btn-inactive" disabled>Lock In Elements</button>
-                </div>
-
-                <div id="step-2" style="display: none;">
-                    <div class="cancel-link" id="btn-cancel">× Cancel</div>
-                    <div class="step-heading heading-s2">Step II: Define Quantities</div>
-                    <div id="quant-items" class="quant-wrap"></div>
-                    <button id="btn-transmute" class="btn-main btn-fire">Transmute</button>
-                </div>
+            <div id="step-2" style="display: none">
+              <div class="cancel-link" id="btn-cancel">× Cancel</div>
+              <div class="step-heading heading-s2">
+                Step II: Define Quantities
+              </div>
+              <div id="quant-items" class="quant-wrap"></div>
+              <button id="btn-transmute" class="btn-main btn-fire">
+                Transmute
+              </button>
             </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div id="records-sidebar">
+      <div id="records-sidebar">
         <div class="rec-head">📜 ALCHEMICAL RECORDS</div>
         <div id="rec-list">
-            <div style="color: #666; text-align: center; margin-top: 60px; font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 2px;">TOME IS EMPTY...</div>
+          <div
+            style="
+              color: #666;
+              text-align: center;
+              margin-top: 60px;
+              font-family: &quot;Cinzel&quot;, serif;
+              font-size: 1.1rem;
+              letter-spacing: 2px;
+            "
+          >
+            TOME IS EMPTY...
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<div id="vic-scr" class="end-scr">
-    <div class="end-title victory">VICTORY</div>
-    <div class="end-btns">
-        <button class="e-btn btn-w" id="btn-retry-v">RETRY TRANSMUTATION</button>
+    <div id="vic-scr" class="end-scr">
+      <div class="end-title victory">VICTORY</div>
+      <div class="end-btns">
+        <button class="e-btn btn-w" id="btn-retry-v">
+          RETRY TRANSMUTATION
+        </button>
         <button class="e-btn btn-o back-game">BACK</button>
+      </div>
     </div>
-</div>
 
-<div id="def-scr" class="end-scr">
-    <div class="end-title defeat">DEFEAT</div>
-    <div class="end-btns">
+    <div id="def-scr" class="end-scr">
+      <div class="end-title defeat">DEFEAT</div>
+      <div class="end-btns">
         <button class="e-btn btn-w" id="btn-retry-d">PLAY AGAIN</button>
         <button class="e-btn btn-o back-game">BACK</button>
+      </div>
     </div>
-</div>
 
-<button id="pokedexBtn">📖</button>
+    <button id="pokedexBtn">📖</button>
 
-<div id="pokedexOverlay">
-  <div id="pokedexContent">
-    <div id="pokedexHeader">
-      <h2>ELEMENT INDEX</h2>
-      <button id="pokedexClose">✕</button>
+    <div id="pokedexOverlay">
+      <div id="pokedexContent">
+        <div id="pokedexHeader">
+          <h2>ELEMENT INDEX</h2>
+          <button id="pokedexClose">✕</button>
+        </div>
+        <div id="pokedexGrid"></div>
+      </div>
     </div>
-    <div id="pokedexGrid"></div>
-  </div>
-</div>
 
-<!-- ===== BACKGROUND MUSIC ===== -->
-<audio id="bgMusic" preload="auto" loop>
-  <source src="./assets/Alchemy_sound.mp3" type="audio/mpeg">
-</audio>
+    <div id="discoveryOverlay" class="discovery-hidden">
+      <div class="discovery-content">
+        <div id="discoveryStars"></div>
+        <h2 class="discovery-label">NEW FORMULA DISCOVERED</h2>
+        <div id="discoveryFormula" class="discovery-formula"></div>
+        <h1 id="discoveryName" class="discovery-name"></h1>
+        <button id="discoveryNext" class="discovery-btn">CONTINUE</button>
+      </div>
+    </div>
 
-<button id="musicToggle">▶</button>
+    <!-- ===== BACKGROUND MUSIC ===== -->
+    <audio id="bgMusic" preload="auto" loop>
+      <source src="./assets/Alchemy_sound.mp3" type="audio/mpeg" />
+    </audio>
 
-<script>
-// ===== BACK BUTTON =====
-document.getElementById('btn-back-games')?.addEventListener('click', () => {
-  window.location.href = 'games.html';
-});
+    <button id="musicToggle">▶</button>
 
-document.querySelectorAll('.back-game').forEach(btn => {
-  btn.addEventListener('click', () => {
-    window.location.href = 'games.html';
-  });
-});
+    <script>
+      // ===== BACK BUTTON =====
+      document
+        .getElementById("btn-back-games")
+        ?.addEventListener("click", () => {
+          window.location.href = "games.html";
+        });
 
-// ===== MUSIC =====
-const bgMusic = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
+      document.querySelectorAll(".back-game").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          window.location.href = "games.html";
+        });
+      });
 
-bgMusic.volume = 0.5;
-bgMusic.muted = true;
+      // ===== MUSIC =====
+      const bgMusic = document.getElementById("bgMusic");
+      const musicToggle = document.getElementById("musicToggle");
 
-// AUTOPLAY ON LOAD
-window.addEventListener("load", () => {
-  bgMusic.play().then(() => {
-    updateBtn();
-  }).catch(() => {
-  });
-});
+      bgMusic.volume = 0.5;
+      bgMusic.muted = true;
 
-function unlockAudio() {
-  bgMusic.muted = false;
-  bgMusic.play();
-  updateBtn();
+      // AUTOPLAY ON LOAD
+      window.addEventListener("load", () => {
+        bgMusic
+          .play()
+          .then(() => {
+            updateBtn();
+          })
+          .catch(() => {});
+      });
 
-  document.removeEventListener("pointerdown", unlockAudio);
-  document.removeEventListener("keydown", unlockAudio);
-}
+      function unlockAudio() {
+        bgMusic.muted = false;
+        bgMusic.play();
+        updateBtn();
 
-document.addEventListener("pointerdown", unlockAudio);
-document.addEventListener("keydown", unlockAudio);
+        document.removeEventListener("pointerdown", unlockAudio);
+        document.removeEventListener("keydown", unlockAudio);
+      }
 
-//toggle
-musicToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
+      document.addEventListener("pointerdown", unlockAudio);
+      document.addEventListener("keydown", unlockAudio);
 
-  if (bgMusic.paused) bgMusic.play();
-  else bgMusic.pause();
+      //toggle
+      musicToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
 
-  updateBtn();
-});
+        if (bgMusic.paused) bgMusic.play();
+        else bgMusic.pause();
 
-function updateBtn() {
-  musicToggle.textContent = bgMusic.paused ? "▶" : "❚❚";
-}
+        updateBtn();
+      });
 
-</script>
+      function updateBtn() {
+        musicToggle.textContent = bgMusic.paused ? "▶" : "❚❚";
+      }
+    </script>
 
-<script src="game_elements.js"></script>
-</body>
+    <script src="game_elements.js"></script>
+  </body>
 </html>
