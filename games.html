@@ -594,8 +594,6 @@
       // PROFILE PHOTO UPLOAD
       // ============================================================
       // Handles image file selection, base64 conversion, and localStorage saving
-      // Photo is stored inside chemivis_user_data under the "photo" key
-
       const photoUploadInput = document.getElementById("photoUploadInput");
       const popupProfilePhoto = document.getElementById("popupProfilePhoto");
       const popupDefaultSvg = document.getElementById("popupDefaultSvg");
@@ -685,8 +683,6 @@
       // ============================================================
       // ERROR MODAL HELPER
       // ============================================================
-      // Creates a temporary styled error modal (fallback for validation errors)
-
       function showErrorModal(title, message) {
         // Remove any existing temp modal first
         const existing = document.querySelector(".temp-error-modal");
