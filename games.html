@@ -12,39 +12,58 @@
     <link rel="stylesheet" href="games.css" />
   </head>
 
-   <body>
+    <body>
+    <!-- ==================== ATOM BACKGROUND CANVAS ==================== -->
+    <!-- Floating particle animation behind all content -->
     <canvas id="atomsBg"></canvas>
 
-    <!-- Top Profile Bar -->
+    <!-- ==================== TOP NAVIGATION BAR ==================== -->
     <div id="topProfileBar">
-        <div id="hamburger">
-          <img src="assets/hamburger_icon.png" alt="Menu" />
-        </div>
-        <span id="pageTitle">Practice Games</span>
-        <div id="profileSection">
-          <span id="profileUsername">Guest</span>
-          <!-- SVG Profile Icon - matches popup -->
-          <div id="profileImage">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="8" r="4" stroke="#333" stroke-width="2" fill="none"/>
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#333" stroke-width="2" fill="none"/>
-              <circle cx="12" cy="12" r="10" stroke="#333" stroke-width="2" fill="none"/>
-            </svg>
-          </div>
-        </div>
+      <!-- Hamburger icon - opens side navigation menu -->
+      <div id="hamburger">
+        <img src="assets/hamburger_icon.png" alt="Menu" />
       </div>
-
-    <!-- Profile Popup -->
-    <div id="profilePopup">
-      <div class="popup-profile">
-        <div class="profile-avatar">
-          <!-- Same SVG as top bar -->
+      <!-- Page title centered in top bar -->
+      <span id="pageTitle">Practice Games</span>
+      <!-- Profile section - shows username and avatar -->
+      <div id="profileSection">
+        <span id="profileUsername">Guest</span>
+        <!-- Default SVG avatar -->
+        <div id="profileImage">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="8" r="4" stroke="#333" stroke-width="2" fill="none"/>
             <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#333" stroke-width="2" fill="none"/>
             <circle cx="12" cy="12" r="10" stroke="#333" stroke-width="2" fill="none"/>
           </svg>
         </div>
+      </div>
+    </div>
+
+    <!-- ==================== PROFILE POPUP ==================== -->
+    <!-- Modal that opens when clicking the profile icon in top bar -->
+    <!-- Contains: avatar upload, name/bio edit, save/cancel, logout, delete account -->
+    <div id="profilePopup">
+      <div class="popup-profile">
+        <!-- Avatar container - click to upload/change photo -->
+        <div class="profile-avatar" id="popupAvatar">
+          <!-- Default SVG icon - visible when no photo uploaded -->
+          <svg id="popupDefaultSvg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="#333" stroke-width="2" fill="none"/>
+            <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="#333" stroke-width="2" fill="none"/>
+            <circle cx="12" cy="12" r="10" stroke="#333" stroke-width="2" fill="none"/>
+          </svg>
+          <!-- Uploaded user photo - hidden until photo is set via JS -->
+          <img id="popupProfilePhoto" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Profile" />
+          <!-- Hover overlay with "Add Photo" / "Change Photo" text -->
+          <div class="upload-overlay" id="popupUploadOverlay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            <span>Add Photo</span>
+          </div>
+        </div>
+
+        <!-- Profile form fields -->
         <div class="profile-info">
           <label for="popupName">Name</label>
           <input type="text" id="popupName" placeholder="Enter your name" />
@@ -55,34 +74,147 @@
           <label for="popupBio">Bio</label>
           <textarea id="popupBio" placeholder="Tell us about yourself..."></textarea>
         </div>
+
+        <!-- Save and Cancel buttons -->
         <div class="buttons-container">
           <button class="btn-save" id="saveProfileChanges">Save</button>
           <button class="btn-cancel" id="cancelProfileChanges">Cancel</button>
         </div>
+
+        <!-- Account management: Log Out and Delete Account -->
+        <div class="account-actions">
+          <!-- Log Out button - opens logout confirmation modal -->
+          <button class="btn-logout" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Log Out
+          </button>
+          <!-- Delete Account button - opens delete confirmation modal -->
+          <button class="btn-delete" id="deleteAccountBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            Delete Account
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Login/Sign Up Overlay -->
+    <!-- ==================== LOGOUT CONFIRMATION MODAL ==================== -->
+    <!-- Styled confirmation dialog when user clicks Log Out -->
+    <div id="logoutConfirmModal">
+      <div class="logout-confirm-card">
+        <div class="logout-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5ba4bc" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </div>
+        <h3>Log Out?</h3>
+        <p>Are you sure you want to log out? You will need to log back in to access your profile and progress.</p>
+        <div class="logout-confirm-buttons">
+          <button class="btn-cancel-logout" id="cancelLogout">Cancel</button>
+          <button class="btn-confirm-logout" id="confirmLogout">Log Out</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DELETE ACCOUNT CONFIRMATION MODAL ==================== -->
+    <!-- Warning modal before permanently deleting account -->
+    <div id="deleteConfirmModal">
+      <div class="delete-confirm-card">
+        <div class="delete-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h3>Delete Account?</h3>
+        <p>This action cannot be undone. All your data, progress, and profile information will be permanently removed.</p>
+        <div class="delete-confirm-buttons">
+          <button class="btn-cancel-delete" id="cancelDelete">Cancel</button>
+          <button class="btn-confirm-delete" id="confirmDelete">Delete Account</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SAVE SUCCESS MODAL ==================== -->
+    <!-- Shown after profile is saved successfully -->
+    <div id="saveSuccessModal">
+      <div class="success-confirm-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5ba4bc" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Saved!</h3>
+        <p>Your profile has been updated successfully.</p>
+        <div class="success-confirm-buttons">
+          <button class="btn-confirm-success" id="confirmSuccess">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PHOTO UPLOAD SUCCESS MODAL ==================== -->
+    <!-- Shown after a new profile photo is uploaded -->
+    <div id="photoSuccessModal">
+      <div class="success-confirm-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#5ba4bc" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Photo Uploaded!</h3>
+        <p>Your profile photo has been updated. Click Save to confirm changes.</p>
+        <div class="success-confirm-buttons">
+          <button class="btn-confirm-success" id="confirmPhotoSuccess">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HIDDEN FILE INPUT FOR PHOTO UPLOAD ==================== -->
+    <!-- Invisible file picker triggered by clicking the avatar -->
+    <input type="file" id="photoUploadInput" accept="image/*" style="display:none" />
+
+    <!-- ==================== LOGIN / SIGN UP OVERLAY ==================== -->
+    <!-- Full-screen modal shown when no user is logged in -->
+    <!-- Contains: logo, username/password fields, sign up toggle -->
     <div id="loginOverlay">
       <div class="login-card">
+        <!-- Chemivis logo -->
         <div class="login-logo">
           <img src="assets/logo.png" alt="Chemivis Logo" />
         </div>
+        <!-- Title switches between "WELCOME TO CHEMIVIS" and "SIGN UP FOR CHEMIVIS" -->
         <h2 id="authTitle">WELCOME TO<br />CHEMIVIS</h2>
+        <!-- Username input -->
         <div class="input-group">
           <label for="usernameInput">Username</label>
           <input type="text" id="usernameInput" placeholder="Enter your username..." autocomplete="off" />
         </div>
+        <!-- Password input -->
         <div class="input-group">
           <label for="passwordInput">Password</label>
           <input type="password" id="passwordInput" placeholder="Enter password..." autocomplete="off" />
         </div>
+        <!-- Confirm password - only visible in sign-up mode -->
         <div class="input-group" id="confirmPasswordGroup">
           <label for="confirmPasswordInput">Confirm Password</label>
           <input type="password" id="confirmPasswordInput" placeholder="Confirm password..." autocomplete="off" />
         </div>
+        <!-- Error message display -->
         <p id="loginError" style="display: none; color: #d9534f; font-size: 14px; margin-bottom: 14px; font-weight: 600;"></p>
+        <!-- Submit button - text changes between "LOG IN" and "SIGN UP" -->
         <button class="submit-btn" id="loginSubmit">LOG IN</button>
+        <!-- Toggle between login and sign up modes -->
         <div class="auth-toggle">
           <span id="authToggleText">New to Chemivis?</span>
           <a id="authToggleLink">Sign Up</a>
@@ -90,8 +222,12 @@
       </div>
     </div>
 
-    <!-- Main Games List -->
+    <!-- ==================== MAIN GAMES CONTENT ==================== -->
+    <!-- Visible only when user is logged in -->
     <div id="mainGamesContent">
+      <!-- ==================== SIDE NAVIGATION MENU ==================== -->
+      <!-- Slides in from left when hamburger is clicked -->
+      <!-- Accessible even during login (z-index above login overlay) -->
       <nav class="side-menu" id="sideMenu">
         <div id="closeMenu">✖</div>
         <a href="index.html">HOME</a>
@@ -102,7 +238,10 @@
         <a href="games.html">PRACTICE GAMES</a>
       </nav>
 
+      <!-- ==================== GAMES GRID ==================== -->
+      <!-- Display of available chemistry practice games -->
       <div class="games-container">
+        <!-- Master Alchemist - large featured game card -->
         <a href="games_elements.html" class="game-card large">
           <div class="game-label">Master Alchemist</div>
           <div class="game-thumbnail" style="background-image: url('assets/alchemy_bg.jpg')"></div>
@@ -113,6 +252,7 @@
           </div>
         </a>
 
+        <!-- Ion Know That One! - small game card -->
         <a href="game_ion.html" class="game-card small">
           <div class="game-label">Ion Know That One!</div>
           <div class="game-thumbnail" style="background-image: url('assets/polyatomic.png')"></div>
@@ -123,6 +263,7 @@
           </div>
         </a>
 
+        <!-- Charge It! - small game card -->
         <a href="game_charges.html" class="game-card small">
           <div class="game-label">Charge It!</div>
           <div class="game-thumbnail" style="background-image: url('assets/charge.png')"></div>
@@ -135,8 +276,14 @@
       </div>
     </div>
 
+    <!-- ==================== JAVASCRIPT ==================== -->
     <script>
-      // ==================== AUTH STATE MANAGEMENT ====================
+      // ============================================================
+      // AUTH STATE MANAGEMENT
+      // ============================================================
+      // Handles login, sign up, session persistence via localStorage
+      // Keys used: chemivis_users (array), chemivis_current_user (string), chemivis_user_data (object)
+
       let isSignUpMode = false;
       let currentUser = null;
 
@@ -152,6 +299,7 @@
       const confirmPasswordInput = document.getElementById("confirmPasswordInput");
       const loginError = document.getElementById("loginError");
 
+      // Check if user has an active session on page load
       function checkExistingSession() {
         const savedUser = localStorage.getItem("chemivis_current_user");
         const savedUserData = localStorage.getItem("chemivis_user_data");
@@ -160,10 +308,12 @@
           currentUser = savedUser;
           const userData = savedUserData ? JSON.parse(savedUserData) : {};
 
+          // Hide login, show main content
           loginOverlay.classList.add("hidden");
           mainContent.classList.add("visible");
           document.getElementById("profileUsername").innerText = currentUser;
 
+          // Populate profile popup fields from saved data
           if (userData.name) document.getElementById("popupName").value = userData.name;
           if (userData.bio) document.getElementById("popupBio").value = userData.bio;
           document.getElementById("popupUsername").value = currentUser;
@@ -173,11 +323,13 @@
         return false;
       }
 
+      // On page load: check session, otherwise show login overlay
       if (!checkExistingSession()) {
         loginOverlay.classList.remove("hidden");
         mainContent.classList.remove("visible");
       }
 
+      // Toggle between Login and Sign Up modes
       function toggleAuthMode() {
         isSignUpMode = !isSignUpMode;
 
@@ -199,21 +351,25 @@
 
       authToggleLink.addEventListener("click", toggleAuthMode);
 
+      // Get all registered users from localStorage
       function getUsers() {
         return JSON.parse(localStorage.getItem("chemivis_users")) || [];
       }
 
+      // Save a new user to the users list
       function saveUser(username, password) {
         const users = getUsers();
         users.push({ username: username.toLowerCase(), password });
         localStorage.setItem("chemivis_users", JSON.stringify(users));
       }
 
+      // Save profile data (name, bio) to chemivis_user_data
       function saveUserData(username, name, bio) {
         const userData = { name: name || "", bio: bio || "", username: username };
         localStorage.setItem("chemivis_user_data", JSON.stringify(userData));
       }
 
+      // Handle login/signup form submission
       loginSubmit.onclick = () => {
         const rawUser = usernameInput.value.trim();
         const rawPass = passwordInput.value.trim();
@@ -234,6 +390,7 @@
         const existing = users.find((u) => u.username === normalizedUser);
 
         if (isSignUpMode) {
+          // SIGN UP FLOW
           if (!confirmPass) {
             loginError.innerText = "Please confirm your password.";
             loginError.style.display = "block";
@@ -255,6 +412,7 @@
             return;
           }
 
+          // Create new user and log them in
           saveUser(rawUser, rawPass);
           currentUser = rawUser;
           localStorage.setItem("chemivis_current_user", rawUser);
@@ -265,6 +423,7 @@
           document.getElementById("popupUsername").value = currentUser;
 
         } else {
+          // LOG IN FLOW
           if (!existing) {
             loginError.innerText = "Username not found. Please sign up first.";
             loginError.style.display = "block";
@@ -280,9 +439,11 @@
             return;
           }
 
+          // Log in existing user
           currentUser = rawUser;
           localStorage.setItem("chemivis_current_user", rawUser);
 
+          // Load saved profile data into popup fields
           const savedData = localStorage.getItem("chemivis_user_data");
           if (savedData) {
             const userData = JSON.parse(savedData);
@@ -297,10 +458,12 @@
         }
       };
 
+      // Allow Enter key to submit form
       usernameInput.onkeydown = (e) => { if (e.key === "Enter") loginSubmit.click(); };
       passwordInput.onkeydown = (e) => { if (e.key === "Enter") loginSubmit.click(); };
       confirmPasswordInput.onkeydown = (e) => { if (e.key === "Enter") loginSubmit.click(); };
 
+      // Visual shake animation for invalid inputs
       function shakeInput(input) {
         input.style.borderColor = "#ff4d4d";
         input.style.transform = "translateX(5px)";
@@ -310,11 +473,17 @@
         }, 300);
       }
 
+      // Clear error message when user starts typing
       usernameInput.addEventListener("input", () => { loginError.style.display = "none"; });
       passwordInput.addEventListener("input", () => { loginError.style.display = "none"; });
       confirmPasswordInput.addEventListener("input", () => { loginError.style.display = "none"; });
 
-      // ==================== PROFILE POPUP ====================
+      // ============================================================
+      // PROFILE POPUP
+      // ============================================================
+      // Opens when clicking the profile icon in the top bar
+      // Contains editable profile info, photo upload, logout, delete account
+
       const profilePopup = document.getElementById("profilePopup");
       const profileImage = document.getElementById("profileImage");
       const saveProfileBtn = document.getElementById("saveProfileChanges");
@@ -322,37 +491,321 @@
       const popupName = document.getElementById("popupName");
       const popupBio = document.getElementById("popupBio");
 
+      // Open profile popup when clicking top bar avatar
       profileImage.addEventListener("click", () => {
         profilePopup.style.display = "flex";
         document.body.style.overflow = "hidden";
       });
 
+      // Close popup and restore body scroll
       function closeProfilePopup() {
         profilePopup.style.display = "none";
         document.body.style.overflow = "auto";
       }
+
+      // ============================================================
+      // MODAL SYSTEM - Replaces all alert() calls
+      // ============================================================
+      // Centralized modal show/hide functions for all confirmation dialogs
+
+      const saveSuccessModal = document.getElementById("saveSuccessModal");
+      const photoSuccessModal = document.getElementById("photoSuccessModal");
+      const logoutConfirmModal = document.getElementById("logoutConfirmModal");
+      const deleteConfirmModal = document.getElementById("deleteConfirmModal");
+
+      function showModal(modal) {
+        modal.style.display = "flex";
+      }
+
+      function hideModal(modal) {
+        modal.style.display = "none";
+      }
+
+      // --- Save Success Modal ---
+      document.getElementById("confirmSuccess").addEventListener("click", () => {
+        hideModal(saveSuccessModal);
+      });
+      saveSuccessModal.addEventListener("click", (e) => {
+        if (e.target === saveSuccessModal) hideModal(saveSuccessModal);
+      });
+
+      // --- Photo Upload Success Modal ---
+      document.getElementById("confirmPhotoSuccess").addEventListener("click", () => {
+        hideModal(photoSuccessModal);
+      });
+      photoSuccessModal.addEventListener("click", (e) => {
+        if (e.target === photoSuccessModal) hideModal(photoSuccessModal);
+      });
+
+      // --- Logout Confirmation Modal ---
+      document.getElementById("cancelLogout").addEventListener("click", () => {
+        hideModal(logoutConfirmModal);
+      });
+      document.getElementById("confirmLogout").addEventListener("click", () => {
+        hideModal(logoutConfirmModal);
+        performLogout();
+      });
+      logoutConfirmModal.addEventListener("click", (e) => {
+        if (e.target === logoutConfirmModal) hideModal(logoutConfirmModal);
+      });
+
+      // --- Delete Account Confirmation Modal ---
+      document.getElementById("cancelDelete").addEventListener("click", () => {
+        hideModal(deleteConfirmModal);
+      });
+      document.getElementById("confirmDelete").addEventListener("click", () => {
+        hideModal(deleteConfirmModal);
+        performDeleteAccount();
+      });
+      deleteConfirmModal.addEventListener("click", (e) => {
+        if (e.target === deleteConfirmModal) hideModal(deleteConfirmModal);
+      });
+
+      // ============================================================
+      // SAVE PROFILE
+      // ============================================================
+      // Validates name field and saves to chemivis_user_data
 
       saveProfileBtn.addEventListener("click", () => {
         const name = popupName.value.trim();
         const bio = popupBio.value.trim();
 
         if (!name) {
-          alert("Name cannot be empty");
+          // Show visual error on empty name field instead of alert
+          const nameInput = document.getElementById("popupName");
+          nameInput.style.borderColor = "#ff4d4d";
+          nameInput.focus();
+          setTimeout(() => { nameInput.style.borderColor = "#e0e0e0"; }, 2000);
           return;
         }
 
         saveUserData(currentUser, name, bio);
-        alert("Profile saved successfully!");
-        closeProfilePopup();
+        showModal(saveSuccessModal);
       });
 
       cancelProfileBtn.addEventListener("click", closeProfilePopup);
 
+      // Close popup when clicking outside the card
       profilePopup.addEventListener("click", (e) => {
         if (e.target === profilePopup) closeProfilePopup();
       });
 
-      // ==================== HAMBURGER MENU ====================
+      // ============================================================
+      // PROFILE PHOTO UPLOAD
+      // ============================================================
+      // Handles image file selection, base64 conversion, and localStorage saving
+      // Photo is stored inside chemivis_user_data under the "photo" key
+
+      const photoUploadInput = document.getElementById("photoUploadInput");
+      const popupProfilePhoto = document.getElementById("popupProfilePhoto");
+      const popupDefaultSvg = document.getElementById("popupDefaultSvg");
+      const popupAvatar = document.getElementById("popupAvatar");
+      const popupUploadOverlay = document.getElementById("popupUploadOverlay");
+
+      // Load existing photo from chemivis_user_data on page load
+      function loadProfilePhoto() {
+        const savedData = localStorage.getItem("chemivis_user_data");
+        if (savedData) {
+          try {
+            const userData = JSON.parse(savedData);
+            // Check if photo exists and is a valid base64 data URL
+            if (userData.photo && userData.photo.startsWith("data:image")) {
+              // HIDE the default SVG icon
+              popupDefaultSvg.style.display = "none";
+              // SHOW the uploaded photo
+              popupProfilePhoto.src = userData.photo;
+              popupProfilePhoto.style.display = "block";
+              // Update overlay text to "Change Photo"
+              popupUploadOverlay.querySelector("span").innerText = "Change Photo";
+            }
+          } catch (e) {
+            console.error("Error loading profile photo:", e);
+          }
+        }
+      }
+
+      // Run on page load to restore any saved photo
+      loadProfilePhoto();
+
+      // Handle file selection from the hidden input
+      photoUploadInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Validate file type
+        if (!file.type.startsWith("image/")) {
+          showErrorModal("Invalid File", "Please upload an image file (JPG, PNG, GIF).");
+          return;
+        }
+
+        // Validate file size (max 2MB)
+        if (file.size > 2 * 1024 * 1024) {
+          showErrorModal("File Too Large", "Image size must be less than 2MB.");
+          return;
+        }
+
+        // Read file as base64 data URL
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const photoData = e.target.result;
+
+          // STEP 1: Hide the default SVG icon completely
+          popupDefaultSvg.style.display = "none";
+
+          // STEP 2: Set the photo source and make it visible
+          popupProfilePhoto.src = photoData;
+          popupProfilePhoto.style.display = "block";
+
+          // STEP 3: Update overlay text
+          popupUploadOverlay.querySelector("span").innerText = "Change Photo";
+
+          // STEP 4: Save photo to chemivis_user_data in localStorage
+          const savedData = localStorage.getItem("chemivis_user_data");
+          let userData = savedData ? JSON.parse(savedData) : {};
+          userData.photo = photoData;
+          localStorage.setItem("chemivis_user_data", JSON.stringify(userData));
+
+          // STEP 5: Show success modal
+          showModal(photoSuccessModal);
+        };
+        reader.onerror = () => {
+          showErrorModal("Upload Failed", "Failed to read image. Please try again.");
+        };
+        reader.readAsDataURL(file);
+
+        // Reset input so the same file can be selected again if needed
+        event.target.value = "";
+      });
+
+      // Click the avatar area to trigger the file picker
+      popupAvatar.addEventListener("click", (e) => {
+        photoUploadInput.click();
+      });
+
+      // ============================================================
+      // ERROR MODAL HELPER
+      // ============================================================
+      // Creates a temporary styled error modal (fallback for validation errors)
+
+      function showErrorModal(title, message) {
+        // Remove any existing temp modal first
+        const existing = document.querySelector(".temp-error-modal");
+        if (existing) existing.remove();
+
+        const modal = document.createElement("div");
+        modal.className = "temp-error-modal";
+        modal.style.cssText = "display:flex;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;justify-content:center;align-items:center;padding:20px;font-family:'Poppins',sans-serif;";
+        modal.innerHTML = `
+          <div style="background:#fff;border-radius:20px;padding:30px;width:350px;max-width:100%;text-align:center;animation:popupSlideIn 0.3s ease;box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+            <div style="width:50px;height:50px;background:rgba(217,83,79,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 15px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#d9534f" stroke-width="2" style="width:28px;height:28px;">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <h3 style="font-family:'Rubik One',sans-serif;font-size:20px;color:#333;margin-bottom:10px;">${title}</h3>
+            <p style="font-size:14px;color:#666;line-height:1.5;margin-bottom:20px;">${message}</p>
+            <button id="tempErrorOk" style="width:100%;padding:12px;border-radius:12px;border:none;background:#5ba4bc;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:'Poppins',sans-serif;transition:all 0.2s;">OK</button>
+          </div>
+        `;
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal || e.target.id === "tempErrorOk") modal.remove();
+        });
+        document.body.appendChild(modal);
+      }
+
+      // ============================================================
+      // LOGOUT
+      // ============================================================
+      // Clears session and returns to login screen
+
+      const logoutBtn = document.getElementById("logoutBtn");
+
+      logoutBtn.addEventListener("click", () => {
+        showModal(logoutConfirmModal);
+      });
+
+      function performLogout() {
+        // Remove current session
+        localStorage.removeItem("chemivis_current_user");
+        currentUser = null;
+        closeProfilePopup();
+
+        // Show login overlay, hide main content
+        loginOverlay.classList.remove("hidden");
+        mainContent.classList.remove("visible");
+        usernameInput.value = "";
+        passwordInput.value = "";
+        confirmPasswordInput.value = "";
+        loginError.style.display = "none";
+
+        // Reset profile popup fields
+        popupName.value = "";
+        popupBio.value = "";
+        document.getElementById("popupUsername").value = "";
+        document.getElementById("profileUsername").innerText = "Guest";
+
+        // Reset avatar to default SVG
+        popupDefaultSvg.style.display = "block";
+        popupProfilePhoto.style.display = "none";
+        popupProfilePhoto.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+        popupUploadOverlay.querySelector("span").innerText = "Add Photo";
+      }
+
+      // ============================================================
+      // DELETE ACCOUNT
+      // ============================================================
+      // Permanently removes user from chemivis_users and clears all data
+
+      const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+
+      deleteAccountBtn.addEventListener("click", () => {
+        showModal(deleteConfirmModal);
+      });
+
+      function performDeleteAccount() {
+        if (currentUser) {
+          // Remove user from the registered users list
+          const users = getUsers();
+          const updatedUsers = users.filter((u) => u.username !== currentUser.toLowerCase());
+          localStorage.setItem("chemivis_users", JSON.stringify(updatedUsers));
+
+          // Delete ALL user data from localStorage
+          localStorage.removeItem("chemivis_user_data");
+          localStorage.removeItem("chemivis_current_user");
+
+          currentUser = null;
+          closeProfilePopup();
+
+          // Return to login screen
+          loginOverlay.classList.remove("hidden");
+          mainContent.classList.remove("visible");
+          usernameInput.value = "";
+          passwordInput.value = "";
+          confirmPasswordInput.value = "";
+          loginError.style.display = "none";
+
+          // Reset all profile fields
+          popupName.value = "";
+          popupBio.value = "";
+          document.getElementById("popupUsername").value = "";
+          document.getElementById("profileUsername").innerText = "Guest";
+
+          // Reset avatar to default
+          popupDefaultSvg.style.display = "block";
+          popupProfilePhoto.style.display = "none";
+          popupProfilePhoto.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+          popupUploadOverlay.querySelector("span").innerText = "Add Photo";
+
+          // Show account deleted success message
+          showErrorModal("Account Deleted", "Your account has been permanently deleted.");
+        }
+      }
+
+      // ============================================================
+      // HAMBURGER / SIDE MENU
+      // ============================================================
+      // Slides in from left, accessible even during login (z-index: 6000)
+
       const menu = document.getElementById("sideMenu");
       const hamburger = document.getElementById("hamburger");
       const closeMenu = document.getElementById("closeMenu");
@@ -366,13 +819,18 @@
         menu.classList.remove("open");
       });
 
+      // Close menu when clicking outside
       document.addEventListener("click", (e) => {
         if (menu.classList.contains("open") && !menu.contains(e.target) && !hamburger.contains(e.target)) {
           menu.classList.remove("open");
         }
       });
 
-      // ==================== FLOATING ATOMS ====================
+      // ============================================================
+      // FLOATING ATOMS BACKGROUND ANIMATION
+      // ============================================================
+      // Canvas-based particle system with collision detection
+
       const canvas = document.getElementById("atomsBg");
       const ctx = canvas.getContext("2d");
       let atoms = [];
@@ -385,6 +843,7 @@
       window.addEventListener("resize", resize);
       resize();
 
+      // Individual explosion particle
       class Particle {
         constructor(x, y) {
           this.x = x;
@@ -405,6 +864,7 @@
         }
       }
 
+      // Main floating atom that bounces and explodes on collision
       class Atom {
         constructor() {
           this.init();
@@ -434,9 +894,11 @@
           if (this.exploded) return;
           this.x += this.vx;
           this.y += this.vy;
+          // Bounce off edges
           if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
           if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
+          // Check collision with other atoms
           for (let a of atomsArr) {
             if (a === this || a.exploded) continue;
             const d = Math.hypot(a.x - this.x, a.y - this.y);
@@ -449,8 +911,10 @@
         }
       }
 
+      // Create 30 floating atoms
       for (let i = 0; i < 30; i++) atoms.push(new Atom());
 
+      // Animation loop
       function animate() {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
