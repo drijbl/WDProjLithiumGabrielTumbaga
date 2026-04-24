@@ -105,7 +105,6 @@
         pauseIcon.classList.toggle("hidden", !isPlaying);
       }
 
-      // START MUSIC ON FIRST USER CLICK (ANYWHERE)
       document.body.addEventListener(
         "click",
         () => {
@@ -124,7 +123,6 @@
         { once: true },
       );
 
-      // pause / play button
       musicToggle.addEventListener("click", (e) => {
         e.stopPropagation();
         if (bgMusic.paused) {
@@ -187,6 +185,7 @@
           this.draw();
         }
       }
+
       class Explosion {
         constructor(x, y) {
           this.particles = [];
@@ -261,55 +260,59 @@
       const nextBtn = document.getElementById("nextBtn");
       const submitBtn = document.getElementById("submitBtn");
 
-      function getCurrentUser() {
-        return localStorage.getItem("chemivis_current_user");
-      }
-      function getAllScores() {
-        return JSON.parse(localStorage.getItem("chemivis_scores")) || {};
-      }
-      function saveScore(gameName, score) {
-        const user = getCurrentUser();
-        if (!user) return;
-        const scores = getAllScores();
-        if (!scores[user]) scores[user] = {};
-        if (!scores[user][gameName]) scores[user][gameName] = [];
-        scores[user][gameName].push({
-          score,
-          time: new Date().toLocaleString(),
-        });
-        localStorage.setItem("chemivis_scores", JSON.stringify(scores));
+      // --- NEW STORAGE LOGIC ---
+      function getHighScore() {
+        // Reads from true LocalStorage
+        return parseInt(localStorage.getItem("chemivis_high_score")) || 0;
       }
 
-      function renderAllTimeScores(gameName) {
+      function saveSessionScore(currentScore) {
+        // Saves ONLY to current browser SessionStorage
+        let sessionScores =
+          JSON.parse(sessionStorage.getItem("chemivis_session_scores")) || [];
+        sessionScores.push({
+          score: currentScore,
+          time: new Date().toLocaleTimeString(), // Better for session context
+        });
+        sessionStorage.setItem(
+          "chemivis_session_scores",
+          JSON.stringify(sessionScores),
+        );
+      }
+
+      function renderSessionScores() {
         const container = document.getElementById("allTimeScores");
         container.innerHTML = "";
 
-        const user = getCurrentUser();
-        if (!user) {
-          container.innerHTML = "<em>No user logged in</em>";
-          return;
-        }
+        let sessionScores =
+          JSON.parse(sessionStorage.getItem("chemivis_session_scores")) || [];
 
-        const allScores = getAllScores();
-        const userScores = (allScores[user] && allScores[user][gameName]) || [];
-
-        if (userScores.length === 0) {
-          const row = document.createElement("div");
-          row.className = "leaderboard-row";
-          const now = new Date().toLocaleString();
-          row.innerHTML = `<span>#1 • ${now}</span><strong>0 pts</strong>`;
-          container.appendChild(row);
+        if (sessionScores.length === 0) {
+          container.innerHTML = `<em>No games played this session.</em>`;
           return;
         }
 
         // Sort highest score first
-        userScores.sort((a, b) => b.score - a.score);
+        sessionScores.sort((a, b) => b.score - a.score);
 
-        userScores.forEach((s, i) => {
+        const overallHighScore = getHighScore();
+
+        sessionScores.forEach((s, i) => {
           const row = document.createElement("div");
-          row.className = "leaderboard-row";
-          const time = s.time || new Date().toLocaleString(); // fallback just in case
-          row.innerHTML = `<span>#${i + 1} • ${time}</span><strong>${s.score} pts</strong>`;
+
+          // Apply distinct CSS if it's the #1 score in this session
+          if (i === 0 && s.score > 0) {
+            row.style.cssText =
+              "color: #ffd700; font-weight: bold; background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.5); padding: 8px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between;";
+            row.innerHTML = `<span>🏆 #${i + 1} • ${s.time}</span><strong>${s.score} pts</strong>`;
+          } else {
+            row.className = "leaderboard-row";
+            // Ensure regular rows have flexbox layout so they match the highlighted one
+            row.style.cssText =
+              "display: flex; justify-content: space-between; margin-bottom: 5px;";
+            row.innerHTML = `<span>#${i + 1} • ${s.time}</span><strong>${s.score} pts</strong>`;
+          }
+
           container.appendChild(row);
         });
       }
@@ -372,34 +375,48 @@
         const val = answerInput.value.trim().toLowerCase();
         if (!val) return;
         const correct = currentMetal.charges.map((c) => c.toLowerCase());
+        const inputParts = val.split(",").map((s) => s.trim());
         const isCorrect =
-          val
-            .split(",")
-            .map((s) => s.trim())
-            .every((s) => correct.includes(s)) &&
-          correct.every((c) =>
-            val
-              .split(",")
-              .map((s) => s.trim())
-              .includes(c),
-          );
+          inputParts.length === correct.length &&
+          inputParts.every((s) => correct.includes(s));
         if (isCorrect) handleCorrect();
         else handleWrong("Incorrect!");
       }
 
       function endGame() {
-        saveScore("Ion Know That One", score);
         clearInterval(timerInterval);
 
-        document.getElementById("finalScoreDisplay").innerText =
-          `Score: ${score}`;
+        const previousHighScore = getHighScore();
+        let isNewRecord = false;
+
+        // --- CORE FIX: Only LocalStorage if greater ---
+        if (score > previousHighScore) {
+          isNewRecord = true;
+          localStorage.setItem("chemivis_high_score", score);
+        }
+
+        // Save to SessionStorage no matter what
+        saveSessionScore(score);
+
+        const displayBest = Math.max(score, previousHighScore);
+
+        const finalScoreElement = document.getElementById("finalScoreDisplay");
+        finalScoreElement.innerHTML = `
+          <div style="font-size: 0.8rem; opacity: 0.7; letter-spacing: 2px;">SESSION SCORE</div>
+          <div style="font-size: 2.5rem; margin-bottom: 10px;">${score}</div>
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+            <span style="color: var(--magic-blue)">ALL-TIME BEST:</span> ${displayBest} pts
+            ${isNewRecord && score > 0 ? '<br><span style="color: #ffd700; font-size: 0.8rem; font-weight: bold;">🌟 NEW ALL-TIME RECORD! 🌟</span>' : ""}
+          </div>`;
 
         gameHud.classList.add("hidden");
         playView.classList.add("hidden");
         leaderboardView.classList.remove("hidden");
-        renderAllTimeScores("Ion Know That One");
+
+        renderSessionScores();
       }
 
+      // --- EVENT LISTENERS ---
       document.getElementById("startBtn").onclick = () => {
         score = 0;
         hearts = 3;
@@ -410,15 +427,19 @@
         playView.classList.remove("hidden");
         loadQuestion();
       };
+
       submitBtn.onclick = checkAnswer;
+
       answerInput.onkeydown = (e) => {
         if (e.key === "Enter") checkAnswer();
       };
+
       nextBtn.onclick = () =>
         isGameOver ? endGame() : (roundNumber++, loadQuestion());
+
       document.getElementById("restartBtn").onclick = () => {
         score = 0;
-        hearts = 3;
+        hearts =   3;
         roundNumber = 1;
         isGameOver = false;
         leaderboardView.classList.add("hidden");
